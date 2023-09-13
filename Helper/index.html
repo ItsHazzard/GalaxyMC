@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tully Helper</title>
+    <style>
+        :root {
+            --dark: rgb(20, 20, 20);
+            --yellow: rgb(253, 216, 53);
+            --blue: rgb(98, 0, 234);
+            --c1: rgb(3, 7, 18);
+            --c2: rgb(53, 94, 230);
+            --left-color: var(--c1);
+            --right-color: var(--c2);
+        }
+
+        body {
+            background-color: var(--dark);
+            margin: 0px;
+        }
+
+        .side {
+            display: grid;
+            height: 100vh;
+            overflow: hidden;
+            place-items: center;
+            position: absolute;
+            width: 100%;
+        }
+
+        .side .title {
+            font-family: "Montserrat", sans-serif;
+            font-size: 7vw;
+            font-weight: 800;
+            margin: 0px 10vw;
+            width: 80vw;
+        }
+
+        .side .fancy {
+            font-family: "Permanent Marker", cursive;
+            font-size: 1.8em;
+            line-height: 0.6em;
+        }
+
+        #left-side {
+            background-color: var(--left-color);
+            width: 60%;
+            z-index: 2;
+        }
+
+        #left-side .title {
+            color: white;
+        }
+
+        #left-side .fancy {
+            color: var(--right-color);
+        }
+
+        #right-side {
+            background-color: var(--right-color);
+        }
+
+        #right-side .title {
+            color: var(--dark);
+        }
+
+        #right-side .fancy {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="left-side" class="side">
+        <h2 class="title">
+            The Harry
+            <span class="fancy">Replacment</span>
+        </h2>
+    </div>
+    <div id="right-side" class="side">
+        <h2 class="title">
+            Mrs Tully
+            <span class="fancy">Helper</span>
+        </h2>
+    </div>
+
+    <script>
+        const redirectToURL = "/Help.html";
+        const left = document.getElementById("left-side");
+        const slider = document.querySelector('.side');
+
+        const redirectToPage = () => {
+            if (slider.contains(event.target)) {
+                // Click event occurred within the slider; do nothing.
+                return;
+            }
+            window.location.href = redirectToURL;
+        }
+
+        const handleMove = e => {
+            left.style.width = `${e.clientX / window.innerWidth * 100}%`;
+        }
+
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('touchmove', e => handleMove(e.touches[0]));
+        document.addEventListener('click', redirectToPage);
+    </script>
+</body>
+
+</html>
