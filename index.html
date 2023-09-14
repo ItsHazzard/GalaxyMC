@@ -68,11 +68,12 @@ nav a:hover {
     background-color: #00bcd4;
     color: #fff;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 10px; /* Increased border-radius for a sleeker look */
     text-decoration: none;
     font-weight: bold;
     margin-top: 20px;
     transition: background-color 0.3s;
+    transform: skewX(-5deg); /* Skew the button slightly */
 }
 
 .cta-button:hover {
@@ -82,11 +83,28 @@ nav a:hover {
 .feature {
     padding: 60px 0;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .feature h2 {
     font-size: 2rem;
     margin-bottom: 20px;
+}
+
+.feature p {
+    margin-top: 20px;
+}
+
+/* Add a slightly angled black line to divide the sections */
+.divider {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    transform: skewX(-5deg);
+    top: 50%;
+    z-index: -1;
 }
 
 footer {
@@ -106,53 +124,55 @@ footer p {
     }
 }
 </style>
-    <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#minecraft">Minecraft</a></li>
-                <li><a href="#staff">Staff</a></li>
-                <li><a href="#discord">Discord</a></li>
-            </ul>
-        </nav>
-    </header>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#minecraft">Minecraft</a></li>
+            <li><a href="#staff">Staff</a></li>
+            <li><a href="#discord">Discord</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <section id="home" class="hero">
-        <div class="content">
-            <h1>Welcome to GalaxyMC</h1>
-            <p>The Way to Cure Boredom</p>
-            <a href="#minecraft" class="cta-button">Join Now</a>
-        </div>
-    </section>
+<section id="home" class="hero">
+    <div class="content">
+        <h1>Welcome to GalaxyMC</h1>
+        <p>The Way to Cure Boredom</p>
+        <a href="#minecraft" class="cta-button">Join Now</a>
+    </div>
+</section>
 
-    <section id="minecraft" class="feature">
-        <div class="content">
-            <h2>Minecraft Servers</h2>
-            <p>Explore our amazing Minecraft servers and embark on epic adventures with friends.</p>
-            <a href="https://www.galaxy-mc.net/minecraft.html" class="cta-button">Visit Minecraft</a>
-        </div>
-    </section>
+<section id="minecraft" class="feature">
+    <div class="divider"></div> <!-- Add the angled black line -->
+    <div class="content">
+        <h2>Minecraft Servers</h2>
+        <p>Explore our amazing Minecraft servers and embark on epic adventures with friends. Customize this text to describe your servers.</p>
+        <a href="https://www.galaxy-mc.net/minecraft.html" class="cta-button">Visit Minecraft</a>
+    </div>
+</section>
 
-    <section id="staff" class="feature">
-        <div class="content">
-            <h2>Meet Our Staff</h2>
-            <p>Our dedicated team is here to assist you. Get to know our staff members.</p>
-            <a href="https://www.galaxy-mc.net/staff.html" class="cta-button">Meet the Staff</a>
-        </div>
-    </section>
+<section id="staff" class="feature">
+    <div class="divider"></div> <!-- Add the angled black line -->
+    <div class="content">
+        <h2>Meet Our Staff</h2>
+        <p>Our dedicated team is here to assist you. Get to know our staff members. Replace this text with information about your staff.</p>
+        <a href="https://www.galaxy-mc.net/staff.html" class="cta-button">Meet the Staff</a>
+    </div>
+</section>
 
-    <section id="discord" class="feature">
-        <div class="content">
-            <h2>Join Our Discord</h2>
-            <p>Stay connected with our community on Discord. Chat, share, and have fun!</p>
-            <a href="https://discord.gg/yCc6czDJEk" class="cta-button">Join Discord</a>
-        </div>
-    </section>
+<section id="discord" class="feature">
+    <div class="divider"></div> <!-- Add the angled black line -->
+    <div class="content">
+        <h2>Join Our Discord</h2>
+        <p>Stay connected with our community on Discord. Chat, share, and have fun. Click the button below to join!</p>
+        <a href="https://discord.gg/yCc6czDJEk" class="cta-button">Join Discord</a>
+    </div>
+</section>
 
-    <footer>
-        <p>&copy; 2020 GalaxyMC. All rights reserved.</p>
-    </footer>
+<footer>
+    <p>&copy; 2020 GalaxyMC. All rights reserved.</p>
+</footer>
 </body>
 </html>
-
