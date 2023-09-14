@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tully Helper</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('background.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Lobster', cursive; /* Apply Lobster font */
+            position: relative;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* 100% of viewport height */
+        }
+        
+        /* Additional CSS for your content */
+        .content {
+            text-align: center;
+            color: white;
+        }
+
+        /* Center the form elements */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #333; /* Set form background color to #333 */
+            padding: 40px; /* Add more padding to the form */
+            border-radius: 20px; /* Add more border radius to form */
+            transform: scale(1.1);
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 20px; /* Increase padding */
+            margin: 20px 0; /* Increase margin */
+            border: 2px black solid; /* Remove border */
+            border-radius: 10px; /* Increase border radius */
+            background-color: #333;
+            transition: 0.3s;
+            text-align: center;
+            font-size: 2em; /* Increase font size */
+            color: white; /* Set text color to white */
+        }
+
+        input[type="text"]:hover {
+            transform: scale(1.1);
+            background-color: darkslategray;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            border: 2px black solid;
+            padding: 20px 40px; /* Increase padding */
+            border-radius: 40px; /* Increase border radius */
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 2em; /* Increase font size */
+        }
+
+        input[type="submit"]:hover {
+            background-color: darkslategray;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 style="text-decoration: underline; font-size: 90px;">Tully Helper</h1>
+        <p style="font-size: 60px;">Extra Help That I Forgot To Add</p>
+        <form action="mailto:admin@galaxy-mc.net" method="post">
+            <input type="text" placeholder="What would you like help with?">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
