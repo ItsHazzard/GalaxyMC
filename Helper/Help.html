@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tully Helper</title>
+    <link rel="icon" href="favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <!-- Include Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
@@ -61,12 +62,12 @@
     right: 20px;
     background-color: #333;
     color: #fff;
-    padding: 10px 20px;
     border-radius: 20px; /* Makes the button more boxy with curved corners */
     text-decoration: none; /* Remove underline from the link */
     border: 2px solid #000; /* Add a black border */
     z-index: 2; /* Ensure it appears above other content */
     transition: all 0.3s ease; /* Smooth transition on hover */
+    padding: 10px 20px; /* Adjust padding as needed */
 }
 
 .credits-button:hover::before {
@@ -88,20 +89,25 @@
 
 .credits-button i {
     margin-right: 10px;
-
 }
-    .back-button {
+
+.credits-button:hover {
+    border: 2px purple solid;
+    transform: scale(1.1);
+}
+
+.back-button {
     position: fixed;
     bottom: 20px;
     left: 20px;
     background-color: #333;
     color: #fff;
-    padding: 10px 20px;
     border-radius: 20px; /* Makes the button more boxy with curved corners */
     text-decoration: none; /* Remove underline from the link */
     border: 2px solid #000; /* Add a black border */
     z-index: 2; /* Ensure it appears above other content */
     transition: all 0.3s ease; /* Smooth transition on hover */
+    padding: 10px 20px; /* Adjust padding as needed */
 }
 
 .back-button:hover::before {
@@ -118,12 +124,100 @@
     white-space: nowrap;
     z-index: 1;
     transition: all 0.3s ease;
-    right: 8px;
+    margin-left: -28px;
 }
 
 .back-button i {
     margin-left: 10px;
 }
+
+.back-button:hover {
+    transform: scale(1.1);
+    border: 2px purple solid;
+    border-radius: 20px;
+}
+
+.click-button {
+    position: fixed;
+    bottom: 18px;
+    left: 140px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 20px; /* Makes the button more boxy with curved corners */
+    text-decoration: none; /* Remove underline from the link */
+    border: 2px solid #000; /* Add a black border */
+    z-index: 2; /* Ensure it appears above other content */
+    transition: all 0.3s ease; /* Smooth transition on hover */
+    padding: 10px 20px; /* Adjust padding as needed */
+}
+
+.click-button:hover::before {
+    content: "Click Me To See!!!";
+    display: block;
+    position: absolute;
+    top: -40px;
+    background-color: darkslategray;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+    white-space: nowrap;
+    z-index: 1;
+    transition: all 0.3s ease;
+    margin-left: -40px;
+}
+
+.click-button i {
+    margin-left: 40px;
+}
+
+.click-button:hover {
+    transform: scale(1.1);
+    border: 2px purple solid;
+}
+
+.extra-button {
+    position: fixed;
+    bottom: 20px;
+    left: 260px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 20px; /* Makes the button more boxy with curved corners */
+    text-decoration: none; /* Remove underline from the link */
+    border: 2px solid #000; /* Add a black border */
+    z-index: 2; /* Ensure it appears above other content */
+    transition: all 0.3s ease; /* Smooth transition on hover */
+    padding: 10px 15px; /* Adjust padding to increase width */
+}
+
+.extra-button:hover::before {
+    content: "Did I Forget Something? Click To Request Help!";
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 50%; /* Center the tooltip */
+    transform: translateX(-50%); /* Center the tooltip horizontally */
+    background-color: darkslategray;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+    white-space: nowrap;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.extra-button i {
+    margin-left: 10px;
+}
+
+.extra-button:hover {
+    transform: scale(1.1);
+    border: 2px purple solid;
+}
+
     </style>
 </head>
 <body>
@@ -175,8 +269,18 @@
 
     <a class="credits-button" href="https://www.galaxy-mc.net/credits.html">
         <i class="fas fa-link"></i> Credits
-    <a class="back-button" href="https://www.galaxy-mc.net/Helper">
-        <i class="fa-solid fa-arrow-left"></i> Back
+        
+        <a class="back-button" href="https://www.galaxy-mc.net/Helper">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </a>
+
+        <a class="click-button" href="https://www.youtube.com/embed/79DijItQXMM?si=HjavhQP0fd9mivPY">
+            👋 Click!
     </a>
+
+    <a class="extra-button" href="https://www.galaxy-mc.net/Helper/extra.html">
+        <i class="fa-solid fa-circle-question"></i> Help
+    </a>
+
 </body>
 </html>
