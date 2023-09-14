@@ -12,3 +12,147 @@
     <meta property="og:image" content="/Photos/favicon.png"> <!-- Replace with the URL of your image -->
     <meta property="og:image:alt" content="GalaxyMC"> <!-- Replace with a brief alt text for your image -->
 </head>
+<style>
+/* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #fff;
+}
+
+header {
+    background-color: #1a1a1a;
+    padding: 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #00bcd4;
+}
+
+.hero {
+    background-image: url('your-hero-image.jpg');
+    background-size: cover;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.hero h1 {
+    font-size: 3rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #00bcd4;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #0097a7;
+}
+
+.feature {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.feature h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+footer {
+    text-align: center;
+    background-color: #1a1a1a;
+    padding: 10px 0;
+}
+
+footer p {
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+    <body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#minecraft">Minecraft</a></li>
+                <li><a href="#staff">Staff</a></li>
+                <li><a href="#discord">Discord</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="content">
+            <h1>Welcome to GalaxyMC</h1>
+            <p>The Way to Cure Boredom</p>
+            <a href="#minecraft" class="cta-button">Join Now</a>
+        </div>
+    </section>
+
+    <section id="minecraft" class="feature">
+        <div class="content">
+            <h2>Minecraft Servers</h2>
+            <p>Explore our amazing Minecraft servers and embark on epic adventures with friends.</p>
+            <a href="https://www.galaxy-mc.net/minecraft.html" class="cta-button">Visit Minecraft</a>
+        </div>
+    </section>
+
+    <section id="staff" class="feature">
+        <div class="content">
+            <h2>Meet Our Staff</h2>
+            <p>Our dedicated team is here to assist you. Get to know our staff members.</p>
+            <a href="https://www.galaxy-mc.net/staff.html" class="cta-button">Meet the Staff</a>
+        </div>
+    </section>
+
+    <section id="discord" class="feature">
+        <div class="content">
+            <h2>Join Our Discord</h2>
+            <p>Stay connected with our community on Discord. Chat, share, and have fun!</p>
+            <a href="https://discord.gg/yCc6czDJEk" class="cta-button">Join Discord</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2020 GalaxyMC. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
