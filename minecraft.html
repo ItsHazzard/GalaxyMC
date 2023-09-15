@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalaxyMC - Minecraft</title>
+    <title>Galaxy - Minecraft</title>
     <meta name="description" content="Explore our amazing Minecraft servers and embark on epic adventures with friends.">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Custom styles for the Minecraft page */
+        .minecraft-background {
+            background-image: url('minecraft-background.png'); /* Add your Minecraft-themed background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+        }
+
+        .server-list {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .server-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .server-list ul li {
+            margin-bottom: 10px;
+        }
+
+        .server-list ul li:before {
+            content: '▹'; /* Add a bullet point symbol */
+            margin-right: 5px;
+            color: #00bcd4;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,16 +50,18 @@
         </nav>
     </header>
 
-    <section id="minecraft" class="feature">
+    <section id="minecraft" class="minecraft-background">
         <div class="content">
-            <h1>Minecraft Servers</h1>
+            <h1>Minecraft Server</h1>
             <p>Explore our amazing Minecraft server and embark on epic adventures with friends.</p>
-            <ul>
-                <li>Server 1: Survival</li>
-                <li>Server 2: Creative</li>
-                <li>Server 3: PvP</li>
-            </ul>
-            <p>Join our server and experience the GalaxyMC community today!</p>
+            <div class="server-list">
+                <ul>
+                    <li>Server 1: Survival</li>
+                    <li>Server 2: Creative</li>
+                    <li>Server 3: PvP</li>
+                </ul>
+            </div>
+            <p>Join our servers and experience the GalaxyMC community today!</p>
         </div>
     </section>
 
@@ -37,4 +70,3 @@
     </footer>
 </body>
 </html>
-
