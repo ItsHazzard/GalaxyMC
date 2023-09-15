@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy - Minecraft</title>
+    <title>GalaxyMC - Minecraft Servers</title>
     <meta name="description" content="Explore our amazing Minecraft servers and embark on epic adventures with friends.">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         /* Custom styles for the Minecraft page */
-        .minecraft-background {
-            background-image: url('https://www.galaxy-mc.net/Photos/Minecraft-background.png'); /* Add your Minecraft-themed background image */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        .minecraft-page {
+            background-color: #1a1a1a; /* Dark background color */
             color: #fff;
+            padding: 20px;
+        }
+
+        .minecraft-heading {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .server-list {
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+            background-color: #333; /* Dark gray background for server list */
             padding: 20px;
             border-radius: 10px;
         }
@@ -29,11 +33,14 @@
 
         .server-list ul li {
             margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
         }
 
         .server-list ul li:before {
-            content: '▹'; /* Add a bullet point symbol */
-            margin-right: 5px;
+            content: '▹'; /* Bullet point symbol */
+            margin-right: 10px;
             color: #00bcd4;
         }
     </style>
@@ -50,10 +57,10 @@
         </nav>
     </header>
 
-    <section id="minecraft" class="minecraft-background">
+    <section id="minecraft" class="minecraft-page">
         <div class="content">
-            <h1>Minecraft Server</h1>
-            <p>Explore our amazing Minecraft server and embark on epic adventures with friends.</p>
+            <h1 class="minecraft-heading">Minecraft Servers</h1>
+            <p>Explore our amazing Minecraft servers and embark on epic adventures with friends.</p>
             <div class="server-list">
                 <ul>
                     <li>Server 1: Survival</li>
