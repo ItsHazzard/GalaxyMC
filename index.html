@@ -13,35 +13,83 @@
     <meta property="og:description" content="The way to solve boredom">
     <meta property="og:image" content="/Photos/favicon.png"> <!-- Replace with the URL of your image -->
     <meta property="og:image:alt" content="GalaxyMC"> <!-- Replace with a brief alt text for your image -->
+    
+    <style>
+        /* Custom styles for the header and logo */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-image: url('/Photos/header-background.jpg'); /* Replace with your header image */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .logo {
+            max-width: 300px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            margin: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ... Add your existing styles for cta-button, feature, divider, and footer here ... */
+    </style>
 </head>
 <body>
-<header>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#minecraft">Minecraft</a></li>
-            <li><a href="#staff">Staff</a></li>
-            <li><a href="#discord">Discord</a></li>
-        </ul>
-    </nav>
-</header>
-
-<section id="home" class="hero">
-    <div class="content">
-        <h1>Welcome to GalaxyMC</h1>
-        <p>The Way to Cure Boredom</p>
-        <a href="#minecraft" class="cta-button">Join Now</a>
-    </div>
-</section>
+    <header>
+        <img src="/Photos/logo.png" alt="GalaxyMC Logo" class="logo">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#minecraft">Minecraft</a></li>
+                <li><a href="#staff">Staff</a></li>
+                <li><a href="#discord">Discord</a></li>
+            </ul>
+        </nav>
+        <div class="hero-content">
+            <h1>Welcome to GalaxyMC</h1>
+            <p>The Way to Cure Boredom</p>
+            <a href="#minecraft" class="cta-button">Join Now</a>
+        </div>
+    </header>
 
 <section id="minecraft" class="feature">
     <div class="divider"></div> <!-- Add the angled black line -->
     <div class="content">
         <h2>Minecraft Server</h2>
         <p>Explore our amazing Minecraft server and embark on epic adventures with friends. Customize this text to describe your servers.</p>
-        <a href="https://www.galaxy-mc.net/minecraft.html" class="cta-button" style="background-image: url('/Photos/Minecraft-background.png')">Visit Minecraft</a>
+        <a style="background-image: url('/Photos/Minecraft-background.png'); background-size: contain;" href="https://www.galaxy-mc.net/minecraft.html" class="cta-button">Visit Minecraft</a>
     </div>
 </section>
+
 
 <section id="staff" class="feature">
     <div class="divider"></div> <!-- Add the angled black line -->
