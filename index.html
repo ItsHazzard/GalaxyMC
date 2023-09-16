@@ -32,7 +32,11 @@
             background-position: center;
             color: #fff;
             text-align: center;
-            padding: 100px 0;
+            padding: 0; /* Remove padding */
+            height: 100vh; /* Set header to full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             position: relative;
         }
 
@@ -46,7 +50,11 @@
             list-style: none;
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            position: absolute;
+            top: 0; /* Align the navigation bar at the top */
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8); /* Add a semi-transparent background */
         }
 
         nav a {
@@ -62,12 +70,11 @@
         }
 
         .subtitle {
-            margin-top: 20px; /* Adjust the margin-top to increase or decrease the spacing */
-            font-size: 1.5rem; /* Adjust the font size as needed */
+            margin-top: 20px;
+            font-size: 1.5rem;
         }
-</style>
+    </style>
     <header>
-        <img src="/Photos/favicon.png" alt="GalaxyMC Logo" class="logo">
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -76,11 +83,12 @@
                 <li><a href="#discord">Discord</a></li>
             </ul>
         </nav>
-    <div class="hero-content">
-        <h1 style="font-family: 'Josefin Sans', sans-serif; font-size: 50px;">Welcome to GalaxyMC</h1>
-        <p class="subtitle">The Way to Cure Boredom</p>
-        <a href="#minecraft" class="cta-button">Join Now</a>
-    </div>
+        <img src="/Photos/logo.png" alt="GalaxyMC Logo" class="logo">
+        <div class="hero-content">
+            <h1 style="font-family: 'Josefin Sans', sans-serif; font-size: 50px;">Welcome to GalaxyMC</h1>
+            <p class="subtitle">The Way to Cure Boredom</p>
+            <a href="#minecraft" class="cta-button">Join Now</a>
+        </div>
     </header>
 
 <section id="minecraft" class="feature">
