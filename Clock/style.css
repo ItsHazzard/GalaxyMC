@@ -11,7 +11,9 @@ body input, body h1, body a, body span {
   margin: 0px;
   padding: 0px;
 }
-
+#timer {
+  cursor: none;
+}
 #app {
   align-items: center;
   display: flex;
