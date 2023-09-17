@@ -82,12 +82,13 @@
     font-weight: bold;
     font-size: 1.2rem;
 }
-        nav {
+nav {
     background-color: #1a1a1a;
-    position: absolute;
+    position: fixed; /* Make the navigation bar fixed at the top */
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 1000; /* Ensure it's above other content */
 }
 
 nav ul {
@@ -109,14 +110,14 @@ nav a {
 color: gray;
 }
     </style>
-        <nav>
-            <ul>
-                <li><a href="/index.html">Home</a></li>
-                <li><a class="onpage" href="/minecraft.html">Minecraft</a></li>
-                <li><a href="/staff.html">Staff</a></li>
-                <li><a href="/discord.html">Discord</a></li>
-            </ul>
-        </nav>
+    <nav>
+        <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a class="onpage" href="/minecraft.html">Minecraft</a></li>
+            <li><a href="/staff.html">Staff</a></li>
+            <li><a href="/discord.html">Discord</a></li>
+        </ul>
+    </nav>
     <section id="minecraft-beta" class="feature">
     <div class="divider"></div> <!-- Add the angled black line -->
     <div class="content">
