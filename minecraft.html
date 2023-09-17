@@ -3,83 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy - Minecraft</title>
-    <link rel="icon" href="/Photos/minecraft.png" type="image/png">
-    <meta name="description" content="Explore our amazing Minecraft servers and embark on epic adventures with friends.">
+    <title>Galaxy | Minecraft</title>
+    <link rel="icon" href="/Photos/favicon.png" type="image/png">
+    <meta name="description" content="GalaxyMC | The way to solve boredom">
     <link rel="stylesheet" href="style.css">
-
-        <meta property="og:title" content="Galaxy | Minecraft">
-    <meta property="og:description" content="Explore our amazing Minecraft servers and embark on epic adventures with friends.">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+    
+    <!-- Open Graph Meta Tags (for social media) -->
+    <meta property="og:title" content="Galaxy | Minecraft">
+    <meta property="og:description" content="Join our in beta server!">
     <meta property="og:image" content="/Photos/minecraft.png"> <!-- Replace with the URL of your image -->
     <meta property="og:image:alt" content="GalaxyMC"> <!-- Replace with a brief alt text for your image -->
-    <style>
-        /* Custom styles for the Minecraft page */
-        .minecraft-page {
-            background-color: #1a1a1a; /* Dark background color */
-            color: #fff;
-            padding: 20px;
-        }
-
-        .minecraft-heading {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .server-list {
-            background-color: #333; /* Dark gray background for server list */
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .server-list ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .server-list ul li {
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .server-list ul li:before {
-            content: '▹'; /* Bullet point symbol */
-            margin-right: 10px;
-            color: #00bcd4;
-        }
-    </style>
 </head>
 <body>
+    <style>
+        /* Your CSS styles go here */
+
+        /* ... */
+
+        .cta-button-minecraft {
+            background-color: #0097a7;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button-minecraft:hover {
+            background-color: #00bcd4;
+        }
+    </style>
     <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#minecraft">Minecraft</a></li>
-                <li><a href="#staff">Staff</a></li>
-                <li><a href="#discord">Discord</a></li>
-            </ul>
-        </nav>
+        <!-- Your header content goes here -->
     </header>
 
-    <section id="minecraft" class="minecraft-page">
+    <!-- Your other sections (Minecraft, Staff, Discord) go here -->
+
+    <!-- Button to Connect to Minecraft Server -->
+    <section id="minecraft" class="feature">
+        <div class="divider"></div> <!-- Add the angled black line -->
         <div class="content">
-            <h1 class="minecraft-heading">Minecraft Server</h1>
-            <p>Explore our amazing Minecraft server and embark on epic adventures with friends.</p>
-            <div class="server-list">
-                <ul>
-                    <li>Server 1: Survival</li>
-                    <li>Server 2: Creative</li>
-                    <li>Server 3: PvP</li>
-                </ul>
-            </div>
-            <p>Join our server and experience the GalaxyMC community today!</p>
+            <h2>Minecraft Server</h2>
+            <p>Explore our amazing Minecraft server and embark on epic adventures with friends. Customize this text to describe your servers.</p>
+            <a href="minecraft://your-server-ip:port" class="cta-button-minecraft">Join Server</a>
         </div>
     </section>
 
+    <!-- Minecraft Beta Server Section -->
+    <section id="minecraft-beta" class="feature">
+        <div class="divider"></div> <!-- Add the angled black line -->
+        <div class="content">
+            <h2>Minecraft Beta Server (Still in Beta)</h2>
+            <p>Our Minecraft Beta server is still in testing, but you can join the beta using the IP address: <strong>beta.galaxy-mc.net</strong></p>
+            <p>Help us improve and shape the future of our server!</p>
+            <a href="minecraft://beta.galaxy-mc.net" class="cta-button-minecraft">Join Beta</a>
+        </div>
+    </section>
+
+    <!-- Your other sections (Staff, Discord) go here -->
+
     <footer>
-        <p>&copy; 2020 GalaxyMC. All rights reserved.</p>
+        <!-- Your footer content goes here -->
     </footer>
 </body>
 </html>
