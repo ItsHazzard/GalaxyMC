@@ -14,8 +14,31 @@
 <script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
 <script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
-<script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
-<script src="./script.js"></script>
+
+<style>
+  /* Add your CSS styles here */
+  body {
+    background-color: #1e1e1e;
+    margin: 0px;
+    overflow: hidden;
+    padding: 0px;
+  }
+  
+  /* ... (your existing CSS styles) ... */
+</style>
+
+<div id="app">
+  <div id="timer">
+    <div id="timer-text">
+      <span class="timer-char number" id="hours">00</span>
+      <span class="timer-char colon">:</span>
+      <span class="timer-char number" id="minutes">00</span>
+      <span class="timer-char colon">:</span>
+      <span class="timer-char number" id="seconds">00</span>
+    </div>
+  </div>
+</div>
+
 <script>
   // Function to calculate the time remaining until the target date and time
   function calculateTimeRemaining() {
@@ -31,49 +54,19 @@
     return { hours, minutes, seconds };
   }
 
-  // React component for the timer
-  const Timer = () => {
-    const [timeRemaining, setTimeRemaining] = React.useState(calculateTimeRemaining());
+  // Function to update the timer display
+  function updateTimer() {
+    const timeRemaining = calculateTimeRemaining();
+    document.getElementById("hours").textContent = timeRemaining.hours.toString().padStart(2, "0");
+    document.getElementById("minutes").textContent = timeRemaining.minutes.toString().padStart(2, "0");
+    document.getElementById("seconds").textContent = timeRemaining.seconds.toString().padStart(2, "0");
+  }
 
-    // Update the time remaining every second
-    React.useEffect(() => {
-      const interval = setInterval(() => {
-        setTimeRemaining(calculateTimeRemaining());
-      }, 1000);
+  // Update the timer display initially
+  updateTimer();
 
-      // Cleanup the interval on unmount
-      return () => clearInterval(interval);
-    }, []);
-
-    // Format the time remaining as a string
-    const formatSegment = (segment) => {
-      return segment < 10 ? `0${segment}` : `${segment}`;
-    };
-
-    return (
-      <div id="timer">
-        <div id="timer-text">
-          <span className="timer-char number">{formatSegment(timeRemaining.hours)}</span>
-          <span className="timer-char colon">:</span>
-          <span className="timer-char number">{formatSegment(timeRemaining.minutes)}</span>
-          <span className="timer-char colon">:</span>
-          <span className="timer-char number">{formatSegment(timeRemaining.seconds)}</span>
-        </div>
-      </div>
-    );
-  };
-
-  // React component for the app
-  const App = () => {
-    return (
-      <div id="app">
-        <Timer />
-      </div>
-    );
-  };
-
-  // Render the app
-  ReactDOM.render(<App />, document.getElementById("root"));
+  // Update the timer display every second
+  setInterval(updateTimer, 1000);
 </script>
 </body>
 </html>
