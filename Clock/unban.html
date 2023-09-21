@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HazClock</title>
+  <link rel="icon" href="/Clock/clock.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="root"></div>
+<script src='https://unpkg.com/react@17/umd/react.development.js'></script>
+<script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+<script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
+<script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
+<script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
+<script src="./script.js"></script>
+<script>
+  // Function to calculate the time remaining until the target date and time
+  function calculateTimeRemaining() {
+    const targetDate = new Date("2023-10-09T15:33:00"); // October 9th, 2023, 3:33 PM
+    const currentDate = new Date();
+    const timeRemaining = targetDate - currentDate;
+
+    // Calculate hours, minutes, and seconds remaining
+    const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((timeRemaining / 1000 / 60) % 60);
+    const seconds = Math.floor((timeRemaining / 1000) % 60);
+
+    return { hours, minutes, seconds };
+  }
+
+  // React component for the timer
+  const Timer = () => {
+    const [timeRemaining, setTimeRemaining] = React.useState(calculateTimeRemaining());
+
+    // Update the time remaining every second
+    React.useEffect(() => {
+      const interval = setInterval(() => {
+        setTimeRemaining(calculateTimeRemaining());
+      }, 1000);
+
+      // Cleanup the interval on unmount
+      return () => clearInterval(interval);
+    }, []);
+
+    // Format the time remaining as a string
+    const formatSegment = (segment) => {
+      return segment < 10 ? `0${segment}` : `${segment}`;
+    };
+
+    return (
+      <div id="timer">
+        <div id="timer-text">
+          <span className="timer-char number">{formatSegment(timeRemaining.hours)}</span>
+          <span className="timer-char colon">:</span>
+          <span className="timer-char number">{formatSegment(timeRemaining.minutes)}</span>
+          <span className="timer-char colon">:</span>
+          <span className="timer-char number">{formatSegment(timeRemaining.seconds)}</span>
+        </div>
+      </div>
+    );
+  };
+
+  // React component for the app
+  const App = () => {
+    return (
+      <div id="app">
+        <Timer />
+      </div>
+    );
+  };
+
+  // Render the app
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>
+</body>
+</html>
