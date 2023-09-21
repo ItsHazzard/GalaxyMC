@@ -59,7 +59,25 @@
             background-color: darkslategray;
         }
 
-        input[type="submit"] {
+        input[type="file"] {
+            width: 90%;
+            padding: 20px; /* Increase padding */
+            margin: 20px 0; /* Increase margin */
+            border: 2px black solid; /* Remove border */
+            border-radius: 10px; /* Increase border radius */
+            background-color: #333;
+            transition: 0.3s;
+            text-align: center;
+            font-size: 2em; /* Increase font size */
+            color: white; /* Set text color to white */
+        }
+
+        input[type="file"]:hover {
+            transform: scale(1.1);
+            background-color: darkslategray;
+        }
+
+        .submit {
             background-color: #333;
             color: #fff;
             border: 2px black solid;
@@ -70,7 +88,7 @@
             font-size: 2em; /* Increase font size */
         }
 
-        input[type="submit"]:hover {
+        .submit:hover {
             background-color: darkslategray;
             transform: scale(1.1);
         }
@@ -82,12 +100,12 @@
         <p style="font-size: 60px;">Extra Help That I Forgot To Add</p>
             <form accept-charset="UTF-8" action="https://www.formbackend.com/f/bc71c75cccb8cf68" method="POST" enctype="multipart/form-data">
           <label for="text"></label>
-          <input type="text" id="text" name="text" required>
+          <input value="Did I Miss Something" type="text" id="text" name="text" required>
         
           <label for="my_file">Uploas an image</label>
           <input type="file" id="my_files" name="my_files[]" accept="image/*" multiple>
         
-          <button type="submit">Submit</button>
+          <button class="submit" type="submit">Submit</button>
         </form>
     </div>
 </body>
