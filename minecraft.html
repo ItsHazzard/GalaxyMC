@@ -193,7 +193,15 @@
     function updateServerStatus(ip) {
         $.getJSON("https://api.mcsrvstat.us/1/" + ip, (status) => {
             if (status.debug.ping) {
-                $("#motd").text(status.motd.raw);
+                // Function to replace Minecraft color codes with HTML color codes
+                function replaceColorCodes(text) {
+                    return text.replace(/§([0-9a-fk-or])/g, '<span style="color: &$1;">');
+                }
+
+                // Apply color codes to the MOTD
+                const motdWithColors = replaceColorCodes(status.motd.raw);
+
+                $("#motd").html(motdWithColors); // Use .html to interpret the HTML tags
                 $("#status").text("Online");
                 $("#version").text(status.version);
                 $("#players_num").text(status.players.online + "/" + status.players.max);
@@ -211,6 +219,5 @@
             $("body").fadeIn(2000);
         });
     }
-</script>
-</body>
+</script></body>
 </html>
