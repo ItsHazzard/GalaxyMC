@@ -183,6 +183,7 @@
         $(document).ready(() => {
             $.getJSON("https://api.mcsrvstat.us/1/" + url, (status) => {
                 if (status.debug.ping) {
+                    $("#motd").append(status.motd.raw);
                     $("#status").text("Online");
                     $("#version").text(status.version);
                     $("#players_num").text(status.players.online + "/" + status.players.max);
@@ -191,6 +192,7 @@
                         $("#players_list").append("<li>" + player + "</li>");
                     });
                 } else {
+                    $("#motd").append(status.hostname);
                     $("#status").text("Offline");
                     $("#version").hide();
                     $("#players_num").hide();
