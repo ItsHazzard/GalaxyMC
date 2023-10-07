@@ -150,8 +150,9 @@
 <section id="server-entry" class="feature">
     <div class="content server-entry">
         <h3>Server Information</h3>
+        <p>IP: <span id="ip">Loading...</span></p>
         <p>Status: <span id="status">Loading...</span></p>
-        <p>MOTD: <span id="motd">Loading...</span></p>
+        <p>MOTD: <span id="motd"></span></p>
         <p>Players: <span id="players_num">Loading...</span></p>
         <ul id="players_list">
             <li>Loading...</li>
@@ -177,31 +178,39 @@
         <p>&copy; 2020 GalaxyMC. All rights reserved.</p>
     </footer>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        let url = "hypixel.net";
-        $(document).ready(() => {
-            $.getJSON("https://api.mcsrvstat.us/1/" + url, (status) => {
-                if (status.debug.ping) {
-                    $("#motd").append(status.motd.raw);
-                    $("#status").text("Online");
-                    $("#version").text(status.version);
-                    $("#players_num").text(status.players.online + "/" + status.players.max);
-                    $("#players_list").empty();
-                    $.each(status.players.list, function (index, player) {
-                        $("#players_list").append("<li>" + player + "</li>");
-                    });
-                } else {
-                    $("#motd").append(status.hostname);
-                    $("#status").text("Offline");
-                    $("#version").hide();
-                    $("#players_num").hide();
-                    $("#players_list").empty();
-                }
-                $("body").fadeIn(2000);
-            });
-        });
-    </script>
-</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    let ip = "hypixel.net"; // Default IP
+    $(document).ready(() => {
+        // Display the IP in the server entry section
+        $("#ip").text(ip);
 
+        // Fetch server status when the page loads
+        updateServerStatus(ip);
+    });
+
+    // Function to update server status
+    function updateServerStatus(ip) {
+        $.getJSON("https://api.mcsrvstat.us/1/" + ip, (status) => {
+            if (status.debug.ping) {
+                $("#motd").text(status.motd.raw);
+                $("#status").text("Online");
+                $("#version").text(status.version);
+                $("#players_num").text(status.players.online + "/" + status.players.max);
+                $("#players_list").empty();
+                $.each(status.players.list, function (index, player) {
+                    $("#players_list").append("<li>" + player + "</li>");
+                });
+            } else {
+                $("#motd").text(status.hostname);
+                $("#status").text("Offline");
+                $("#version").hide();
+                $("#players_num").hide();
+                $("#players_list").empty();
+            }
+            $("body").fadeIn(2000);
+        });
+    }
+</script>
+</body>
 </html>
