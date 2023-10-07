@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,15 +16,13 @@
     <meta property="og:image" content="/Photos/minecraft.png"> <!-- Replace with the URL of your image -->
     <meta property="og:image:alt" content="GalaxyMC"> <!-- Replace with a brief alt text for your image -->
 
-    <script src="https://itshazzard.GitHub.io/dist/mc-player-counter.min.js"></script>
-</head>
-<body>
     <style>
         body {
             background-color: #121212;
             margin: 0;
             padding: 0;
             height: 100vh; 
+            font-family: Arial, sans-serif;
         }
         
         #minecraft-beta {
@@ -49,46 +48,47 @@
             font-size: 1.5rem;
         }
 
-        .cta-button-minecraft {
-            background-color: #0097a7;
-            color: #fff;
-            padding: 10px 20px;
+        .server-entry {
+            background-color: #1a1a1a;
+            padding: 20px;
             border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: background-color 0.3s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
-        .cta-button-minecraft:hover {
-            background-color: #00bcd4;
+        .server-entry h3 {
+            font-size: 1.5rem;
+            color: #00bcd4;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #00bcd4;
         }
 
-        #features {
-            padding: 60px 0;
-            text-align: center;
+        .server-entry p {
+            font-size: 1.2rem;
             color: #fff;
+            margin: 10px 0;
         }
 
-        #features h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        #features ul {
+        .server-entry ul {
             list-style: none;
             padding: 0;
         }
 
-        #features li {
+        .server-entry li {
             font-size: 1.2rem;
-            margin-bottom: 10px;
+            color: #fff;
+            margin-left: 20px;
+            position: relative;
         }
 
-        #features strong {
-            color: #00bcd4; /* Customize the color as needed */
-            font-weight: bold;
-            font-size: 1.2rem;
+        .server-entry li::before {
+            content: "•";
+            position: absolute;
+            left: -20px;
+            color: #00bcd4;
         }
 
         nav {
@@ -127,6 +127,9 @@
             height: 5vh;
         }
     </style>
+</head>
+
+<body>
     <nav>
         <ul>
             <li><a href="/index.html">Home</a></li>
@@ -136,31 +139,67 @@
         </ul>
     </nav>
     <section id="minecraft-beta" class="feature">
-    <div class="content">
-        <h2>Galaxy (Still in Beta)</h2>
-        <p>Our server is still in testing, but you can join the beta by joining:</p>
-        <p><strong>beta.galaxy-mc.net</strong></p>
-        <p>Help us improve and shape the future of our server!</p>
-        <p>Online: <b><span data-playercounter-ip="beta.galaxy-mc.net" data-playercounter-format="{online}/{max}">0</span></b></p>
-    </div>
-</section>
-<!-- Features Section -->
-<section id="features" class="feature">
-    <div class="content">
-        <h2>Server Features</h2>
-        <ul>
-            <li>Survival mode with custom challenges</li>
-            <li>Hardcore mode for the ultimate challenge</li>
-            <li>PvP arenas for thrilling battles</li>
-            <li>Minigames for fun and competition</li>
-            <li>Custom texture pack for a unique experience</li>
-            <!-- Add more features as needed -->
-        </ul>
-    </div>
-</section>
-
-<footer>
-    <p>&copy; 2020 GalaxyMC. All rights reserved.</p>
-</footer>
+        <div class="content">
+            <h2>Galaxy (Still in Beta)</h2>
+            <p>Our server is still in testing, but you can join the beta by joining:</p>
+            <p><strong>beta.galaxy-mc.net</strong></p>
+            <p>Help us improve and shape the future of our server!</p>
+        </div>
+    </section>
+    <!-- Server Entry Section -->
+    <section id="server-entry" class="feature">
+        <div class="content server-entry">
+            <h3>Server Information</h3>
+            <p>Status: <span id="status">Loading...</span></p>
+            <p>Version: <span id="version">Loading...</span></p>
+            <p>Players: <span id="players_num">Loading...</span></p>
+            <ul id="players_list">
+                <li>Loading...</li>
+            </ul>
+        </div>
+    </section>
+    <!-- Features Section -->
+    <section id="features" class="feature">
+        <div class="content">
+            <h2>Server Features</h2>
+            <ul>
+                <li>Survival mode with custom challenges</li>
+                <li>Hardcore mode for the ultimate challenge</li>
+                <li>PvP arenas for thrilling battles</li>
+                <li>Minigames for fun and competition</li>
+                <li>Custom texture pack for a unique experience</li>
+                <!-- Add more features as needed -->
+            </ul>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2020 GalaxyMC. All rights reserved.</p>
+    </footer>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        let url = "beta.galaxy-mc.net";
+        $(document).ready(() => {
+            $.getJSON("https://api.mcsrvstat.us/1/" + url, (status) => {
+                if (status.debug.ping) {
+                    $("#status").text("Online");
+                    $("#version").text(status.version);
+                    $("#players_num").text(status.players.online + "/" + status.players.max);
+                    $("#players_list").empty();
+                    $.each(status.players.list, function (index, player) {
+                        $("#players_list").append("<li>" + player + "</li>");
+                    });
+                } else {
+                    $("#status").text("Offline");
+                    $("#version").hide();
+                    $("#players_num").hide();
+                    $("#players_list").empty();
+                }
+                $("body").fadeIn(2000);
+            });
+        });
+    </script>
 </body>
+
 </html>
