@@ -179,6 +179,7 @@
     </footer>
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     let ip = "hypixel.net"; // Default IP
     $(document).ready(() => {
@@ -193,41 +194,7 @@
     function updateServerStatus(ip) {
         $.getJSON("https://api.mcsrvstat.us/1/" + ip, (status) => {
             if (status.debug.ping) {
-                // Function to replace Minecraft color codes with HTML color codes
-                function replaceColorCodes(text) {
-                    return text.replace(/&([0-9a-fk-or])/g, function (match, colorCode) {
-                        switch (colorCode) {
-                            case '0': return '<span style="color: #000;">';
-                            case '1': return '<span style="color: #00A0DE;">';
-                            case '2': return '<span style="color: #008000;">';
-                            case '3': return '<span style="color: #00A000;">';
-                            case '4': return '<span style="color: #A00000;">';
-                            case '5': return '<span style="color: #A000A0;">';
-                            case '6': return '<span style="color: #FFA000;">';
-                            case '7': return '<span style="color: #A0A0A0;">';
-                            case '8': return '<span style="color: #808080;">';
-                            case '9': return '<span style="color: #004080;">';
-                            case 'a': return '<span style="color: #00FF00;">';
-                            case 'b': return '<span style="color: #00A0A0;">';
-                            case 'c': return '<span style="color: #FF0000;">';
-                            case 'd': return '<span style="color: #FF00FF;">';
-                            case 'e': return '<span style="color: #FFFF00;">';
-                            case 'f': return '<span style="color: #FFFFFF;">';
-                            case 'k': return '<span style="text-shadow: 0.05em 0.05em 0.1em #000;">';
-                            case 'l': return '<span style="font-weight: bold;">';
-                            case 'm': return '<span style="text-decoration: line-through;">';
-                            case 'n': return '<span style="text-decoration: underline;">';
-                            case 'o': return '<span style="font-style: italic;">';
-                            case 'r': return '</span>';
-                            default: return '<span>';
-                        }
-                    });
-                }
-
-                // Apply color codes to the MOTD
-                const motdWithColors = replaceColorCodes(status.motd.raw);
-
-                $("#motd").html(motdWithColors); // Use .html to interpret the HTML tags
+                $("#motd").text(status.motd.raw);
                 $("#status").text("Online");
                 $("#version").text(status.version);
                 $("#players_num").text(status.players.online + "/" + status.players.max);
@@ -245,5 +212,6 @@
             $("body").fadeIn(2000);
         });
     }
-</script></body>
+</script>
+</body>
 </html>
