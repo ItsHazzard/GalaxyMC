@@ -45,7 +45,7 @@ let config = {
     BACK_COLOR: { r: 0, g: 0, b: 0 },
     TRANSPARENT: false,
     BLOOM: true,
-    BLOOM_ITERATIONS: 1,
+    BLOOM_ITERATIONS: 0.1,
     BLOOM_RESOLUTION: 256,
     BLOOM_INTENSITY: 0.1,
     BLOOM_THRESHOLD: 0.1,
