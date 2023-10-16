@@ -109,7 +109,7 @@ function loop() {
       snake.maxCells++;
 
       // canvas is 400x400 which is 25x25 grids 
-      apple.x = getRandomInt(0, 62.5) * grid;
+      apple.x = getRandomInt(0, 65.625) * grid;
       apple.y = getRandomInt(0, 31.25) * grid;
     }
 
@@ -156,6 +156,26 @@ document.addEventListener('keydown', function(e) {
   }
   // down arrow key
   else if (e.which === 40 && snake.dy === 0) {
+    snake.dy = grid;
+    snake.dx = 0;
+  }
+  // A key
+  if (e.which === 65 && snake.dx === 0) {
+    snake.dx = -grid;
+    snake.dy = 0;
+  }
+  // W key
+  else if (e.which === 87 && snake.dy === 0) {
+    snake.dy = -grid;
+    snake.dx = 0;
+  }
+  // D key
+  else if (e.which === 68 && snake.dx === 0) {
+    snake.dx = grid;
+    snake.dy = 0;
+  }
+  // S key
+  else if (e.which === 83 && snake.dy === 0) {
     snake.dy = grid;
     snake.dx = 0;
   }
