@@ -20,12 +20,12 @@
   </style>
 </head>
 <body>
-<canvas width="2000" height="1000" id="game"></canvas>
+<canvas width="2100" height="1000" id="game"></canvas>
 <script>
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
-var grid = 100;
+var grid = 32;
 var count = 0;
   
 var snake = {
@@ -109,8 +109,8 @@ function loop() {
       snake.maxCells++;
 
       // canvas is 2100x1000 which is 25x25 grids 
-      apple.x = getRandomInt(0, 21) * grid;
-      apple.y = getRandomInt(0, 10) * grid;
+      apple.x = getRandomInt(0, 65.625) * grid;
+      apple.y = getRandomInt(0, 31.25) * grid;
     }
 
     // check collision with all cells after this one (modified bubble sort)
@@ -125,8 +125,8 @@ function loop() {
         snake.dx = grid;
         snake.dy = 0;
 
-        apple.x = getRandomInt(0, 25) * grid;
-        apple.y = getRandomInt(0, 25) * grid;
+        apple.x = getRandomInt(0, 65.625) * grid;
+        apple.y = getRandomInt(0, 31.25) * grid;
       }
     }
   });
