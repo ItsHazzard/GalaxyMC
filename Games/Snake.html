@@ -25,7 +25,7 @@
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 
-var grid = 20;
+var grid = 30;
 var count = 0;
   
 var snake = {
@@ -109,8 +109,8 @@ function loop() {
       snake.maxCells++;
 
       // canvas is 2100x1000 which is 25x25 grids 
-      apple.x = getRandomInt(0, 63) * grid;
-      apple.y = getRandomInt(0, 30) * grid;
+      apple.x = getRandomInt(0, 42) * grid;
+      apple.y = getRandomInt(0, 20) * grid;
     }
 
     // check collision with all cells after this one (modified bubble sort)
@@ -125,8 +125,8 @@ function loop() {
         snake.dx = grid;
         snake.dy = 0;
 
-        apple.x = getRandomInt(0, 63) * grid;
-        apple.y = getRandomInt(0, 30) * grid;
+        apple.x = getRandomInt(0, 42) * grid;
+        apple.y = getRandomInt(0, 20) * grid;
       }
     }
   });
