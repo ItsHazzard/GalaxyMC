@@ -22,7 +22,8 @@ button {
 }
 
 .board {
-    width: min-content;
+    width: 90vh;
+    height: 90vh;
     margin: 32px auto 0;
     border: 10px solid red;
     border-radius: 6px;
