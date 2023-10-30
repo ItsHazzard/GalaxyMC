@@ -9,7 +9,7 @@
 
 body {
     font: 400 14px Roboto, sans-serif;
-    background: #f0f0f5;
+    background: #333;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -22,12 +22,11 @@ button {
 }
 
 .board {
-    width: 90vh;
-    height: 90vh;
+    width: 90%;
+    height: 90%;
     margin: 32px auto 0;
     border: 10px solid red;
     border-radius: 6px;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
