@@ -20,7 +20,7 @@ const TimerChar = (props) => {
     return (React.createElement("div", { ref: ref, className: "timer-char number" }, getCharSlider()));
 };
 const Timer = () => {
-    const [date, setDateTo] = React.useState(new Date());
+    const [date, setDateTo] = React.useState(new Date(26/12));
     React.useEffect(() => {
         const interval = setInterval(() => {
             const update = new Date();
