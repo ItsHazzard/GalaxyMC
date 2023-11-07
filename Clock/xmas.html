@@ -160,11 +160,8 @@
 <!-- partial:index.partial.html -->
 <div id="root"></div>
 <!-- partial -->
-  <script src='https://unpkg.com/react@17/umd/react.development.js'></script>
-  <script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
-  <script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
-  <script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
   <script>
     "use strict";
 
@@ -194,22 +191,29 @@
         const ref = React.useRef(null);
         const colon = props.char === ":";
         if (colon) {
-            return (React.createElement("h1", { className: "timer-char colon" }, ":"));
+            return <h1 className="timer-char colon">:</h1>;
         }
         const number = parseInt(props.char);
         const getCharSlider = () => {
             let options = [];
             for (let i = 0; i <= 9; i++) {
-                const classes = classNames("timer-char-slider-option", {
-                    active: number === i
-                });
-                options.push(React.createElement("span", { key: i, className: classes }, i));
+                const classes = `timer-char-slider-option ${number === i ? 'active' : ''}`;
+                options.push(<span key={i} className={classes}>{i}</span>);
             }
-            const height = ref.current ? ref.current.offsetHeight : 0,
-                top = `${number * height * -1}px`;
-            return (React.createElement("div", { className: "timer-char-slider", style: { top } }, options));
+            const height = ref.current ? ref.current.offsetHeight : 0;
+            const top = `${number * height * -1}px`;
+            return (
+                <div className="timer-char-slider" style={{ top }}>
+                    {options}
+                </div>
+            );
         };
-        return (React.createElement("div", { ref: ref, className: "timer-char number" }, getCharSlider()));
+
+        return (
+            <div ref={ref} className="timer-char number">
+                {getCharSlider()}
+            </div>
+        );
     };
 
     const Timer = () => {
@@ -241,7 +245,9 @@
 
         return (
             <div id="timer">
-                <div id="timer-text">{getChars()}</div>
+                <div id="timer-text">
+                    {getChars()}
+                </div>
             </div>
         );
     };
