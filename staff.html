@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Page</title>
+    <style>
+        body {
+            background-color: #333;
+            font-family: Arial, sans-serif;
+        }
 
+        .staff {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .staff-member {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: filter 0.3s;
+            filter: blur(0);
+            cursor: pointer;
+        }
+
+        .staff-icon img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .staff-name {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .staff-role {
+            font-family: "Consolas", monospace;
+            font-weight: bold;
+            padding: 5px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        /* Define role-specific colors */
+        .owner { color: #55F; }
+        .co-owner { color: #0AA; }
+        .manager { color: #00A; }
+        .head-admin { color: #A00; }
+        .admin { color: #F55; }
+        .jr-admin { color: #F55; }
+        .head-moderator { color: #A0A; }
+        .moderator { color: #F5F; }
+        .jr-moderator { color: #F5F; }
+        .head-developer { color: #00A; }
+        .developer { color: #55F; }
+        .jr-developer { color: #55F; }
+        .head-builder { color: #0AA; }
+        .builder { color: #0AA; }
+        .jr-builder { color: #0AA; }
+        .head-designer { color: #5FF; }
+        .designer { color: #5FF; }
+        .jr-designer { color: #5FF; }
+        .trainee { color: #FF5; }
+    </style>
+</head>
+<body>
+    <div class="staff">
+        <div class="staff-member">
+            <div class="staff-icon">
+                <img src="icon1.png" alt="Icon 1">
+            </div>
+            <div class="staff-name">Harry</div>
+            <div class="staff-role owner">#555[#55FOWNER#555]</div>
+        </div>
+        <div class="staff-member">
+            <div class="staff-icon">
+                <img src="icon2.png" alt="Icon 2">
+            </div>
+            <div class="staff-name">Jane Smith</div>
+            <div class="staff-role co-owner">#555[#0AACo-Owner#555]</div>
+        </div>
+        <!-- Add more staff members here with their respective roles -->
+    </div>
+</body>
+</html>
