@@ -12,7 +12,7 @@
 
         .staff {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             gap: 20px;
         }
@@ -22,9 +22,10 @@
             border-radius: 15px;
             padding: 20px;
             text-align: center;
-            transition: transform 0.3s, filter 0.3s;
+            transition: transform 0.3s, filter 0.3s, backdrop-filter 0.3s;
             transform: scale(1);
             filter: blur(0);
+            backdrop-filter: blur(5px); /* Initial blur effect */
             cursor: pointer;
         }
 
@@ -34,9 +35,19 @@
             border-radius: 50%;
         }
 
-        .staff-name {
-            margin-top: 10px;
+        .staff-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 24px;
             font-weight: bold;
+        }
+
+        .staff-name {
+            font-weight: bold;
+        }
+
+        .staff-ign {
+            font-size: 16px;
+            color: #000; /* Change the color to your preference */
         }
 
         .staff-role {
@@ -45,11 +56,6 @@
             border: 1px solid #555;
             border-radius: 5px;
             display: inline-block;
-        }
-
-        .ign {
-            font-style: italic;
-            color: #FF5;
         }
 
         /* Define role-specific colors */
@@ -73,36 +79,37 @@
         .jr-designer { color: #5FF5FF; }
         .trainee { color: #FFFF55; }
 
-        .staff-title {
-            font-family: 'Josefin Sans', sans-serif;
+        .staff-role .brackets {
+            color: #555; /* Dark gray for brackets */
         }
 
         .staff-member:hover {
             transform: scale(1.05);
-            filter: blur(2px);
+            filter: blur(4px); /* Increased blur on hover */
+            backdrop-filter: blur(10px); /* Increased blur on hover */
         }
     </style>
 </head>
 <body>
+    <h1 class="staff-title">Staff</h1>
     <div class="staff">
-        <h1 class="staff-title">Staff</h1>
         <div class="staff-member">
             <div class="staff-icon">
                 <img src="icon1.png" alt="Icon 1">
             </div>
             <div class="staff-name">John Doe</div>
-            <div class="staff-role owner">#555[OWNER#555]</div>
-            <div class="ign">IGN: Player123</div>
+            <div class="staff-ign">IGN: Player123</div>
+            <div class="staff-role owner">[<span class="brackets">OWNER</span>]</div>
         </div>
         <div class="staff-member">
             <div class="staff-icon">
                 <img src="icon2.png" alt="Icon 2">
             </div>
             <div class="staff-name">Jane Smith</div>
-            <div class="staff-role co-owner">#555[Co-Owner#555]</div>
-            <div class="ign">IGN: Gamer456</div>
+            <div class="staff-ign">IGN: Gamer456</div>
+            <div class="staff-role co-owner">[<span class="brackets">Co-Owner</span>]</div>
         </div>
-        <!-- Add more staff members here with their respective roles and IGN -->
+        <!-- Add more staff members here with their respective names, IGN, and roles -->
     </div>
 </body>
 </html>
