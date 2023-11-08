@@ -12,17 +12,6 @@
             position: relative; /* Position relative for the body */
         }
 
-        .background {
-            position: fixed;
-            top: 60px; /* Add margin top to complement the nav bar */
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(18, 18, 18, 0.6); /* Slight transparency */
-            backdrop-filter: blur(5px); /* Apply a slight blur to the background */
-            z-index: -1; /* Layer it to the back */
-        }
-
         nav {
             background-color: #1a1a1a;
             position: fixed;
@@ -60,7 +49,8 @@
         }
 
         .staff-member {
-            background-color: transparent; /* Make all tiles transparent */
+            background: rgba(18, 18, 18, 0.6); /* Slight transparency */
+            backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 20px;
             text-align: center;
