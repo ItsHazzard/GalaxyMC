@@ -43,8 +43,8 @@
 
         .staff {
             display: flex;
-            flex-wrap: wrap; /* Allow for wrapping elements to the next row */
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
             padding: 20px;
         }
@@ -58,9 +58,7 @@
             transition: transform 0.3s;
             transform: scale(2); /* Make the tile 2x larger */
             cursor: pointer;
-            margin: 10px; /* Add margin to create space between tiles */
-            flex: 1; /* Distribute tiles equally in a row */
-            max-width: calc(33.33% - 20px); /* Set the max width for three tiles in a row */
+            margin-top: 140px;
         }
 
         .staff-icon img {
@@ -132,26 +130,26 @@
     </nav>
     <div class="staff">
         <div class="staff-member">
-            <div class="background">
-                <div class="staff-icon">
-                    <img src="icon1.png" alt="Icon 1">
-                </div>
-                <div class="staff-name">John Doe</div>
-                <div class="staff-ign">IGN: Player123</div>
-                <div class="staff-role owner"><span class="brackets">[</span>Owner<span class="brackets">]</span></div>
+         <div class="background">
+            <div class="staff-icon">
+                <img src="icon1.png" alt="Icon 1">
             </div>
+            <div class="staff-name">John Doe</div>
+            <div class="staff-ign">IGN: Player123</div>
+            <div class="staff-role owner"><span class="brackets">[</span>Owner<span class="brackets">]</span></div>
         </div>
+     </div>
         <div class="staff-member">
-            <div class="background">
-                <div class "staff-icon">
-                    <img src="icon2.png" alt="Icon 2">
-                </div>
-                <div class="staff-name">Jane Smith</div>
-                <div class="staff-ign">IGN: Gamer456</div>
-                <div class="staff-role co-owner"><span class="brackets">[</span>Co-Owner<span class="brackets">]</span></div>
+        <div class="background">
+            <div class "staff-icon">
+                <img src="icon2.png" alt="Icon 2">
             </div>
+            <div class="staff-name">Jane Smith</div>
+            <div class="staff-ign">IGN: Gamer456</div>
+            <div class="staff-role co-owner"><span class="brackets">[</span>Co-Owner<span class="brackets">]</span></div>
         </div>
-        <!-- Add more staff members here with their respective names, IGN, and roles -->
     </div>
+        <!-- Add more staff members here with their respective names, IGN, and roles -->
+ </div>
 </body>
 </html>
