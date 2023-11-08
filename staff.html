@@ -43,15 +43,13 @@
 
         .staff {
             display: flex;
-            flex-wrap: wrap; /* Enable wrapping to create rows */
-            justify-content: center; /* Center the content horizontally */
+            flex-wrap: wrap; /* Allow for wrapping elements to the next row */
+            justify-content: center;
             gap: 20px;
             padding: 20px;
-            margin-top: 60px; /* Add margin top to complement the nav bar */
         }
 
         .staff-member {
-            width: calc(33.33% - 40px); /* Three members per row */
             background: rgba(160, 160, 160, 0.2); /* Slight transparency */
             backdrop-filter: blur(5px);
             border-radius: 15px;
@@ -60,6 +58,9 @@
             transition: transform 0.3s;
             transform: scale(2); /* Make the tile 2x larger */
             cursor: pointer;
+            margin: 10px; /* Add margin to create space between tiles */
+            flex: 1; /* Distribute tiles equally in a row */
+            max-width: calc(33.33% - 20px); /* Set the max width for three tiles in a row */
         }
 
         .staff-icon img {
@@ -142,7 +143,7 @@
         </div>
         <div class="staff-member">
             <div class="background">
-                <div class="staff-icon">
+                <div class "staff-icon">
                     <img src="icon2.png" alt="Icon 2">
                 </div>
                 <div class="staff-name">Jane Smith</div>
