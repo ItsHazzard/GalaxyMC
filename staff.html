@@ -49,11 +49,11 @@
         }
 
         .staff-member {
-            width: calc(25% - 20px); /* Adjusted the width to make cards smaller */
+            width: calc(33.33% - 20px);
             background: rgba(160, 160, 160, 0.2);
             backdrop-filter: blur(5px);
             border-radius: 15px;
-            padding: 15px; /* Reduced padding for smaller cards */
+            padding: 25px;
             text-align: center;
             transition: transform 0.3s;
             transform: scale(2);
@@ -68,7 +68,7 @@
         }
 
         .staff-title {
-            font-size: 18px; /* Adjusted font size for smaller cards */
+            font-size: 24px;
             font-weight: bold;
         }
 
@@ -77,7 +77,7 @@
         }
 
         .staff-ign {
-            font-size: 14px; /* Adjusted font size for smaller cards */
+            font-size: 16px;
             color: #000;
         }
 
@@ -89,8 +89,25 @@
             display: inline-block;
         }
 
-        /* Define role-specific colors */
-        /* ... Your role-specific colors ... */
+        .owner { color: #0055E0; }
+        .co-owner { color: #00AAFF; }
+        .manager { color: #0000A0; }
+        .head-admin { color: #A00000; }
+        .admin { color: #FF5555; }
+        .jr-admin { color: #FF5555; }
+        .head-moderator { color: #A0A0A0; }
+        .moderator { color: #FF55FF; }
+        .jr-moderator { color: #FF55FF; }
+        .head-developer { color: #0000A0; }
+        .developer { color: #0055E0; }
+        .jr-developer { color: #0055E0; }
+        .head-builder { color: #00AAFF; }
+        .builder { color: #00AAFF; }
+        .jr-builder { color: #00AAFF; }
+        .head-designer { color: #5FF5FF; }
+        .designer { color: #5FF5FF; }
+        .jr-designer { color: #5FF5FF; }
+        .trainee { color: #FFFF55; }
 
         .staff-role .brackets {
             color: #555;
@@ -115,16 +132,16 @@
             <div class="staff-icon">
                 <img src="icon1.png" alt="Icon 1">
             </div>
-            <div class="staff-title">John Doe</div>
-            <div class="staff-name">IGN: Player123</div>
+            <div class="staff-name">John Doe</div>
+            <div class="staff-ign">IGN: Player123</div>
             <div class="staff-role owner"><span class="brackets">[</span>Owner<span class="brackets">]</span></div>
         </div>
         <div class="staff-member">
             <div class="staff-icon">
                 <img src="icon2.png" alt="Icon 2">
             </div>
-            <div class="staff-title">Jane Smith</div>
-            <div class="staff-name">IGN: Gamer456</div>
+            <div class="staff-name">Jane Smith</div>
+            <div class="staff-ign">IGN: Gamer456</div>
             <div class="staff-role co-owner"><span class="brackets">[</span>Co-Owner<span class="brackets">]</span></div>
         </div>
         <!-- Add more staff members here with their respective names, IGN, and roles -->
