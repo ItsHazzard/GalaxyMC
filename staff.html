@@ -6,10 +6,10 @@
     <title>Staff Page</title>
     <style>
         body {
-            background-color: #121212;
+            background-color: #121212; /* Updated background color */
             font-family: Consolas, monospace;
-            margin: 0;
-            position: relative;
+            margin: 0; /* Remove margin for the body */
+            position: relative; /* Position relative for the body */
         }
 
         .background {
@@ -18,18 +18,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url("background.jpg") no-repeat center center fixed;
-            background-size: cover;
-            filter: blur(10px); /* Apply blur effect to the background */
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Transparent black overlay */
+            background: rgba(18, 18, 18, 0.7); /* Transparent background color */
+            backdrop-filter: blur(10px); /* Apply blur to the background */
+            z-index: -1; /* Layer it to the back */
         }
 
         nav {
@@ -39,7 +30,6 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            font-family: Arial, sans-serif; /* Use Arial font for navigation */
         }
 
         nav ul {
@@ -54,11 +44,12 @@
             text-decoration: none;
             color: #fff;
             font-weight: bold;
+            font-family: Arial, sans-serif; /* Arial font for the navigation links */
             margin: 0 20px;
         }
 
         nav a.onpage {
-            color: #00bcd4;
+            color: #00bcd4; /* Change the color for the active link */
         }
 
         .staff {
@@ -74,9 +65,9 @@
             padding: 20px;
             text-align: center;
             transition: transform 0.3s, filter 0.3s, backdrop-filter 0.3s;
-            transform: scale(2);
-            filter: blur(5px);
-            backdrop-filter: blur(10px);
+            transform: scale(2); /* Make the tile 2x larger */
+            filter: blur(5px); /* Initial blur effect */
+            backdrop-filter: blur(10px); /* Initial blur effect */
             cursor: pointer;
         }
 
@@ -86,13 +77,19 @@
             border-radius: 50%;
         }
 
+        .staff-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
         .staff-name {
             font-weight: bold;
         }
 
         .staff-ign {
             font-size: 16px;
-            color: #000;
+            color: #000; /* Change the color to your preference */
         }
 
         .staff-role {
@@ -125,19 +122,18 @@
         .trainee { color: #FFFF55; }
 
         .staff-role .brackets {
-            color: #555;
+            color: #555; /* Dark gray for brackets */
         }
 
         .staff-member:hover {
-            transform: scale(2.2);
-            filter: blur(8px);
-            backdrop-filter: blur(14px);
+            transform: scale(2.2); /* Increase the size on hover */
+            filter: blur(8px); /* Increased blur on hover */
+            backdrop-filter: blur(14px); /* Increased blur on hover */
         }
     </style>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="overlay"></div>
+    <div class="background"></div> <!-- Background div -->
     <nav>
         <ul>
             <li><a href="/index.html">Home</a></li>
