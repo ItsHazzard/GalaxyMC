@@ -6,10 +6,10 @@
     <title>Staff Page</title>
     <style>
         body {
-            background-color: #121212; /* Updated background color */
+            background-color: #121212;
             font-family: Consolas, monospace;
-            margin: 0; /* Remove margin for the body */
-            position: relative; /* Position relative for the body */
+            margin: 0;
+            position: relative;
         }
 
         nav {
@@ -33,32 +33,32 @@
             text-decoration: none;
             color: #fff;
             font-weight: bold;
-            font-family: Arial, sans-serif; /* Arial font for the navigation links */
+            font-family: Arial, sans-serif;
             margin: 0 20px;
         }
 
         nav a.onpage {
-            color: #00bcd4; /* Change the color for the active link */
+            color: #00bcd4;
         }
 
         .staff {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: space-between;
             padding: 20px;
         }
 
         .staff-member {
-            background: rgba(160, 160, 160, 0.2); /* Slight transparency */
+            width: calc(33.33% - 20px);
+            background: rgba(160, 160, 160, 0.2);
             backdrop-filter: blur(5px);
             border-radius: 15px;
             padding: 25px;
             text-align: center;
             transition: transform 0.3s;
-            transform: scale(2); /* Make the tile 2x larger */
+            transform: scale(2);
             cursor: pointer;
-            margin-top: 140px;
+            margin-bottom: 20px;
         }
 
         .staff-icon img {
@@ -78,7 +78,7 @@
 
         .staff-ign {
             font-size: 16px;
-            color: #000; /* Change the color to your preference */
+            color: #000;
         }
 
         .staff-role {
@@ -89,7 +89,6 @@
             display: inline-block;
         }
 
-        /* Define role-specific colors */
         .owner { color: #0055E0; }
         .co-owner { color: #00AAFF; }
         .manager { color: #0000A0; }
@@ -111,11 +110,11 @@
         .trainee { color: #FFFF55; }
 
         .staff-role .brackets {
-            color: #555; /* Dark gray for brackets */
+            color: #555;
         }
 
         .staff-member:hover {
-            transform: scale(2.2); /* Increase the size on hover */
+            transform: scale(2.2);
         }
     </style>
 </head>
@@ -130,7 +129,6 @@
     </nav>
     <div class="staff">
         <div class="staff-member">
-         <div class="background">
             <div class="staff-icon">
                 <img src="icon1.png" alt="Icon 1">
             </div>
@@ -138,18 +136,15 @@
             <div class="staff-ign">IGN: Player123</div>
             <div class="staff-role owner"><span class="brackets">[</span>Owner<span class="brackets">]</span></div>
         </div>
-     </div>
         <div class="staff-member">
-        <div class="background">
-            <div class "staff-icon">
+            <div class="staff-icon">
                 <img src="icon2.png" alt="Icon 2">
             </div>
             <div class="staff-name">Jane Smith</div>
             <div class="staff-ign">IGN: Gamer456</div>
             <div class="staff-role co-owner"><span class="brackets">[</span>Co-Owner<span class="brackets">]</span></div>
         </div>
-    </div>
         <!-- Add more staff members here with their respective names, IGN, and roles -->
- </div>
+    </div>
 </body>
 </html>
