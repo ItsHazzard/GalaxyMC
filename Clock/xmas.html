@@ -2,265 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🎄Christmas</title>
+  <title>Christmas Countdown</title>
   <link rel="icon" href="/Clock/clock.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #1e1e1e;
-      margin: 0px;
-      overflow: hidden;
-      padding: 0px;
-    }
+  background-color: #1e1e1e;
+  margin: 0px;
+  overflow: hidden;
+  padding: 0px;
+}
+body input, body h1, body a, body span {
+  color: #5a5a5a;
+  font-family: "Rubik", sans-serif;
+  font-weight: 400;
+  margin: 0px;
+  padding: 0px;
+}
 
-    body input, body h1, body a, body span {
-      color: #5a5a5a;
-      font-family: "Rubik", sans-serif;
-      font-weight: 400;
-      margin: 0px;
-      padding: 0px;
-    }
+#app {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+}
+#app #timer {
+  background: linear-gradient(120deg, purple, blue);
+  border-radius: 22px;
+}
+#app #timer #timer-text {
+  align-items: center;
+  background-color: #1e1e1e;
+  border-radius: 20px;
+  display: flex;
+  margin: 4px;
+  padding: 0px 20px;
+}
+#app #timer #timer-text .timer-char {
+  height: 150px;
+  position: relative;
+  text-align: center;
+  width: 80px;
+}
+#app #timer #timer-text .timer-char.colon {
+  color: white;
+  font-size: 8em;
+  line-height: 150px;
+}
+#app #timer #timer-text .timer-char .timer-char-slider {
+  display: flex;
+  flex-direction: column;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  transition: top 200ms;
+  width: 80px;
+}
+#app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option {
+  color: white;
+  font-size: 4em;
+  height: 150px;
+  line-height: 150px;
+  opacity: 0.05;
+  transition: opacity 400ms, font-size 400ms;
+  width: 80px;
+}
+#app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option.active {
+  font-size: 8em;
+  opacity: 1;
+}
 
-    #app {
-      align-items: center;
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      width: 100vw;
-    }
-
-    #app #timer {
-      background: linear-gradient(120deg, purple, blue);
-      border-radius: 22px;
-    }
-
-    #app #timer #timer-text {
-      align-items: center;
-      background-color: #1e1e1e;
-      border-radius: 20px;
-      display: flex;
-      margin: 4px;
-      padding: 0px 20px;
-    }
-
-    #app #timer #timer-text .timer-char {
-      height: 150px;
-      position: relative;
-      text-align: center;
-      width: 80px;
-    }
-
-    #app #timer #timer-text .timer-char.colon {
-      color: white;
-      font-size: 8em;
-      line-height: 150px;
-    }
-
-    #app #timer #timer-text .timer-char .timer-char-slider {
-      display: flex;
-      flex-direction: column;
-      left: 0px;
-      position: absolute;
-      top: 0px;
-      transition: top 200ms;
-      width: 80px;
-    }
-
-    #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option {
-      color: white;
-      font-size: 4em;
-      height: 150px;
-      line-height: 150px;
-      opacity: 0.05;
-      transition: opacity 400ms, font-size 400ms;
-      width: 80px;
-    }
-
-    #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option.active {
-      font-size: 8em;
-      opacity: 1;
-    }
-
-    @media (max-width: 800px) {
-      #app #timer {
-        border-radius: 16px;
-      }
-
-      #app #timer #timer-text {
-        border-radius: 14px;
-        margin: 4px;
-        padding: 0px 12px;
-      }
-
-      #app #timer #timer-text .timer-char {
-        height: 80px;
-        width: 40px;
-      }
-
-      #app #timer #timer-text .timer-char.colon {
-        font-size: 4em;
-        line-height: 80px;
-      }
-
-      #app #timer #timer-text .timer-char .timer-char-slider {
-        width: 40px;
-      }
-
-      #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option {
-        font-size: 2em;
-        height: 80px;
-        line-height: 80px;
-        width: 40px;
-      }
-
-      #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option.active {
-        font-size: 4em;
-      }
-    }
-
-    @media (max-width: 400px) {
-      #app #timer {
-        border-radius: 8px;
-      }
-
-      #app #timer #timer-text {
-        border-radius: 6px;
-        margin: 2px;
-        padding: 0px 10px;
-      }
-
-      #app #timer #timer-text .timer-char {
-        height: 40px;
-        width: 20px;
-      }
-
-      #app #timer #timer-text .timer-char.colon {
-        font-size: 2em;
-        line-height: 40px;
-      }
-
-      #app #timer #timer-text .timer-char .timer-char-slider {
-        width: 20px;
-      }
-
-      #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option {
-        font-size: 1.25em;
-        height: 40px;
-        line-height: 40px;
-        width: 20px;
-      }
-
-      #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option.active {
-        font-size: 2em;
-      }
-    }
+@media (max-width: 800px) {
+  #app #timer {
+    border-radius: 16px;
+  }
+  #app #timer #timer-text {
+    border-radius: 14px;
+    margin: 4px;
+    padding: 0px 12px;
+  }
+  #app #timer #timer-text .timer-char {
+    height: 80px;
+    width: 40px;
+  }
+  #app #timer #timer-text .timer-char.colon {
+    font-size: 4em;
+    line-height: 80px;
+  }
+  #app #timer #timer-text .timer-char .timer-char-slider {
+    width: 40px;
+  }
+  #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option {
+    font-size: 2em;
+    height: 80px;
+    line-height: 80px;
+    width: 40px;
+  }
+  #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option.active {
+    font-size: 4em;
+  }
+}
+@media (max-width: 400px) {
+  #app #timer {
+    border-radius: 8px;
+  }
+  #app #timer #timer-text {
+    border-radius: 6px;
+    margin: 2px;
+    padding: 0px 10px;
+  }
+  #app #timer #timer-text .timer-char {
+    height: 40px;
+    width: 20px;
+  }
+  #app #timer #timer-text .timer-char.colon {
+    font-size: 2em;
+    line-height: 40px;
+  }
+  #app #timer #timer-text .timer-char .timer-char-slider {
+    width: 20px;
+  }
+  #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option {
+    font-size: 1.25em;
+    height: 40px;
+    line-height: 40px;
+    width: 20px;
+  }
+  #app #timer #timer-text .timer-char .timer-char-slider .timer-char-slider-option.active {
+    font-size: 2em;
+  }
+}
   </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
 <div id="root"></div>
-<!-- partial -->
-  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
-  <script>
-    "use strict";
+<script src='https://unpkg.com/react@17/umd/react.development.js'></script>
+<script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+<script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
+<script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
+<script>
+  "use strict";
+  const TimerChar = (props) => {
+    // Your TimerChar component code remains the same
+  };
 
-    const getTimeUntilChristmas = () => {
-        const now = new Date();
-        const christmas = new Date(now.getFullYear(), 11, 25); // Christmas is on December 25th
+  const Timer = () => {
+    const [timeUntilChristmas, setTimeUntilChristmas] = React.useState(calculateTimeUntilChristmas);
 
-        if (now > christmas) {
-            christmas.setFullYear(now.getFullYear() + 1); // If Christmas has passed, set it for the next year
-        }
+    React.useEffect(() => {
+      const interval = setInterval(() => {
+        setTimeUntilChristmas(calculateTimeUntilChristmas);
+      }, 1000);
 
-        const timeDiff = christmas - now;
-        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+      return () => clearInterval(interval);
+    }, []);
 
-        return {
-            days: days,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
-        };
+    function calculateTimeUntilChristmas() {
+      const today = new Date();
+      const christmasDate = new Date(today.getFullYear(), 11, 25); // Christmas is on December 25th
+
+      if (today > christmasDate) {
+        christmasDate.setFullYear(today.getFullYear() + 1);
+      }
+
+      const timeDifference = christmasDate - today;
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      return { days, hours, minutes, seconds };
+    }
+
+    const getChars = () => {
+      const time = `${timeUntilChristmas.days}d:${timeUntilChristmas.hours}h:${timeUntilChristmas.minutes}m:${timeUntilChristmas.seconds}s`;
+
+      return time.split("").map((char, index) => (
+        <TimerChar key={index} char={char} />
+      ));
     };
 
-    const TimerChar = (props) => {
-        const ref = React.useRef(null);
-        const colon = props.char === ":";
-        if (colon) {
-            return <h1 className="timer-char colon">:</h1>;
-        }
-        const number = parseInt(props.char);
-        const getCharSlider = () => {
-            let options = [];
-            for (let i = 0; i <= 9; i++) {
-                const classes = `timer-char-slider-option ${number === i ? 'active' : ''}`;
-                options.push(<span key={i} className={classes}>{i}</span>);
-            }
-            const height = ref.current ? ref.current.offsetHeight : 0;
-            const top = `${number * height * -1}px`;
-            return (
-                <div className="timer-char-slider" style={{ top }}>
-                    {options}
-                </div>
-            );
-        };
+    return (
+      <div id="timer">
+        <div id="timer-text">{getChars()}</div>
+      </div>
+    );
+  };
 
-        return (
-            <div ref={ref} className="timer-char number">
-                {getCharSlider()}
-            </div>
-        );
-    };
+  const App = () => {
+    return (
+      <div id="app">
+        <Timer />
+      </div>
+    );
+  };
 
-    const Timer = () => {
-        const [timeRemaining, setTimeRemaining] = React.useState(getTimeUntilChristmas());
-
-        React.useEffect(() => {
-            const interval = setInterval(() => {
-                setTimeRemaining(getTimeUntilChristmas());
-            }, 1000);
-
-            return () => {
-                clearInterval(interval);
-            };
-        }, []);
-
-        const getChars = () => {
-            return (
-                <div>
-                    <TimerChar char={timeRemaining.days} />
-                    <TimerChar char=":" />
-                    <TimerChar char={timeRemaining.hours} />
-                    <TimerChar char=":" />
-                    <TimerChar char={timeRemaining.minutes} />
-                    <TimerChar char=":" />
-                    <TimerChar char={timeRemaining.seconds} />
-                </div>
-            );
-        };
-
-        return (
-            <div id="timer">
-                <div id="timer-text">
-                    {getChars()}
-                </div>
-            </div>
-        );
-    };
-
-    const App = () => {
-        return (
-            <div id="app">
-                <Timer />
-            </div>
-        );
-    };
-
-    ReactDOM.render(<App />, document.getElementById("root"));
-  </script>
+  ReactDOM.render(<App />, document.getElementById("root"));
+</script>
 </body>
 </html>
