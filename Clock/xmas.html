@@ -31,6 +31,19 @@
       font-size: 8em;
       line-height: 150px;
       margin: 0 10px;
+      position: relative;
+      animation: slideDown 1s ease-in-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-150px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
