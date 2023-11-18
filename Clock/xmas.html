@@ -1,73 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Christmas Countdown</title>
-  <link rel="icon" href="/Clock/clock.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      background-color: #1e1e1e;
-      margin: 0;
-      overflow: hidden;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+<style>
+  body {
+    background-color: #1e1e1e;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
 
-    #timer {
-      background: linear-gradient(120deg, red, green);
-      border-radius: 22px;
-      padding: 20px;
-      display: flex;
-    }
+  #timer {
+    border: 10px solid;
+    border-image: linear-gradient(120deg, red, green);
+    border-image-slice: 1;
+    border-radius: 22px;
+    padding: 20px;
+    display: flex;
+  }
 
-    .timer-char {
-      color: white;
-      font-size: 8em;
-      line-height: 150px;
-      margin: 0 10px;
-    }
-  </style>
-</head>
-<body>
-  <div id="timer"></div>
-
-  <script>
-    function updateTimer() {
-      const currentDate = new Date();
-      const christmasDate = new Date(currentDate.getFullYear(), 11, 25); // Christmas is on December 25th
-
-      if (currentDate > christmasDate) {
-        christmasDate.setFullYear(currentDate.getFullYear() + 1); // Set to next year if Christmas has passed
-      }
-
-      const timeDifference = christmasDate - currentDate;
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-      const timerElement = document.getElementById('timer');
-      timerElement.innerHTML = `
-        <div class="timer-char">${formatSegment(days)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(hours)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(minutes)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(seconds)}</div>
-      `;
-    }
-
-    function formatSegment(segment) {
-      return segment < 10 ? `0${segment}` : segment;
-    }
-
-    setInterval(updateTimer, 1000);
-    updateTimer(); // Initial update
-  </script>
-</body>
-</html>
+  .timer-char {
+    color: white;
+    font-size: 8em;
+    line-height: 150px;
+    margin: 0 10px;
+  }
+</style>
