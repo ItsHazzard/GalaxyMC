@@ -50,39 +50,86 @@
 <body>
   <div id="timer"></div>
 
-  <script>
-    function updateTimer() {
-      const currentDate = new Date();
-      const christmasDate = new Date(currentDate.getFullYear(), 11, 25); // Christmas is on December 25th
+<div id="root"></div>
+<!-- partial -->
+  <script src='https://unpkg.com/react@17/umd/react.development.js'></script>
+<script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+<script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
+<script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
+<script>
+  "use strict";
 
-      if (currentDate > christmasDate) {
-        christmasDate.setFullYear(currentDate.getFullYear() + 1); // Set to next year if Christmas has passed
-      }
+const TimerChar = (props) => {
+    const ref = React.useRef(null);
+    const colon = props.char === ":";
 
-      const timeDifference = christmasDate - currentDate;
-      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    const getCharSlider = () => {
+        let options = [];
+        for (let i = 0; i <= 9; i++) {
+            const classes = classNames("timer-char-slider-option", {
+                active: props.number === i
+            });
+            options.push(React.createElement("span", { key: i, className: classes }, i));
+        }
+        const top = `${props.number * 150 * -1}px`;
+        return (React.createElement("div", { className: "timer-char-slider", style: { top } }, options));
+    };
 
-      const timerElement = document.getElementById('timer');
-      timerElement.innerHTML = `
-        <div class="timer-char">${formatSegment(days)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(hours)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(minutes)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(seconds)}</div>
-      `;
-    }
+    return (
+        <div className={`timer-char ${colon ? "colon" : "number"}`} ref={ref}>
+            {colon ? ":" : getCharSlider()}
+        </div>
+    );
+};
 
-    function formatSegment(segment) {
-      return segment < 10 ? `0${segment}` : segment;
-    }
+const Timer = () => {
+    const [date, setDateTo] = React.useState(new Date());
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            const update = new Date();
+            if (update.getSeconds() !== date.getSeconds()) {
+                setDateTo(update);
+            }
+        }, 100);
+        return () => {
+            clearInterval(interval);
+        };
+    }, [date]);
 
-    setInterval(updateTimer, 1000);
-    updateTimer(); // Initial update
-  </script>
-</body>
-</html>
+    const formatSegment = (segment) => {
+        return segment < 10 ? `0${segment}` : segment;
+    };
+
+    const getHours = (hours) => {
+        return hours % 12 === 0 ? 12 : hours % 12;
+    };
+
+    const getTime = () => {
+        const hours = getHours(date.getHours()), minutes = date.getMinutes(), seconds = date.getSeconds();
+        return `${formatSegment(hours)}:${formatSegment(minutes)}:${formatSegment(seconds)}`;
+    };
+
+    const getChars = () => {
+        return getTime().split("").map((char, index) => (
+            <TimerChar key={index} char={char} number={parseInt(char)} />
+        ));
+    };
+
+    return (
+        <div id="timer">
+            <div id="timer-text">{getChars()}</div>
+        </div>
+    );
+};
+
+const App = () => {
+    return (
+        <div id="app">
+            <Timer />
+        </div>
+    );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));
+</script>
