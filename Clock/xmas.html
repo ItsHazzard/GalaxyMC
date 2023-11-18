@@ -2,105 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Christmas Countdown</title>
-  <link rel="icon" href="/Clock/clock.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #1e1e1e;
-      margin: 0px;
-      overflow: hidden;
-      padding: 0px;
-    }
-
-    body input, body h1, body a, body span {
-      color: #5a5a5a;
-      font-family: "Rubik", sans-serif;
-      font-weight: 400;
-      margin: 0px;
-      padding: 0px;
-    }
-
-    #app {
-      align-items: center;
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      width: 100vw;
-    }
-
-    #timer {
-      background: linear-gradient(120deg, purple, blue);
-      border-radius: 22px;
-      overflow: hidden; /* Ensure the child elements don't overflow */
-    }
-
-    #timer #timer-text {
-      align-items: center;
-      background-color: #1e1e1e;
-      border-radius: 20px;
-      display: flex;
-      margin: 4px;
-      padding: 0px 20px;
-      overflow: hidden; /* Ensure the child elements don't overflow */
-    }
-
-    .timer-char {
-      height: 150px;
-      position: relative;
+      font-family: 'Arial', sans-serif;
       text-align: center;
-      width: 80px;
+      margin: 50px;
     }
 
-    .timer-char.colon {
-      color: white;
-      font-size: 8em;
-      line-height: 150px;
-    }
-
-    .timer-char .timer-char-slider {
-      display: flex;
-      flex-direction: column;
-      left: 0px;
-      position: absolute;
-      top: 0px;
-      transition: top 200ms;
-      width: 80px;
-    }
-
-    .timer-char .timer-char-slider .timer-char-slider-option {
-      color: white;
-      font-size: 4em;
-      height: 150px;
-      line-height: 150px;
-      opacity: 0.05;
-      transition: opacity 400ms, font-size 400ms;
-      width: 80px;
-    }
-
-    .timer-char .timer-char-slider .timer-char-slider-option.active {
-      font-size: 8em;
-      opacity: 1;
-    }
-
-    @media (max-width: 800px) {
-      /* Your existing media query styles */
-    }
-
-    @media (max-width: 400px) {
-      /* Your existing media query styles */
+    #countdown {
+      font-size: 2em;
+      color: #333;
     }
   </style>
 </head>
 <body>
-<div id="root"></div>
-<script src='https://unpkg.com/react@17/umd/react.development.js'></script>
-<script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
-<script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
-<script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
-<script>
-  // Your existing JavaScript code
-</script>
+
+  <h1>Christmas Countdown</h1>
+  <div id="countdown"></div>
+
+  <script>
+    // Set the date we're counting down to
+    const countDownDate = new Date("Dec 25, 2023 00:00:00").getTime();
+
+    // Update the countdown every 1 second
+    const x = setInterval(function() {
+
+      // Get the current date and time
+      const now = new Date().getTime();
+
+      // Calculate the time remaining
+      const distance = countDownDate - now;
+
+      // Calculate days, hours, minutes, and seconds
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the countdown
+      document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+      // If the countdown is over, display a message
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Merry Christmas!";
+      }
+    }, 1000);
+  </script>
+
 </body>
 </html>
