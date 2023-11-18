@@ -168,6 +168,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
 <script>
   "use strict";
+
 const TimerChar = (props) => {
     const ref = React.useRef(null);
     const colon = props.char === ":";
@@ -188,40 +189,65 @@ const TimerChar = (props) => {
     };
     return (React.createElement("div", { ref: ref, className: "timer-char number" }, getCharSlider()));
 };
+
 const Timer = () => {
-    const [date, setDateTo] = React.useState(new Date());
+    const [timeRemaining, setTimeRemaining] = React.useState(getTimeRemaining());
+
     React.useEffect(() => {
         const interval = setInterval(() => {
-            const update = new Date();
-            if (update.getSeconds() !== date.getSeconds()) {
-                setDateTo(update);
-            }
+            setTimeRemaining(getTimeRemaining());
         }, 1000);
+
         return () => {
             clearInterval(interval);
         };
-    }, [date]);
+    }, []);
+
+    function getTimeRemaining() {
+        const currentDate = new Date();
+        const christmasDate = new Date(currentDate.getFullYear(), 11, 25); // Christmas is on December 25th
+        if (currentDate > christmasDate) {
+            christmasDate.setFullYear(currentDate.getFullYear() + 1); // Set to next year if Christmas has passed
+        }
+
+        const timeDifference = christmasDate - currentDate;
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        return { days, hours, minutes, seconds };
+    }
+
     const formatSegment = (segment) => {
         return segment < 10 ? `0${segment}` : segment;
     };
-    const getHours = (hours) => {
-        return hours % 12 === 0 ? 12 : hours % 12;
-    };
-    const getTime = () => {
-        const hours = getHours(date.getHours()), minutes = date.getMinutes(), seconds = date.getSeconds();
-        return `${formatSegment(hours)}:${formatSegment(minutes)}:${formatSegment(seconds)}`;
-    };
+
     const getChars = () => {
-        return getTime().split("").map((char, index) => (React.createElement(TimerChar, { key: index, char: char })));
+        const { days, hours, minutes, seconds } = timeRemaining;
+        const timeString = `${formatSegment(days)}:${formatSegment(hours)}:${formatSegment(minutes)}:${formatSegment(seconds)}`;
+
+        return timeString.split("").map((char, index) => (
+            <TimerChar key={index} char={char} />
+        ));
     };
-    return (React.createElement("div", { id: "timer" },
-        React.createElement("div", { id: "timer-text" }, getChars())));
+
+    return (
+        <div id="timer">
+            <div id="timer-text">{getChars()}</div>
+        </div>
+    );
 };
+
 const App = () => {
-    return (React.createElement("div", { id: "app" },
-        React.createElement(Timer, null)));
+    return (
+        <div id="app">
+            <Timer />
+        </div>
+    );
 };
-ReactDOM.render(React.createElement(App, null), document.getElementById("root"));
+
+ReactDOM.render(<App />, document.getElementById("root"));
 </script>
 
 </body>
