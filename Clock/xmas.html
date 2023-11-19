@@ -1,85 +1,147 @@
-<!-- partial:index.partial.html -->
-<div id="root"></div>
-<!-- partial -->
-<script src='https://unpkg.com/react@17/umd/react.development.js'></script>
-<script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
-<script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
-<script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
-<script>
-  "use strict";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Christmas Countdown</title>
+  <link rel="icon" href="/Clock/clock.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1e1e1e;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
 
-const TimerChar = (props) => {
-    const ref = React.useRef(null);
-    const colon = props.char === ":";
+    #timer {
+      border: 10px solid transparent;
+      background-clip: padding-box;
+      border-image: linear-gradient(120deg, purple, blue) 1;
+      border-radius: 22px;
+      padding: 20px;
+      display: flex;
+    }
 
-    const getCharSlider = () => {
-        let options = [];
-        for (let i = 0; i <= 9; i++) {
-            const classes = classNames("timer-char-slider-option", {
-                active: props.number === i
-            });
-            options.push(React.createElement("span", { key: i, className: classes }, i));
-        }
-        const height = ref.current ? ref.current.offsetHeight : 0;
-        const top = `${props.number * height * -1}px`;
-        return (React.createElement("div", { className: "timer-char-slider", style: { top } }, options));
+    .timer-char {
+      color: white;
+      font-size: 8em;
+      line-height: 150px;
+      margin: 0 10px;
+    }
+
+    .colon {
+      color: white;
+      font-size: 8em;
+      line-height: 150px;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 800px) {
+      #timer {
+        border-radius: 16px;
+      }
+
+      .timer-char {
+        height: 80px;
+        width: 40px;
+      }
+
+      .colon {
+        font-size: 4em;
+        line-height: 80px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      #timer {
+        border-radius: 8px;
+      }
+
+      .timer-char {
+        height: 40px;
+        width: 20px;
+      }
+
+      .colon {
+        font-size: 2em;
+        line-height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src='https://unpkg.com/react@17/umd/react.development.js'></script>
+  <script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+  <script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
+  <script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
+  <script>
+    "use strict";
+
+    const TimerChar = (props) => {
+      const colon = props.char === ":";
+
+      return (
+        <div className={`timer-char ${colon ? "colon" : "number"}`}>
+          {colon ? ":" : props.char}
+        </div>
+      );
     };
 
-    return (
-        <div className={`timer-char ${colon ? "colon" : "number"}`} ref={ref}>
-            {colon ? ":" : getCharSlider()}
-        </div>
-    );
-};
-
-const Timer = () => {
-    const [date, setDateTo] = React.useState(new Date());
-    React.useEffect(() => {
+    const Timer = () => {
+      const [date, setDateTo] = React.useState(new Date());
+      React.useEffect(() => {
         const interval = setInterval(() => {
-            const update = new Date();
-            if (update.getSeconds() !== date.getSeconds()) {
-                setDateTo(update);
-            }
+          const update = new Date();
+          if (update.getSeconds() !== date.getSeconds()) {
+            setDateTo(update);
+          }
         }, 100);
         return () => {
-            clearInterval(interval);
+          clearInterval(interval);
         };
-    }, [date]);
+      }, [date]);
 
-    const formatSegment = (segment) => {
+      const formatSegment = (segment) => {
         return segment < 10 ? `0${segment}` : segment;
-    };
+      };
 
-    const getHours = (hours) => {
+      const getHours = (hours) => {
         return hours % 12 === 0 ? 12 : hours % 12;
-    };
+      };
 
-    const getTime = () => {
+      const getTime = () => {
         const hours = getHours(date.getHours()), minutes = date.getMinutes(), seconds = date.getSeconds();
         return `${formatSegment(hours)}:${formatSegment(minutes)}:${formatSegment(seconds)}`;
-    };
+      };
 
-    const getChars = () => {
+      const getChars = () => {
         return getTime().split("").map((char, index) => (
-            <TimerChar key={index} char={char} number={parseInt(char)} />
+          <TimerChar key={index} char={char} />
         ));
+      };
+
+      return (
+        <div id="timer">
+          {getChars()}
+        </div>
+      );
     };
 
-    return (
-        <div id="timer">
-            <div id="timer-text">{getChars()}</div>
-        </div>
-    );
-};
-
-const App = () => {
-    return (
+    const App = () => {
+      return (
         <div id="app">
-            <Timer />
+          <Timer />
         </div>
-    );
-};
+      );
+    };
 
-ReactDOM.render(<App />, document.getElementById("root"));
-</script>
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+</html>
