@@ -20,8 +20,8 @@
     #timer {
       border: 10px solid transparent;
       background-clip: padding-box;
-      border-image: linear-gradient(120deg, purple, blue) 1;
-      border-radius: 22px;
+      border-image: linear-gradient(120deg, red, green) 1;
+      border-radius: 30px;
       padding: 20px;
       display: flex;
     }
@@ -32,116 +32,44 @@
       line-height: 150px;
       margin: 0 10px;
     }
-
-    .colon {
-      color: white;
-      font-size: 8em;
-      line-height: 150px;
-      margin: 0 10px;
-    }
-
-    @media (max-width: 800px) {
-      #timer {
-        border-radius: 16px;
-      }
-
-      .timer-char {
-        height: 80px;
-        width: 40px;
-      }
-
-      .colon {
-        font-size: 4em;
-        line-height: 80px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      #timer {
-        border-radius: 8px;
-      }
-
-      .timer-char {
-        height: 40px;
-        width: 20px;
-      }
-
-      .colon {
-        font-size: 2em;
-        line-height: 40px;
-      }
-    }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="timer"></div>
 
-  <script src='https://unpkg.com/react@17/umd/react.development.js'></script>
-  <script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
-  <script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
-  <script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
   <script>
-    "use strict";
+    function updateTimer() {
+      const currentDate = new Date();
+      const christmasDate = new Date(currentDate.getFullYear(), 11, 25); // Christmas is on December 25th
 
-    const TimerChar = (props) => {
-      const colon = props.char === ":";
+      if (currentDate > christmasDate) {
+        christmasDate.setFullYear(currentDate.getFullYear() + 1); // Set to next year if Christmas has passed
+      }
 
-      return (
-        <div className={`timer-char ${colon ? "colon" : "number"}`}>
-          {colon ? ":" : props.char}
-        </div>
-      );
-    };
+      const timeDifference = christmasDate - currentDate;
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-    const Timer = () => {
-      const [date, setDateTo] = React.useState(new Date());
-      React.useEffect(() => {
-        const interval = setInterval(() => {
-          const update = new Date();
-          if (update.getSeconds() !== date.getSeconds()) {
-            setDateTo(update);
-          }
-        }, 100);
-        return () => {
-          clearInterval(interval);
-        };
-      }, [date]);
+      const timerElement = document.getElementById('timer');
+      timerElement.innerHTML = `
+        <div class="timer-char">${formatSegment(days)}</div>
+        <div class="timer-char">:</div>
+        <div class="timer-char">${formatSegment(hours)}</div>
+        <div class="timer-char">:</div>
+        <div class="timer-char">${formatSegment(minutes)}</div>
+        <div class="timer-char">:</div>
+        <div class="timer-char">${formatSegment(seconds)}</div>
+      `;
+    }
 
-      const formatSegment = (segment) => {
-        return segment < 10 ? `0${segment}` : segment;
-      };
+    function formatSegment(segment) {
+      return segment < 10 ? `0${segment}` : segment;
+    }
 
-      const getHours = (hours) => {
-        return hours % 12 === 0 ? 12 : hours % 12;
-      };
-
-      const getTime = () => {
-        const hours = getHours(date.getHours()), minutes = date.getMinutes(), seconds = date.getSeconds();
-        return `${formatSegment(hours)}:${formatSegment(minutes)}:${formatSegment(seconds)}`;
-      };
-
-      const getChars = () => {
-        return getTime().split("").map((char, index) => (
-          <TimerChar key={index} char={char} />
-        ));
-      };
-
-      return (
-        <div id="timer">
-          {getChars()}
-        </div>
-      );
-    };
-
-    const App = () => {
-      return (
-        <div id="app">
-          <Timer />
-        </div>
-      );
-    };
-
-    ReactDOM.render(<App />, document.getElementById("root"));
+    setInterval(updateTimer, 1000);
+    updateTimer(); // Initial update
   </script>
 </body>
 </html>
