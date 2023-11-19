@@ -5,10 +5,9 @@
   <title>Christmas Countdown</title>
   <link rel="icon" href="/Clock/clock.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/gsap@3.9.0/dist/gsap.min.js"></script>
   <style>
     body {
-      background-color: #1e1e1e;
+      background: linear-gradient(120deg, red, green);
       margin: 0;
       overflow: hidden;
       padding: 0;
@@ -32,6 +31,16 @@
       font-size: 8em;
       line-height: 150px;
       margin: 0 10px;
+      animation: pulse 1.5s infinite alternate; /* Slow down pulsating effect */
+    }
+
+    @keyframes pulse {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.1);
+      }
     }
   </style>
 </head>
@@ -63,23 +72,14 @@
 
       const timerElement = document.querySelectorAll('.timer-char');
 
-      morphNumber(timerElement[0], formatSegment(days));
-      morphNumber(timerElement[2], formatSegment(hours));
-      morphNumber(timerElement[4], formatSegment(minutes));
-      morphNumber(timerElement[6], formatSegment(seconds));
+      timerElement[0].innerText = formatSegment(days);
+      timerElement[2].innerText = formatSegment(hours);
+      timerElement[4].innerText = formatSegment(minutes);
+      timerElement[6].innerText = formatSegment(seconds);
     }
 
     function formatSegment(segment) {
       return segment < 10 ? `0${segment}` : segment;
-    }
-
-    function morphNumber(element, newNumber) {
-      if (element.innerText !== newNumber) {
-        gsap.to(element, { scale: 1.5, duration: 0.25, onComplete: () => {
-          element.innerText = newNumber;
-          gsap.to(element, { scale: 1, duration: 0.25 });
-        }});
-      }
     }
 
     setInterval(updateTimer, 1000);
