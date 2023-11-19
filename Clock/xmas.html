@@ -18,12 +18,11 @@
     }
 
     #timer {
-      border: 10px solid transparent;
-      background-clip: padding-box;
-      border-image: linear-gradient(120deg, red, green) 1;
+      background: linear-gradient(120deg, red, green);
       border-radius: 30px;
       padding: 20px;
       display: flex;
+      align-items: center;
     }
 
     .timer-char {
@@ -31,21 +30,29 @@
       font-size: 8em;
       line-height: 150px;
       margin: 0 10px;
-      animation: rotate 1s infinite linear; /* Add rotation animation */
+      animation: pulse 1s infinite alternate; /* Add pulsating animation */
     }
 
-    @keyframes rotate {
+    @keyframes pulse {
       from {
-        transform: rotate(0deg);
+        transform: scale(1);
       }
       to {
-        transform: rotate(360deg);
+        transform: scale(1.1);
       }
     }
   </style>
 </head>
 <body>
-  <div id="timer"></div>
+  <div id="timer">
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+  </div>
 
   <script>
     function updateTimer() {
@@ -62,16 +69,15 @@
       const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-      const timerElement = document.getElementById('timer');
-      timerElement.innerHTML = `
-        <div class="timer-char">${formatSegment(days)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(hours)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(minutes)}</div>
-        <div class="timer-char">:</div>
-        <div class="timer-char">${formatSegment(seconds)}</div>
-      `;
+      const timerElement = document.querySelectorAll('.timer-char');
+
+      timerElement[0].innerText = formatSegment(days);
+      timerElement[1].innerText = ':';
+      timerElement[2].innerText = formatSegment(hours);
+      timerElement[3].innerText = ':';
+      timerElement[4].innerText = formatSegment(minutes);
+      timerElement[5].innerText = ':';
+      timerElement[6].innerText = formatSegment(seconds);
     }
 
     function formatSegment(segment) {
