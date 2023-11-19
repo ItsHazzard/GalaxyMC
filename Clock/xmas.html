@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(120deg, red, green);
+      background-color: #1e1e1e;
       margin: 0;
       overflow: hidden;
       padding: 0;
@@ -18,8 +18,7 @@
     }
 
     #timer {
-      border: 10px solid transparent;
-      border-image: linear-gradient(120deg, red, green) 1;
+      background: linear-gradient(120deg, red, green);
       border-radius: 30px;
       padding: 20px;
       display: flex;
@@ -31,7 +30,7 @@
       font-size: 8em;
       line-height: 150px;
       margin: 0 10px;
-      animation: pulse 1.5s infinite alternate; /* Slow down pulsating effect */
+      animation: pulse 1s infinite alternate; /* Add pulsating animation */
     }
 
     @keyframes pulse {
@@ -73,8 +72,11 @@
       const timerElement = document.querySelectorAll('.timer-char');
 
       timerElement[0].innerText = formatSegment(days);
+      timerElement[1].innerText = ':';
       timerElement[2].innerText = formatSegment(hours);
+      timerElement[3].innerText = ':';
       timerElement[4].innerText = formatSegment(minutes);
+      timerElement[5].innerText = ':';
       timerElement[6].innerText = formatSegment(seconds);
     }
 
