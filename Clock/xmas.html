@@ -30,16 +30,7 @@
       font-size: 8em;
       line-height: 150px;
       margin: 0 10px;
-      animation: pulse 1s infinite alternate; /* Add pulsating animation */
-    }
-
-    @keyframes pulse {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.1);
-      }
+      transition: transform 0.5s ease-in-out;
     }
   </style>
 </head>
@@ -71,17 +62,24 @@
 
       const timerElement = document.querySelectorAll('.timer-char');
 
-      timerElement[0].innerText = formatSegment(days);
-      timerElement[1].innerText = ':';
-      timerElement[2].innerText = formatSegment(hours);
-      timerElement[3].innerText = ':';
-      timerElement[4].innerText = formatSegment(minutes);
-      timerElement[5].innerText = ':';
-      timerElement[6].innerText = formatSegment(seconds);
+      morphNumber(timerElement[0], formatSegment(days));
+      morphNumber(timerElement[2], formatSegment(hours));
+      morphNumber(timerElement[4], formatSegment(minutes));
+      morphNumber(timerElement[6], formatSegment(seconds));
     }
 
     function formatSegment(segment) {
       return segment < 10 ? `0${segment}` : segment;
+    }
+
+    function morphNumber(element, newNumber) {
+      if (element.innerText !== newNumber) {
+        element.style.transform = 'scale(1.5)'; // Increase size before morphing
+        setTimeout(() => {
+          element.innerText = newNumber;
+          element.style.transform = 'scale(1)'; // Return to normal size after morphing
+        }, 250); // Adjust the duration based on your preference
+      }
     }
 
     setInterval(updateTimer, 1000);
