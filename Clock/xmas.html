@@ -33,6 +33,10 @@
       animation: pulse 1s infinite alternate; /* Add pulsating animation */
     }
 
+    .colon {
+      align-self: center; /* Align the colons to the middle vertically */
+    }
+
     @keyframes pulse {
       from {
         transform: scale(1);
@@ -46,11 +50,11 @@
 <body>
   <div id="timer">
     <div class="timer-char"></div>
+    <div class="colon">:</div>
     <div class="timer-char"></div>
+    <div class="colon">:</div>
     <div class="timer-char"></div>
-    <div class="timer-char"></div>
-    <div class="timer-char"></div>
-    <div class="timer-char"></div>
+    <div class="colon">:</div>
     <div class="timer-char"></div>
   </div>
 
@@ -72,11 +76,8 @@
       const timerElement = document.querySelectorAll('.timer-char');
 
       timerElement[0].innerText = formatSegment(days);
-      timerElement[1].innerText = ':';
       timerElement[2].innerText = formatSegment(hours);
-      timerElement[3].innerText = ':';
       timerElement[4].innerText = formatSegment(minutes);
-      timerElement[5].innerText = ':';
       timerElement[6].innerText = formatSegment(seconds);
     }
 
