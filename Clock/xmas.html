@@ -5,6 +5,7 @@
   <title>Christmas Countdown</title>
   <link rel="icon" href="/Clock/clock.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/gsap@3.9.0/dist/gsap.min.js"></script>
   <style>
     body {
       background-color: #1e1e1e;
@@ -18,7 +19,8 @@
     }
 
     #timer {
-      background: linear-gradient(120deg, red, green);
+      border: 10px solid transparent;
+      border-image: linear-gradient(120deg, red, green) 1;
       border-radius: 30px;
       padding: 20px;
       display: flex;
@@ -30,7 +32,6 @@
       font-size: 8em;
       line-height: 150px;
       margin: 0 10px;
-      transition: transform 0.5s ease-in-out;
     }
   </style>
 </head>
@@ -74,11 +75,10 @@
 
     function morphNumber(element, newNumber) {
       if (element.innerText !== newNumber) {
-        element.style.transform = 'scale(1.5)'; // Increase size before morphing
-        setTimeout(() => {
+        gsap.to(element, { scale: 1.5, duration: 0.25, onComplete: () => {
           element.innerText = newNumber;
-          element.style.transform = 'scale(1)'; // Return to normal size after morphing
-        }, 250); // Adjust the duration based on your preference
+          gsap.to(element, { scale: 1, duration: 0.25 });
+        }});
       }
     }
 
