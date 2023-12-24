@@ -28,6 +28,7 @@
         }
 
         button {
+            display: none; /* Hide the button */
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
@@ -42,7 +43,7 @@
 <body>
     <div class="content">
         <h1>It's 5 o'Clock Somewhere</h1>
-        <p id="result">Click the button to find out where!</p>
+        <p id="result">Loading...</p>
         <button onclick="findFivePM()">5 o'Clock Somewhere</button>
     </div>
 
@@ -76,6 +77,9 @@
                 document.getElementById('result').innerHTML = 'Unable to fetch world time. Please try again later.';
             }
         }
+
+        // Call the function immediately when the page loads
+        window.onload = findFivePM;
     </script>
 </body>
 </html>
