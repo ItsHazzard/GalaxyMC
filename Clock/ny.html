@@ -57,7 +57,7 @@
   <script>
     function updateTimer() {
       const currentDate = new Date();
-      const christmasDate = new Date(currentDate.getFullYear(), 1, 1); // Christmas is on December 25th
+      const christmasDate = new Date(currentDate.getFullYear(), 12, 1); // Christmas is on December 25th
 
       if (currentDate > christmasDate) {
         christmasDate.setFullYear(currentDate.getFullYear() + 1); // Set to next year if Christmas has passed
