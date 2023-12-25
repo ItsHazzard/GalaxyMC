@@ -42,7 +42,7 @@
 </head>
 <body>
     <div class="content">
-        <h1>Is It 5 o'Clock Somewhere</h1>
+        <h1>It's 5 o'Clock Somewhere</h1>
         <p id="result">Loading...</p>
         <button onclick="findFivePM()">5 o'Clock Somewhere</button>
     </div>
@@ -50,23 +50,24 @@
     <script>
         async function findFivePM() {
             try {
-                const response = await fetch('https://worldtimeapi.org/api/timezone/');
-                const timezones = await response.json();
+                const gmtPlus11Response = await fetch('https://worldtimeapi.org/api/timezone/Etc/GMT+11');
+                const gmtPlus11Data = await gmtPlus11Response.json();
+                const gmtPlus11Hour = new Date(gmtPlus11Data.utc_datetime).getUTCHours();
 
                 let closestTimezone = null;
                 let closestDifference = Number.MAX_VALUE;
 
-                for (const timezone of timezones) {
+                for (const timezone of gmtPlus11Data.abbreviation_list) {
                     const timezoneData = await fetch(`https://worldtimeapi.org/api/timezone/${timezone}`);
                     const data = await timezoneData.json();
                     const currentHour = new Date(data.utc_datetime).getUTCHours();
 
-                    if (currentHour === 17) {
+                    if (currentHour === gmtPlus11Hour) {
                         closestTimezone = timezone;
                         closestDifference = 0;
                         break; // Exact match found, no need to check further
                     } else {
-                        const difference = Math.abs(currentHour - 17);
+                        const difference = Math.abs(currentHour - gmtPlus11Hour);
                         if (difference < closestDifference) {
                             closestDifference = difference;
                             closestTimezone = timezone;
