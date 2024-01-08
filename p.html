@@ -11,12 +11,10 @@
     :root {
       --border: rgb(3, 169, 244);
       --g1: #0000A0;;
-      --g2: #FF5555;
-      --g3: #FF55FF;
+      --g2: #FF55FF;
     }
 
     body {
-      animation: background-pan 10s linear infinite;
       background-image: url("Photos/Poppy.jpeg");
       background-color: #ccc;
       display: flex;
@@ -68,8 +66,7 @@
         130deg, 
         transparent 0% 33%, 
         var(--g1) 66%, 
-        var(--g2) 83.5%, 
-        var(--g3) 100%
+        var(--g2) 100%, 
       );
       background-position: 0% 0%;
       background-size: 300% 300%;
@@ -191,7 +188,7 @@ const addWord = (text, index) => subtitle.appendChild(createWord(text, index));
 
 const createSubtitle = text => text.split(" ").map(addWord);
 
-createSubtitle("I just wanted to say thank you, for taking a chance with me. Many memories to be made yet hermoso, and 1 more thing if you do ever want to leave me I encourage you too. Thats all B2");
+createSubtitle("I just wanted to say thank you, for taking a chance with me. Many memories to be made yet hermoso, and 1 more thing if you do ever want to leave me do. Thats all for now B2");
   </script>
 </body>
 </html>
