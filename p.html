@@ -133,12 +133,24 @@
       z-index: 3; /* Set a higher z-index for card icon */
     }
 
+    #fancy-text {
+      color: blue;
+      font-family: 'Lobster', cursive;
+      font-size: 400px;
+      position: absolute;
+      font-weight: bolder;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0; /* Set a lower z-index for fancy text */
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <div class="card">
     <div class="card-content">
-      <h3 class="card-title">Hey Vegemite!</h3>
+      <h3 class="card-title">Hey <fancy>Vegemite!</fancy></h3>
       <h4 class="card-subtitle"></h4>
     </div>
   </div>
