@@ -11,11 +11,12 @@
     :root {
       --border: rgb(3, 169, 244);
       --g1: #0000A0;;
-      --g2: #FF55FF;
+      --g2: #FF55FF;;
     }
 
     body {
       background-image: url("Photos/Poppy.jpeg");
+      background-repeat: no-repeat;
       background-color: #ccc;
       display: flex;
       flex-direction: column;
@@ -25,11 +26,6 @@
       margin: 0;
       overflow: hidden;
       position: relative;
-    }
-
-    fancy {
-      color: lightblue;
-      font-family: 'Pacifico', cursive;
     }
 
     .card {
@@ -136,27 +132,6 @@
       z-index: 3; /* Set a higher z-index for card icon */
     }
 
-    @keyframes background-pan {
-      from {
-        background-position: 0% center;
-      }
-      to {
-        background-position: -200% center;
-      }
-    }
-
-    #fancy-text {
-      color: blue;
-      font-family: 'Lobster', cursive;
-      font-size: 400px;
-      position: absolute;
-      font-weight: bolder;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 0; /* Set a lower z-index for fancy text */
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
