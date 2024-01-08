@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>So...</title>
+    <title>Poppy!</title>
     <link rel="icon" href="/Photos/favicon.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
   <style>
     :root {
       --border: rgb(3, 169, 244);
-      --g1: rgb(98, 0, 234);
-      --g2: rgb(236, 64, 122);
-      --g3: rgb(253, 216, 53);
+      --g1: #0000A0;;
+      --g2: #FF5555;
+      --g3: #FF55FF;
     }
 
     body {
-  animation: background-pan 10s linear infinite;
-  background: linear-gradient(
-    to right,
-    var(--g1),
-    var(--g2),
-    var(--g1)
-  );
+      animation: background-pan 10s linear infinite;
+      background-image: url("Photos/Poppy.jpeg");
+      background-color: #ccc;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -169,7 +165,7 @@
 <body>
   <div class="card">
     <div class="card-content">
-      <h3 class="card-title">Hey So...</h3>
+      <h3 class="card-title">Hey Vegemite!</h3>
       <h4 class="card-subtitle"></h4>
     </div>
   </div>
@@ -195,7 +191,7 @@ const addWord = (text, index) => subtitle.appendChild(createWord(text, index));
 
 const createSubtitle = text => text.split(" ").map(addWord);
 
-createSubtitle("Umm, Scarlett wasnt lying. I was the one lying to you, I dont care what you think about me but i just had to say that.");
+createSubtitle("I just wanted to say thank you, for taking a chance with me. Many memories to be made yet hermoso, and 1 more thing if you do ever want to leave me I encourage you too. Thats all B2");
   </script>
 </body>
 </html>
