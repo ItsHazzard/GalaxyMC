@@ -18,21 +18,19 @@
       height: 100vh;
     }
 
-    h1 {
+    #birthday-message {
       color: white;
       font-size: 6em;
-      margin-bottom: 50%;
-      position: absolute;
-      
+      margin-top: 50px; /* Move "Happy Birthday!" up */
+      padding: 0 10px;
     }
 
     #name {
       color: white;
       font-size: 8em;
       line-height: 50px;
-      margin-bottom: 10vh;
-      font-weight: bold;
-
+      margin-bottom: 20px;
+      padding: 0 10px;
     }
 
     #timer {
@@ -41,6 +39,7 @@
       padding: 20px;
       display: flex;
       align-items: center;
+      margin-top: 20px; /* Move the timer down */
     }
 
     .timer-char {
@@ -62,7 +61,7 @@
   </style>
 </head>
 <body>
-  <h1>Happy Birthday!</h1>
+  <div id="birthday-message">Happy Birthday!</div>
   <div id="name"></div>
 
   <div id="timer">
@@ -74,7 +73,6 @@
     <div class="timer-char"></div>
     <div class="timer-char"></div>
   </div>
-
   <script>
     function updateTimer() {
       const currentDate = new Date();
