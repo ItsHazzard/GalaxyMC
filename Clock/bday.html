@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Countdown</title>
+  <link rel="icon" href="/Clock/clock.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #1e1e1e;
+      margin: 0;
+      overflow: hidden;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #timer {
+      background: linear-gradient(120deg, red, green);
+      border-radius: 30px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .timer-char {
+      color: white;
+      font-size: 8em;
+      line-height: 150px;
+      margin: 0 10px;
+      animation: pulse 1s infinite alternate; /* Add pulsating animation */
+    }
+
+    @keyframes pulse {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="timer">
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+    <div class="timer-char"></div>
+  </div>
+
+  <script>
+    function updateTimer() {
+      const currentDate = new Date();
+      const birthdays = [
+        new Date(currentDate.getFullYear(), 2, 2), // 2nd of March
+        new Date(currentDate.getFullYear(), 2, 5), // 5th of March
+        new Date(currentDate.getFullYear(), 7, 7), // 7th of August
+        new Date(currentDate.getFullYear(), 9, 30)  // 30th of October
+      ];
+
+      let nearestBirthday = birthdays[0];
+      for (const birthday of birthdays) {
+        if (birthday - currentDate > 0 && (birthday - currentDate < nearestBirthday - currentDate || nearestBirthday - currentDate < 0)) {
+          nearestBirthday = birthday;
+        }
+      }
+
+      const timeDifference = nearestBirthday - currentDate;
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      const timerElement = document.querySelectorAll('.timer-char');
+
+      timerElement[0].innerText = formatSegment(days);
+      timerElement[1].innerText = ':';
+      timerElement[2].innerText = formatSegment(hours);
+      timerElement[3].innerText = ':';
+      timerElement[4].innerText = formatSegment(minutes);
+      timerElement[5].innerText = ':';
+      timerElement[6].innerText = formatSegment(seconds);
+    }
+
+    function formatSegment(segment) {
+      return segment < 10 ? `0${segment}` : segment;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer(); // Initial update
+  </script>
+</body>
+</html>
