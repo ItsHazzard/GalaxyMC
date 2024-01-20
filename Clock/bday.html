@@ -14,7 +14,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
       height: 100vh;
+    }
+
+    #name {
+      color: white;
+      font-size: 8em;
+      line-height: 50px;
+      margin-bottom: 20px;
     }
 
     #timer {
@@ -44,6 +52,8 @@
   </style>
 </head>
 <body>
+  <div id="name"></div>
+
   <div id="timer">
     <div class="timer-char"></div>
     <div class="timer-char"></div>
@@ -58,24 +68,26 @@
     function updateTimer() {
       const currentDate = new Date();
       const birthdays = [
-        new Date(currentDate.getFullYear(), 2, 2), // 2nd of March
-        new Date(currentDate.getFullYear(), 2, 5), // 5th of March
-        new Date(currentDate.getFullYear(), 7, 7), // 7th of August
-        new Date(currentDate.getFullYear(), 9, 30)  // 30th of October
+        { name: "Megan", date: new Date(currentDate.getFullYear(), 2, 2) }, // 2nd of March
+        { name: "Harry", date: new Date(currentDate.getFullYear(), 2, 5) }, // 5th of March
+        { name: "Jamie", date: new Date(currentDate.getFullYear(), 7, 8) }, // 8th of August
+        { name: "Jack", date: new Date(currentDate.getFullYear(), 9, 30) }  // 30th of October
       ];
 
       let nearestBirthday = birthdays[0];
       for (const birthday of birthdays) {
-        if (birthday - currentDate > 0 && (birthday - currentDate < nearestBirthday - currentDate || nearestBirthday - currentDate < 0)) {
+        if (birthday.date - currentDate > 0 && (birthday.date - currentDate < nearestBirthday.date - currentDate || nearestBirthday.date - currentDate < 0)) {
           nearestBirthday = birthday;
         }
       }
 
-      const timeDifference = nearestBirthday - currentDate;
+      const timeDifference = nearestBirthday.date - currentDate;
       const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      document.getElementById('name').innerText = nearestBirthday.name;
 
       const timerElement = document.querySelectorAll('.timer-char');
 
