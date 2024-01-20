@@ -18,17 +18,20 @@
       height: 100vh;
     }
 
-    #birthday-message {
+    h1 {
       color: white;
       font-size: 6em;
-      margin-top: 2px;
+      margin-bottom: 80vh;
+      position: absolute;
+      
     }
 
     #name {
       color: white;
       font-size: 8em;
       line-height: 50px;
-      margin-bottom: 25px;
+      margin-bottom: 15vh;
+      font-weight: bold;
 
     }
 
@@ -59,7 +62,7 @@
   </style>
 </head>
 <body>
-  <div id="birthday-message">Happy Birthday!</div>
+  <h1>Happy Birthday!</h1>
   <div id="name"></div>
 
   <div id="timer">
@@ -109,7 +112,7 @@
     }
 
     function formatSegment(segment) {
-      return segment < 10 ? `0${segment}` : segment;
+      return segment < 10 ? `0` : segment;
     }
 
     setInterval(updateTimer, 1000);
