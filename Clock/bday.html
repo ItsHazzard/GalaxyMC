@@ -18,6 +18,12 @@
       height: 100vh;
     }
 
+    #birthday-message {
+      color: white;
+      font-size: 6em;
+      margin-bottom: 10px;
+    }
+
     #name {
       color: white;
       font-size: 8em;
@@ -52,6 +58,7 @@
   </style>
 </head>
 <body>
+  <div id="birthday-message">Happy Birthday!</div>
   <div id="name"></div>
 
   <div id="timer">
@@ -63,7 +70,6 @@
     <div class="timer-char"></div>
     <div class="timer-char"></div>
   </div>
-
   <script>
     function updateTimer() {
       const currentDate = new Date();
