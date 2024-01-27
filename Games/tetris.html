@@ -22,6 +22,18 @@
     canvas {
       border: 1px solid white;
     }
+
+    #score {
+      color: white;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    #nextBlock {
+      color: white;
+      font-size: 20px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -29,6 +41,7 @@
   <canvas width="320" height="640" id="game"></canvas>
   <button id="pauseButton">Pause</button>
   <div id="score">Score: 0</div>
+  <div id="nextBlock">Next Block: ?</div>
   <script>
     function getRandomInt(min, max) {
       min = Math.ceil(min);
@@ -107,12 +120,14 @@
             }
           }
           score += 100;
+          updateScore();
         } else {
           row--;
         }
       }
 
       tetromino = getNextTetromino();
+      updateNextBlock();
     }
 
     function showGameOver() {
@@ -331,6 +346,12 @@
     function updateScore() {
       const scoreElement = document.getElementById('score');
       scoreElement.textContent = 'Score: ' + score;
+    }
+
+    // Function to update the next block display
+    function updateNextBlock() {
+      const nextBlockElement = document.getElementById('nextBlock');
+      nextBlockElement.textContent = 'Next Block: ' + tetrominoSequence[tetrominoSequence.length - 1];
     }
 
     rAF = requestAnimationFrame(loop);
