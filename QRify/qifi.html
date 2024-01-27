@@ -1,0 +1,122 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qifi Generator</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #61dafb;
+        }
+
+        label, input, button {
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #61dafb;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #4fa3d1;
+        }
+
+        #wifi-qrcode {
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        #download-btn {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #download-btn:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color: #61dafb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Qifi Generator</h1>
+        <label for="wifi-input">Enter Wi-Fi credentials:</label>
+        <input type="text" id="wifi-input" placeholder="Enter Wi-Fi credentials">
+        <button onclick="generateWiFiQRCode()">Generate Wi-Fi QR Code</button>
+        <div id="wifi-qrcode"></div>
+        <button id="download-btn" onclick="downloadWiFiQRCode()">Download Wi-Fi QR Code</button>
+        <a href="index.html">Back to Menu</a>
+    </div>
+
+    <script src="https://davidshimjs.github.io/qrcodejs/qrcode.min.js"></script>
+    <script src="https://raw.githubusercontent.com/joelpurra/qifi/master/qifi.js"></script>
+    <script>
+        function generateWiFiQRCode() {
+            var wifiInput = document.getElementById('wifi-input').value;
+            var wifiQrcodeContainer = document.getElementById('wifi-qrcode');
+            wifiQrcodeContainer.innerHTML = '';
+
+            if (wifiInput.trim() === '') {
+                alert('Please enter Wi-Fi credentials.');
+                return;
+            }
+
+            var wifiQR = qifi.generate(wifiInput);
+            new QRCode(wifiQrcodeContainer, wifiQR);
+        }
+
+        function downloadWiFiQRCode() {
+            var wifiQrcodeCanvas = document.querySelector("#wifi-qrcode canvas");
+
+            if (wifiQrcodeCanvas) {
+                var link = document.createElement('a');
+                link.href = wifiQrcodeCanvas.toDataURL("image/png");
+                link.download = 'wifi-qrcode.png';
+                link.click();
+            } else {
+                alert('Generate a Wi-Fi QR code first.');
+            }
+        }
+    </script>
+</body>
+</html>
