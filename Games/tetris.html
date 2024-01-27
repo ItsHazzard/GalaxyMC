@@ -16,38 +16,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: row;
+      flex-direction: column;
     }
 
     canvas {
       border: 1px solid white;
     }
-
-    #info {
-      color: white;
-      font-size: 18px;
-      margin-left: 20px;
-    }
-
-    #score {
-      margin-bottom: 10px;
-    }
-
-    #nextTetrominoCanvas {
-      margin-left: 20px;
-    }
   </style>
 </head>
 
 <body>
-  <canvas width="480" height="640" id="game"></canvas>
-  <div id="info">
-    <div id="score">Score: 0</div>
-    <div>Current Tetromino:</div>
-    <canvas width="160" height="160" id="currentTetrominoCanvas"></canvas>
-    <div id="nextTetrominoCanvas"></div>
-  </div>
+  <canvas width="320" height="640" id="game"></canvas>
   <button id="pauseButton">Pause</button>
+  <div id="score">Score: 0</div>
   <script>
     function getRandomInt(min, max) {
       min = Math.ceil(min);
@@ -126,14 +107,12 @@
             }
           }
           score += 100;
-          updateScore();
         } else {
           row--;
         }
       }
 
       tetromino = getNextTetromino();
-      updateNextTetromino();
     }
 
     function showGameOver() {
@@ -152,25 +131,9 @@
       context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
     }
 
-    function showWin() {
-      cancelAnimationFrame(rAF);
-      gameOver = true;
-
-      context.fillStyle = 'black';
-      context.globalAlpha = 0.75;
-      context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
-
-      context.globalAlpha = 1;
-      context.fillStyle = 'white';
-      context.font = '36px monospace';
-      context.textAlign = 'center';
-      context.textBaseline = 'middle';
-      context.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
-    }
-
     const canvas = document.getElementById('game');
     const context = canvas.getContext('2d');
-    const grid = 50;
+    const grid = 32;
     const tetrominoSequence = [];
     const playfield = [];
     for (let row = -2; row < 20; row++) {
@@ -216,10 +179,10 @@
         [1, 1, 1],
         [0, 0, 0],
       ],
-      'N': [
+      'N': [ // Added 'N'
         [0, 1, 0],
-        [1, 1, 1],
-        [0, 0, 0],
+        [0, 1, 0],
+        [1, 0, 1],
       ]
     };
 
@@ -231,7 +194,7 @@
       'Z': 'red',
       'J': 'blue',
       'L': 'orange',
-      'N': 'brown'
+      'N': 'brown' // Added 'N'
     };
 
     let count = 0;
@@ -244,7 +207,14 @@
     function loop() {
       rAF = requestAnimationFrame(loop);
       context.clearRect(0, 0, canvas.width, canvas.height);
-      drawGrid();
+
+      // Draw dark gray grid outline
+      context.strokeStyle = 'darkgray';
+      for (let row = 0; row < 20; row++) {
+        for (let col = 0; col < 10; col++) {
+          context.strokeRect(col * grid, row * grid, grid, grid);
+        }
+      }
 
       for (let row = 0; row < 20; row++) {
         for (let col = 0; col < 10; col++) {
@@ -275,36 +245,6 @@
           }
         }
       }
-    }
-
-    function drawGrid() {
-      context.strokeStyle = 'darkgray';
-      for (let row = 0; row < 20; row++) {
-        for (let col = 0; col < 10; col++) {
-          context.strokeRect(col * grid, row * grid, grid, grid);
-        }
-      }
-    }
-
-    function updateNextTetromino() {
-      const nextCanvas = document.getElementById('nextTetrominoCanvas');
-      const nextContext = nextCanvas.getContext('2d');
-      nextContext.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
-      const nextMatrix = tetrominos[tetrominoSequence[tetrominoSequence.length - 1]];
-      const blockSize = nextCanvas.width / 4;
-      for (let row = 0; row < nextMatrix.length; row++) {
-        for (let col = 0; col < nextMatrix[row].length; col++) {
-          if (nextMatrix[row][col]) {
-            nextContext.fillStyle = colors[tetromino.name];
-            nextContext.fillRect(col * blockSize, row * blockSize, blockSize - 1, blockSize - 1);
-          }
-        }
-      }
-    }
-
-    function updateScore() {
-      const scoreElement = document.getElementById('score');
-      scoreElement.textContent = 'Score: ' + score;
     }
 
     document.addEventListener('keydown', function (e) {
@@ -347,27 +287,6 @@
         requestAnimationFrame(loop);
       }
     }
-
-    function handleConsoleCommands(input) {
-      if (input.toLowerCase() === 'win') {
-        showWin();
-      } else if (input.toLowerCase() === 'lose') {
-        showGameOver();
-      } else if (input.toLowerCase().startsWith('score')) {
-        const newScore = parseInt(input.split('=')[1].trim());
-        if (!isNaN(newScore)) {
-          score = newScore;
-          updateScore();
-        }
-      }
-    }
-
-    window.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && e.target.nodeName.toLowerCase() === 'input') {
-        handleConsoleCommands(e.target.value);
-        e.target.value = '';
-      }
-    });
 
     rAF = requestAnimationFrame(loop);
   </script>
