@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wi-Fi QR Code Generator</title>
+    <title>Wi-Fi QR Generator</title>
     <style>
         body {
             background-color: #1f1f1f;
@@ -105,7 +105,7 @@
     </div>
 
     <script src="https://davidshimjs.github.io/qrcodejs/qrcode.min.js"></script>
-    <script src="https://raw.githubusercontent.com/joelpurra/qifi/master/qifi.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qifi"></script>
     <script>
         function generateWiFiQRCode() {
             var wifiSSID = document.getElementById('wifi-ssid').value;
@@ -121,11 +121,11 @@
                 return;
             }
 
-            var wifiQR = qifi.generate({
+            var wifiQR = qifi.encode({
                 ssid: wifiSSID,
                 password: wifiKey,
                 encryption: wifiEncryption,
-                hidden: wifiHidden,
+                isHidden: wifiHidden,
             });
 
             new QRCode(wifiQrcodeContainer, wifiQR);
