@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qifi Generator</title>
+    <title>Wi-Fi QR Code Generator</title>
     <style>
         body {
             background-color: #1f1f1f;
@@ -51,7 +51,6 @@
 
         #wifi-qrcode {
             margin-top: 20px;
-            border-radius: 5px;
         }
 
         #download-btn {
@@ -79,7 +78,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Qr-Fi Generator</h1>
+        <h1>Wi-Fi QR Code Generator</h1>
         <label for="wifi-ssid">SSID:</label>
         <input type="text" id="wifi-ssid" placeholder="Enter Wi-Fi SSID">
 
@@ -88,9 +87,7 @@
 
         <label for="wifi-encryption">Encryption:</label>
         <select id="wifi-encryption">
-            <option value="WPA">WPA</option>
-            <option value="WPA2">WPA2</option>
-            <option value="WPA3">WPA3</option>
+            <option value="WPA">WPA/WPA2/WPA3</option>
             <option value="NONE">None</option>
             <option value="WEP">WEP</option>
         </select>
