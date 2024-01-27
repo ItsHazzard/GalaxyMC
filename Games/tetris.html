@@ -34,7 +34,6 @@
     }
 
     #nextTetrominoCanvas {
-      border: 1px solid white;
       margin-left: 20px;
     }
   </style>
@@ -46,8 +45,7 @@
     <div id="score">Score: 0</div>
     <div>Current Tetromino:</div>
     <canvas width="160" height="160" id="currentTetrominoCanvas"></canvas>
-    <div id="nextTetromino">Next Tetromino:</div>
-    <canvas width="160" height="160" id="nextTetrominoCanvas"></canvas>
+    <div id="nextTetrominoCanvas"></div>
   </div>
   <button id="pauseButton">Pause</button>
   <script>
@@ -172,7 +170,7 @@
 
     const canvas = document.getElementById('game');
     const context = canvas.getContext('2d');
-    const grid = 40;
+    const grid = 50;
     const tetrominoSequence = [];
     const playfield = [];
     for (let row = -2; row < 20; row++) {
