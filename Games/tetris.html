@@ -205,7 +205,9 @@
     let paused = false;
 
     function loop() {
-      rAF = requestAnimationFrame(loop);
+      if (!paused) {
+        rAF = requestAnimationFrame(loop);
+      }
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw dark gray grid outline
