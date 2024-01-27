@@ -89,7 +89,7 @@
 
     function placeTetromino() {
       for (let row = 0; row < tetromino.matrix.length; row++) {
-        for (let col = 0; col < tetromino.matrix[row].length; col++) {
+        for (let col = 0; row < tetromino.matrix[row].length; col++) {
           if (tetromino.matrix[row][col]) {
             if (tetromino.row + row < 0) {
               return showGameOver();
@@ -131,22 +131,9 @@
       context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
     }
 
-    function showPauseScreen() {
-      context.fillStyle = 'black';
-      context.globalAlpha = 0.75;
-      context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
-
-      context.globalAlpha = 1;
-      context.fillStyle = 'white';
-      context.font = '36px monospace';
-      context.textAlign = 'center';
-      context.textBaseline = 'middle';
-      context.fillText('PAUSED', canvas.width / 2, canvas.height / 2);
-    }
-
     const canvas = document.getElementById('game');
     const context = canvas.getContext('2d');
-    const grid = 40; // Increased grid size
+    const grid = 32;
     const tetrominoSequence = [];
     const playfield = [];
     for (let row = -2; row < 20; row++) {
@@ -218,11 +205,6 @@
     let paused = false;
 
     function loop() {
-      if (paused) {
-        showPauseScreen();
-        return;
-      }
-
       rAF = requestAnimationFrame(loop);
       context.clearRect(0, 0, canvas.width, canvas.height);
 
