@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <canvas width="320" height="640" id="game"></canvas>
+  <canvas width="480" height="720" id="game"></canvas>
   <button id="pauseButton">Pause</button>
   <div id="score">Score: 0</div>
   <script>
@@ -131,9 +131,22 @@
       context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
     }
 
+    function showPauseScreen() {
+      context.fillStyle = 'black';
+      context.globalAlpha = 0.75;
+      context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
+
+      context.globalAlpha = 1;
+      context.fillStyle = 'white';
+      context.font = '36px monospace';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+      context.fillText('PAUSED', canvas.width / 2, canvas.height / 2);
+    }
+
     const canvas = document.getElementById('game');
     const context = canvas.getContext('2d');
-    const grid = 32;
+    const grid = 48; // Increased grid size
     const tetrominoSequence = [];
     const playfield = [];
     for (let row = -2; row < 20; row++) {
@@ -205,9 +218,12 @@
     let paused = false;
 
     function loop() {
-      if (!paused) {
-        rAF = requestAnimationFrame(loop);
+      if (paused) {
+        showPauseScreen();
+        return;
       }
+
+      rAF = requestAnimationFrame(loop);
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw dark gray grid outline
@@ -277,6 +293,10 @@
           return;
         }
         tetromino.row = row;
+      }
+
+      if (e.key === 'p' || e.key === 'P') {
+        togglePause();
       }
     });
 
