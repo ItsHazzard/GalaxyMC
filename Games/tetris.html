@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .game-container {
+      position: relative;
+      width: 300px;
+      height: 600px;
+      border: 2px solid #333;
+    }
+
+    #tetris-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: repeat(20, 1fr);
+      width: 100%;
+      height: 100%;
+    }
+
+    .cell {
+      border: 1px solid #ccc;
+    }
+
+    .cell.active {
+      background-color: #4CAF50;
+    }
+
+    .cell.filled {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div id="tetris-grid"></div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('tetris-grid');
+      const width = 10;
+      const height = 20;
+      let currentPosition = 4;
+      let currentRotation = 0;
+      let currentShape = randomShape();
+
+      function randomShape() {
+        const shapes = [
+          [[1, 1, 1, 1]],
+          [[1, 1, 1], [1]],
+          [[1, 1, 1], [0, 0, 1]],
+          [[1, 1, 1], [0, 1]],
+          [[1, 1], [1, 1]],
+          [[1, 1, 1], [1, 0]],
+          [[1, 1, 1], [0, 1, 0]],
+        ];
+
+        return shapes[Math.floor(Math.random() * shapes.length)];
+      }
+
+      function draw() {
+        grid.innerHTML = '';
+        currentShape[currentRotation].forEach((row, rowIndex) => {
+          row.forEach((cell, cellIndex) => {
+            if (cell) {
+              const cellElement = document.createElement('div');
+              cellElement.classList.add('cell', 'active');
+              cellElement.style.gridColumn = currentPosition + cellIndex + 1;
+              cellElement.style.gridRow = rowIndex + 1;
+              grid.appendChild(cellElement);
+            }
+          });
+        });
+      }
+
+      function undraw() {
+        const cells = document.querySelectorAll('.active');
+        cells.forEach((cell) => cell.remove());
+      }
+
+      function drawFilled() {
+        currentShape[currentRotation].forEach((row, rowIndex) => {
+          row.forEach((cell, cellIndex) => {
+            if (cell) {
+              const cellElement = document.createElement('div');
+              cellElement.classList.add('cell', 'filled');
+              cellElement.style.gridColumn = currentPosition + cellIndex + 1;
+              cellElement.style.gridRow = rowIndex + 1;
+              grid.appendChild(cellElement);
+            }
+          });
+        });
+      }
+
+      function moveDown() {
+        undraw();
+        currentPosition += width;
+        draw();
+      }
+
+      function moveLeft() {
+        undraw();
+        currentPosition -= 1;
+        draw();
+      }
+
+      function moveRight() {
+        undraw();
+        currentPosition += 1;
+        draw();
+      }
+
+      function rotate() {
+        undraw();
+        currentRotation = (currentRotation + 1) % currentShape.length;
+        draw();
+      }
+
+      function collision() {
+        return currentShape[currentRotation].some((row, rowIndex) =>
+          row.some((cell, cellIndex) => {
+            const nextPosition = currentPosition + cellIndex + 1 + (rowIndex * width);
+            return cell && (nextPosition > width * height || (nextPosition % width === 0 && cellIndex !== 0));
+          })
+        );
+      }
+
+      function merge() {
+        currentShape[currentRotation].forEach((row, rowIndex) => {
+          row.forEach((cell, cellIndex) => {
+            if (cell) {
+              const position = currentPosition + cellIndex + 1 + (rowIndex * width);
+              grid.children[position].classList.remove('active');
+              grid.children[position].classList.add('filled');
+            }
+          });
+        });
+      }
+
+      function checkRows() {
+        for (let row = height; row >= 1; row--) {
+          const rowCells = Array.from(grid.children).filter(cell => parseInt(cell.style.gridRow) === row);
+          if (rowCells.every(cell => cell.classList.contains('filled'))) {
+            rowCells.forEach(cell => cell.remove());
+            moveRowsDown(row);
+          }
+        }
+      }
+
+      function moveRowsDown(row) {
+        for (let i = row - 1; i >= 1; i--) {
+          const rowCells = Array.from(grid.children).filter(cell => parseInt(cell.style.gridRow) === i);
+          rowCells.forEach(cell => {
+            cell.style.gridRow = i + 1;
+          });
+        }
+      }
+
+      function gameOver() {
+        return Array.from(grid.children).slice(0, width).some(cell => cell.classList.contains('filled'));
+      }
+
+      function update() {
+        if (!collision()) {
+          moveDown();
+        } else {
+          merge();
+          checkRows();
+          if (!gameOver()) {
+            currentPosition = 4;
+            currentRotation = 0;
+            currentShape = randomShape();
+          } else {
+            alert('Game Over!');
+            resetGame();
+          }
+        }
+      }
+
+      function resetGame() {
+        grid.innerHTML = '';
+        currentPosition = 4;
+        currentRotation = 0;
+        currentShape = randomShape();
+        draw();
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.code === 'ArrowUp') {
+          rotate();
+        } else if (e.code === 'ArrowDown') {
+          update();
+        } else if (e.code === 'ArrowLeft') {
+          moveLeft();
+        } else if (e.code === 'ArrowRight') {
+          moveRight();
+        }
+      });
+
+      // Initial setup
+      resetGame();
+      setInterval(update, 1000);
+    });
+  </script>
+</body>
+</html>
