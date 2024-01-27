@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,12 +26,12 @@
             color: #61dafb;
         }
 
-        label, input, button {
+        label, input, button, select {
             margin-bottom: 10px;
             border-radius: 5px;
         }
 
-        input {
+        input, select {
             padding: 8px;
             width: 100%;
         }
@@ -51,7 +51,7 @@
 
         #wifi-qrcode {
             margin-top: 20px;
-            border-radius: 10px;
+            border-radius: 5px;
         }
 
         #download-btn {
@@ -79,9 +79,28 @@
 </head>
 <body>
     <div class="container">
-        <h1>Qifi Generator</h1>
-        <label for="wifi-input">Enter Wi-Fi credentials:</label>
-        <input type="text" id="wifi-input" placeholder="Enter Wi-Fi credentials">
+        <h1>Qr-Fi Generator</h1>
+        <label for="wifi-ssid">SSID:</label>
+        <input type="text" id="wifi-ssid" placeholder="Enter Wi-Fi SSID">
+
+        <label for="wifi-key">Key/Password:</label>
+        <input type="text" id="wifi-key" placeholder="Enter Wi-Fi Key/Password">
+
+        <label for="wifi-encryption">Encryption:</label>
+        <select id="wifi-encryption">
+            <option value="WPA">WPA</option>
+            <option value="WPA2">WPA2</option>
+            <option value="WPA3">WPA3</option>
+            <option value="NONE">None</option>
+            <option value="WEP">WEP</option>
+        </select>
+
+        <label for="wifi-hidden">Hidden:</label>
+        <select id="wifi-hidden">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+        </select>
+
         <button onclick="generateWiFiQRCode()">Generate Wi-Fi QR Code</button>
         <div id="wifi-qrcode"></div>
         <button id="download-btn" onclick="downloadWiFiQRCode()">Download Wi-Fi QR Code</button>
@@ -92,16 +111,26 @@
     <script src="https://raw.githubusercontent.com/joelpurra/qifi/master/qifi.js"></script>
     <script>
         function generateWiFiQRCode() {
-            var wifiInput = document.getElementById('wifi-input').value;
+            var wifiSSID = document.getElementById('wifi-ssid').value;
+            var wifiKey = document.getElementById('wifi-key').value;
+            var wifiEncryption = document.getElementById('wifi-encryption').value;
+            var wifiHidden = document.getElementById('wifi-hidden').value === 'true';
+
             var wifiQrcodeContainer = document.getElementById('wifi-qrcode');
             wifiQrcodeContainer.innerHTML = '';
 
-            if (wifiInput.trim() === '') {
-                alert('Please enter Wi-Fi credentials.');
+            if (wifiSSID.trim() === '') {
+                alert('Please enter Wi-Fi SSID.');
                 return;
             }
 
-            var wifiQR = qifi.generate(wifiInput);
+            var wifiQR = qifi.generate({
+                ssid: wifiSSID,
+                password: wifiKey,
+                encryption: wifiEncryption,
+                hidden: wifiHidden,
+            });
+
             new QRCode(wifiQrcodeContainer, wifiQR);
         }
 
