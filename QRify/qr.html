@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #61dafb;
+        }
+
+        label, input, button {
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #61dafb;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #4fa3d1;
+        }
+
+        #qrcode {
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        #download-btn {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #download-btn:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color: #61dafb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Generator</h1>
+        <label for="text-input">Enter text:</label>
+        <input type="text" id="text-input" placeholder="Enter text">
+        <button onclick="generateQRCode()">Generate QR Code</button>
+        <div id="qrcode"></div>
+        <button id="download-btn" onclick="downloadQRCode()">Download QR Code</button>
+        <a href="index.html">Back to Menu</a>
+    </div>
+
+    <script src="https://davidshimjs.github.io/qrcodejs/qrcode.min.js"></script>
+    <script>
+        function generateQRCode() {
+            var textInput = document.getElementById('text-input').value;
+            var qrcodeContainer = document.getElementById('qrcode');
+            qrcodeContainer.innerHTML = '';
+
+            if (textInput.trim() === '') {
+                alert('Please enter text.');
+                return;
+            }
+
+            new QRCode(qrcodeContainer, textInput);
+        }
+
+        function downloadQRCode() {
+            var qrcodeCanvas = document.querySelector("#qrcode canvas");
+
+            if (qrcodeCanvas) {
+                var link = document.createElement('a');
+                link.href = qrcodeCanvas.toDataURL("image/png");
+                link.download = 'qrcode.png';
+                link.click();
+            } else {
+                alert('Generate a QR code first.');
+            }
+        }
+    </script>
+</body>
+</html>
