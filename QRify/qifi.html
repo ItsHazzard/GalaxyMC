@@ -3,123 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wi-Fi QR Code Generator</title>
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!-- Include qrcode.js -->
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <title>Dark Theme QR Code Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <!-- Bootstrap CSS -->
+
     <style>
+        /* Dark theme styles */
+
         body {
-            background-color: #1f1f1f;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
+            background-color: #282c34;
+            color: #abb2bf;
         }
 
-        label, input, button, select {
-            margin-bottom: 10px;
+        .container {
+            background-color: #21252b;
             border-radius: 5px;
-            padding: 8px;
-            width: 100%;
-        }
-
-        button {
-            background-color: #61dafb;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #4fa3d1;
-        }
-
-        #qrcode {
+            padding: 20px;
             margin-top: 20px;
         }
 
-        #save, #print {
-            display: none;
+        .form-control,
+        .btn {
+            background-color: #363c4a;
+            border-color: #363c4a;
+            color: #abb2bf;
         }
+
+        .btn:hover {
+            background-color: #5c6370;
+            border-color: #5c6370;
+        }
+
+        .checkbox label {
+            color: #abb2bf;
+        }
+
+        #qrcode {
+            background-color: #363c4a;
+            border: 2px solid #282c34;
+        }
+
+        #history-drop {
+            background-color: #21252b;
+        }
+
+        /* Dark theme styles end */
     </style>
 </head>
 <body>
-    <div>
-        <label for="ssid">SSID:</label>
-        <input type="text" id="ssid" placeholder="Enter SSID">
-
-        <label for="hidden">Hidden:</label>
-        <input type="checkbox" id="hidden">
-
-        <label for="enc">Encryption:</label>
-        <select id="enc">
-            <option value="nopass">No Password</option>
-            <option value="WPA">WPA/WPA2/WPA3</option>
-            <option value="WEP">WEP</option>
-            <!-- Add other encryption options as needed -->
-        </select>
-
-        <label for="key">Key/Password:</label>
-        <input type="password" id="key" placeholder="Enter Key/Password">
-
-        <button onclick="generate()">Generate QR Code</button>
+    <div class="container">
+        <form id="form">
+            <div class="form-group">
+                <label for="ssid">SSID:</label>
+                <input type="text" class="form-control" id="ssid" required>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" id="hidden"> Hidden
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="enc">Encryption:</label>
+                <select class="form-control" id="enc">
+                    <option value="nopass">No Password</option>
+                    <!-- Add other encryption options if needed -->
+                </select>
+            </div>
+            <div id="key-p" class="form-group">
+                <label for="key">Key:</label>
+                <input type="password" class="form-control" id="key">
+            </div>
+            <button type="submit" class="btn btn-primary">Generate QR Code</button>
+        </form>
         <div id="qrcode"></div>
-        <button id="save" onclick="save()">Save</button>
-        <button id="print">Print</button>
+        <p id="showssid"></p>
+        <button id="save" class="btn btn-success" style="display: none;">Save Configuration</button>
+        <a id="export" style="display: none;" download="qrcode.png">Export QR Code</a>
+        <div id="history-drop">
+            <ul class="dropdown-menu"></ul>
+        </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> <!-- jQuery -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> <!-- Bootstrap JS -->
+    <script src="jquery.qrcode.min.js"></script> <!-- QR Code Generator Plugin -->
+
     <script>
-        function escape_string (string) {
+        // JavaScript code
+        function escape_string(string) {
             var to_escape = ['\\', ';', ',', ':', '"'];
             var hex_only = /^[0-9a-f]+$/i;
             var output = "";
-            for (var i=0; i<string.length; i++) {
-                if($.inArray(string[i], to_escape) != -1) {
-                    output += '\\'+string[i];
-                }
-                else {
+            for (var i = 0; i < string.length; i++) {
+                if ($.inArray(string[i], to_escape) != -1) {
+                    output += '\\' + string[i];
+                } else {
                     output += string[i];
                 }
             }
             return output;
-        };
+        }
 
-        function generate () {
+        function generate() {
             var ssid = $('#ssid').val();
             var hidden = $('#hidden').is(':checked');
             var enc = $('#enc').val();
             if (enc != 'nopass') {
                 var key = $('#key').val();
+                $('#showkey').text(enc + ' Passphrase: ' + key);
             } else {
                 var key = '';
+                $('#showkey').text('');
             }
-            var qrstring = 'WIFI:S:'+escape_string(ssid)+';T:'+enc+';P:'+escape_string(key)+';';
+            var qrstring = 'WIFI:S:' + escape_string(ssid) + ';T:' + enc + ';P:' + escape_string(key) + ';';
             if (hidden) {
                 qrstring += 'H:true';
             }
             qrstring += ';';
-
             $('#qrcode').empty();
             $('#qrcode').qrcode(qrstring);
+            $('#showssid').text('SSID: ' + ssid);
+            $('#save').show();
+            $('#print').css('display', 'inline-block');
 
-            $('#save, #print').show();
-        };
+            var canvas = $('#qrcode canvas');
+            if (canvas.length == 1) {
+                var data = canvas[0].toDataURL('image/png');
+                var e = $('#export');
+                e.attr('href', data);
+                e.attr('download', ssid + '-qrcode.png');
+                e.css('display', 'inline-block');
+            }
+        }
 
-        function save () {
-            // Your save logic goes here
-            console.log('Saving...');
-        };
+        function save() {
+            var ssid = $('#ssid').val();
+            if (!ssid) return;
+            var hidden = $('#hidden').is(':checked');
+            var enc = $('#enc').val();
+            var key = $('#key').val();
+            var storage = $.localStorage('qificodes');
+            if (!storage) storage = {};
+            storage[ssid] = { 'hidden': hidden, 'enc': enc, 'key': key };
+            $.localStorage('qificodes', storage);
+            loadhistory();
+        }
 
-        $(document).ready(function(){
-            $('#print').click(function() {
-                // Your print logic goes here
-                console.log('Printing...');
+        function load(ssid) {
+            var storage = $.localStorage('qificodes');
+            if (ssid in storage) {
+                $('#ssid').val(ssid);
+                $('#enc').val(storage[ssid]['enc']);
+                $('#key').val(storage[ssid]['key']);
+                $('#hidden').prop('checked', storage[ssid]['hidden']);
+                generate();
+            }
+        }
+
+        function loadhistory() {
+            var storage = $.localStorage('qificodes');
+            if (storage) {
+                var history = $('#history-drop ul.dropdown-menu');
+                var ssids = Object.keys(storage);
+                history.empty();
+                for (var i = 0; i < ssids.length; i++) {
+                    history.append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="history-item">' + ssids[i] + '</a></li>');
+                }
+                history.append('<li role="presentation" class="divider"></li>');
+                history.append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="history-clear">clear history</a></li>');
+
+                history.on('click', 'a.history-item', function (e) {
+                    e.preventDefault();
+                    load($(this).text());
+                });
+                history.on('click', 'a.history-clear', function (e) {
+                    e.preventDefault();
+                    clearhistory();
+                });
+                $('#history-drop').show();
+            }
+        }
+
+        function clearhistory() {
+            $.localStorage('qificodes', null);
+            $('#history-drop').hide();
+        }
+
+        $(document).ready(function () {
+            $('#form').submit(function () {
+                generate();
+                return false;
             });
+            $('#save').click(function () {
+                save();
+            });
+            $('#display-key').click(function () {
+                var $key = $("#key");
+                if ($key.attr('type') === 'password') {
+                    $key.attr('type', 'text');
+                    $("#display-key-icon").attr("class", "glyphicon glyphicon-eye-close");
+                } else {
+                    $key.attr('type', 'password');
+                    $("#display-key-icon").attr("class", "glyphicon glyphicon-eye-open");
+                }
+            });
+            $('#enc').change(function () {
+                if ($(this).val() != 'nopass') {
+                    $('#key-p').show();
+                    $('#key').attr('required', 'required');
+                } else {
+                    $('#key-p').hide();
+                    $('#key').removeAttr('required');
+                }
+            });
+            $('#form').tooltip({
+                selector: "[data-toggle=tooltip]"
+            });
+            loadhistory();
         });
+
+        // Service Worker installation
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js', { scope: './' }).then(function (registration) {
+                    console.log('[Service Worker] Successfully installed');
+                }).catch(function (error) {
+                    console.log('[Service Worker] Installation failed:', error);
+                });
+            });
+        }
     </script>
 </body>
 </html>
