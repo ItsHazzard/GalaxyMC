@@ -16,16 +16,34 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
+      flex-direction: row;
     }
 
     canvas {
       border: 1px solid white;
     }
+
+    #controls {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      color: white;
+      font-size: 14px;
+      line-height: 1.5;
+    }
   </style>
 </head>
 
 <body>
+  <div id="controls">
+    Controls:<br>
+    Left: Left Arrow Key<br>
+    Right: Right Arrow Key<br>
+    Rotate: Up Arrow Key<br>
+    Drop: Down Arrow Key<br>
+    Pause: P<br>
+    Refresh: R
+  </div>
   <canvas width="320" height="640" id="game"></canvas>
   <button id="pauseButton">Pause</button>
   <div id="score">Score: 0</div>
@@ -279,6 +297,10 @@
 
       if (e.key === 'p' || e.key === 'P') {
         togglePause();
+      }
+
+      if (e.key === 'r' || e.key === 'R') {
+        location.reload();
       }
     });
 
