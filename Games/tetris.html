@@ -26,7 +26,7 @@
 </head>
 
 <body>
-  <canvas width="480" height="720" id="game"></canvas>
+  <canvas width="320" height="640" id="game"></canvas>
   <button id="pauseButton">Pause</button>
   <div id="score">Score: 0</div>
   <script>
@@ -146,7 +146,7 @@
 
     const canvas = document.getElementById('game');
     const context = canvas.getContext('2d');
-    const grid = 48; // Increased grid size
+    const grid = 40; // Increased grid size
     const tetrominoSequence = [];
     const playfield = [];
     for (let row = -2; row < 20; row++) {
