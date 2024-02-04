@@ -1,123 +1,314 @@
 
-<html lang="en"><head>
-  <meta charset="utf-8">
-  <base href="/locale/en/">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="pure JS WiFi QR Code Generator">
+    <meta name="author" content="Evgeni Golov">
+    <meta name="flattr:id" content="menw3k">
+    <title>pure JS WiFi QR Code Generator</title>
+    <link rel="stylesheet" type="text/css" media="all" href="style.css">
+    <link rel="stylesheet" type="text/css" media="print" href="print.css">
+    <link rel="icon" href="qifi.png" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
 
-  <link rel="alternate" href="https://wifiqrcode.com/locale/en/" hreflang="en">
-  <link rel="alternate" href="https://wifiqrcode.com/locale/de/" hreflang="de">
-  <link rel="alternate" href="https://wifiqrcode.com/locale/fr/" hreflang="fr">
-  <link rel="alternate" href="https://wifiqrcode.com/locale/es/" hreflang="es">
-  <meta property="og:image" content="https://wifiqrcode.com/assets/icon.png">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="all" href="bootstrap/dist/css/bootstrap.min.css">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">QiFi</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li id="history-drop" class="dropdown">
+                <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">History <b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="history-drop">
+                </ul>
+              </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
-  <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="assets/favicon/manifest.json">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
+    <div class="container">
+    <section id="generator">
+    <div class="page-header"><h1 id="title">pure JS WiFi QR Code Generator</h1></div>
+    <div id="history"></div>
+    <form id="form">
+        <div class="form-group has-feedback">
+            <label for="ssid" class="control-label">SSID</label>
+            <div class="input-group">
+                <span id="basic-addon-ssid" class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
+                <input type="text" id="ssid" name="ssid" class="form-control" placeholder="SSID" aria-describedby="basic-addon-ssid" required>
+            </div>
+        </div>
 
-  <style type="text/css" media="all">
-    /* latin-ext */
-    @font-face {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 300;
-      font-display: swap;
-      src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmSU5fChc4AMP6lbBP.woff2) format('woff2');
-      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
+        <div class="form-group">
+            <label for="enc" class="control-label">Encryption</label>
+            <div class="input-group">
+                <select name="enc" id="enc" class="form-control">
+                    <option value="WPA">WPA/WPA2/WPA3</option>
+                    <option value="WEP">WEP</option>
+                    <option value="nopass">None</option>
+                </select>
+            </div>
+        </div>
 
-    /* latin */
-    @font-face {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 300;
-      font-display: swap;
-      src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
+        <div class="form-group has-feedback" id="key-p">
+            <label class="control-label">Key</label>
+            <div class="input-group">
+                <span id="basic-addon1" class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" id="key" name="key" class="form-control" placeholder="key" aria-describedby="basic-addon1" required>
+                <span class="input-group-btn"><button class="btn btn-default" type="button" id="display-key"><i class="glyphicon glyphicon-eye-open" id="display-key-icon"></i></button></span>
+           </div>
+        </div>
 
-    /* latin-ext */
-    @font-face {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu7GxKKTU1Kvnz.woff2) format('woff2');
-      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
+        <div class="form-group">
+            <label class="pull-left control-label" for="hidden">Hidden</label>
+            <div class="input-group">
+                <input type="checkbox" name="hidden" id="hidden" data-toggle="tooltip" title="Is your SSID hidden?">
+            </div>
+        </div>
 
-    /* latin */
-    @font-face {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
+        <div class="form-group">
+            <button id="generate" class="btn btn-primary">Generate!</button>
+            <button id="save" type="button" class="btn" data-toggle="tooltip" title="Save the credentials for the WiFi in HTML5 localStorage for later use.">Save!</button>
+            <a href="#" id="export" class="btn" target="_blank" data-toggle="tooltip" title="Export the QR code as a PNG.">Export!</a>
+            <a href="javascript:window.print()" id="print" class="btn" data-toggle="tooltip" title="Print the QR code.">Print!</a>
+        </div>
+    </form>
+    <h1 id="showssid">SSID: none</h1>
+    <h1 id="showkey">Passphrase: none</h1>
+    <div id="qrcode"></div>
+    </section>
+    <section id="about">
+        <div class="page-header"><h1 class="anchor">About</h1></div>
+        <p>
+        Ever wanted to create a cool QR code for your guests? But never wanted to type in your WiFi credentials into a form that submits them to a remote webserver to render the QR code? <i>QiFi</i> for the rescue! It will render the code in your browser, on your machine, so the WiFi stays as secure as it was before (read the code if you do not trust text on the internet :-))!
+        </p>
+        <p>
+        If you use the Save-button to store a code, this is still secure, as the data is stored in HTML5 localStorage and is never transmitted to the server (in contrast to cookie-based solutions).
+        </p>
+        <p>
+        Don't trust your browser either? Just pipe the string
+        <code>WIFI:S:&lt;SSID&gt;;T:&lt;WPA|WEP|&gt;;P:&lt;password&gt;;;</code>
+        through the QR code generator of your choice after <a href="https://github.com/zxing/zxing/wiki/Barcode-Contents#wi-fi-network-config-android-ios-11">reading the documentation</a>.
+        </p>
 
-    /* latin-ext */
-    @font-face {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: local('Roboto Medium'), local('Roboto-Medium'), url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fChc4AMP6lbBP.woff2) format('woff2');
-      unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-    }
+        <h2>Supported Scanners</h2>
+        <h3>Android</h3>
+        <p>
+            The Android Camera App has support for WiFi QR codes since Android 10.
+        </p>
+        <p>
+            <a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner</a> from ZXing.
+        </p>
+        <p>
+            Huawei phones have a QR code scanner in HiVision mode. This mode has an eye-shaped icon and can be lauched from the lock screen by swiping up or from the camera.
+        </p>
+        <p>
+            Every other Android Barcode Scanner based on the <a href="https://github.com/zxing/zxing">ZXing library</a>.
+        </p>
+        <h3>iOS</h3>
+        <p>
+            The iOS Camera App has <a href="https://www.macrumors.com/2017/06/06/iphone-can-scan-qr-codes-ios-11/">support for WiFi QR codes since iOS 11</a>.
+        </p>
+        <p>
+            <a href="https://itunes.apple.com/app/qr-reader-for-iphone/id368494609">QR Reader for iPhone</a> from TapMedia and <a href="https://itunes.apple.com/in/app/avira-insight-qr-code-scanner/id1151086651">Avira Insight QR Code Scanner</a> by Avira Holding GmbH &amp; Co. KG also support WiFi QR codes. Please note: Due to iOS design, third-party apps cannot modify WiFi settings directly and you'll have to copy&amp;paste the details.
+        </p>
+        <h3>Maemo</h3>
+        <p>
+            <a href="http://maemo.org/packages/view/mbarcode/">mbarcode</a> with the <a href="http://maemo.org/packages/view/mbarcode-plugin-wifi/">mbarcode wifi plugin</a> on Maemo 5.
+        </p>
+        <h3>Other</h3>
+        <p>
+            Every other QR scanner out there should be able to scan the code too, but probably won't interpret it as intended. If your scanner supports WiFi QR codes, please send me a mail!
+        </p>
+    </section>
+    <section id="contact">
+        <div class="page-header"><h1 class="anchor">Contact</h1></div>
+        <p>QiFi was written by <a href="https://www.die-welt.net">Evgeni Golov</a>, using <a href="http://jquery.com/">jQuery</a>, <a href="http://jeromeetienne.github.io/jquery-qrcode/">jQuery QRCode</a>, <a href="http://yckart.github.io/jquery.storage.js/">jQuery Storage</a> and <a href="https://getbootstrap.com/">Bootstrap</a>.</p>
+        <p>If you have any comments, suggestions, bugs or complaints: please write to: <a href="mailto:evgeni+qifi@golov.de">evgeni+qifi@golov.de</a>.</p>
+    </section>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <img src="qifi-small.png" alt="qifi logo"/> by <a href="https://github.com/evgeni">@evgeni</a><br/>
+        <span style="color: #999999;">QR Code is a registered trademark of DENSO WAVE INCORPORATED in the United States and other countries.</span>
+      </div>
+    </footer>
+    <script src="jquery/jquery-3.5.1.slim.min.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="jquery-qrcode/jquery.qrcode.min.js"></script>
+    <script src="jquery.storage.js/jquery.storage.js"></script>
+    <script type="text/javascript">
+        function escape_string (string) {
+            var to_escape = ['\\', ';', ',', ':', '"'];
+            var hex_only = /^[0-9a-f]+$/i;
+            var output = "";
+            for (var i=0; i<string.length; i++) {
+                if($.inArray(string[i], to_escape) != -1) {
+                    output += '\\'+string[i];
+                }
+                else {
+                    output += string[i];
+                }
+            }
+            //if (hex_only.test(output)) {
+            //    output = '"'+output+'"';
+            //}
+            return output;
+        };
 
-    /* latin */
-    @font-face {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: local('Roboto Medium'), local('Roboto-Medium'), url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format('woff2');
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-    }
-  </style>
+        function generate () {
+            var ssid = $('#ssid').val();
+            var hidden = $('#hidden').is(':checked');
+            var enc = $('#enc').val();
+            if (enc != 'nopass') {
+                var key = $('#key').val();
+                $('#showkey').text(enc+' Passphrase: '+key);
+            } else {
+                var key = '';
+                $('#showkey').text('');
+            }
+            // https://github.com/zxing/zxing/wiki/Barcode-Contents#wi-fi-network-config-android-ios-11
+            var qrstring = 'WIFI:S:'+escape_string(ssid)+';T:'+enc+';P:'+escape_string(key)+';';
+            if (hidden) {
+                qrstring += 'H:true';
+            }
+            qrstring += ';';
+            $('#qrcode').empty();
+            $('#qrcode').qrcode(qrstring);
+            $('#showssid').text('SSID: '+ssid);
+            $('#save').show();
+            $('#print').css('display', 'inline-block');
 
-  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+            var canvas = $('#qrcode canvas');
+            if (canvas.length == 1) {
+                var data = canvas[0].toDataURL('image/png');
+                var e = $('#export');
+                e.attr('href', data);
+                e.attr('download', ssid+'-qrcode.png');
+                // e.show() sets display:inline, but we need inline-block
+                e.css('display', 'inline-block');
+            }
+        };
 
-  <!-- Google Tag Manager -->
-  <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-WCT2JLT"></script><script>(function (w, d, s, l, i) {
-    w[l] = w[l] || []; w[l].push({
-      'gtm.start':
-        new Date().getTime(), event: 'gtm.js'
-    }); var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-WCT2JLT');</script>
-  <!-- End Google Tag Manager -->
-  <style type="text/css">@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc-.woff) format('woff');}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxM.woff) format('woff');}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc-.woff) format('woff');}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fCRc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fABc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fCBc4AMP6lbBP.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fCxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fChc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu5mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7GxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fCRc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fABc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fCBc4AMP6lbBP.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fCxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fChc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>
-<link rel="stylesheet" href="styles.3fd0cdfd0f9079e26c95.css"><style>#cookie-banner[_ngcontent-iie-c47]{width:100%;font-size:16px;background-color:#fbfbfb;position:fixed;bottom:0;z-index:1;box-shadow:0 0 1px #999;display:table;border-spacing:10px}#cookie-container[_ngcontent-iie-c47]{display:table-row}#cookie-button-cell[_ngcontent-iie-c47], #cookie-text-cell[_ngcontent-iie-c47]{display:table-cell;vertical-align:middle}#cookie-button-cell[_ngcontent-iie-c47]{width:40px}#cookie-button[_ngcontent-iie-c47]{line-height:30px;width:40px}</style><style>div.footer[_ngcontent-iie-c46]{color:#fff;text-align:center;padding:2rem 1rem;background-color:#333}span.language-icon[_ngcontent-iie-c46]{padding:0 .8rem}img.flag[_ngcontent-iie-c46]{height:25px;border-radius:50%;border:2px solid #fff}div.container[_ngcontent-iie-c46]{padding:.5rem 0}a[_ngcontent-iie-c46]{color:#fff;font-weight:400}@media (min-width:500px){div.nav-link[_ngcontent-iie-c46]{display:inline}}nav[_ngcontent-iie-c46]   a[_ngcontent-iie-c46]{padding:0 .8rem}#copyright[_ngcontent-iie-c46]{padding-top:1.5rem;padding-bottom:2rem}#denso[_ngcontent-iie-c46]{padding-bottom:2.5rem;font-style:italic}</style><style>.mat-button .mat-button-focus-overlay,.mat-icon-button .mat-button-focus-overlay{opacity:0}.mat-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay,.mat-stroked-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay{opacity:.04}@media(hover: none){.mat-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay,.mat-stroked-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay{opacity:0}}.mat-button,.mat-icon-button,.mat-stroked-button,.mat-flat-button{box-sizing:border-box;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;outline:none;border:none;-webkit-tap-highlight-color:transparent;display:inline-block;white-space:nowrap;text-decoration:none;vertical-align:baseline;text-align:center;margin:0;min-width:64px;line-height:36px;padding:0 16px;border-radius:4px;overflow:visible}.mat-button::-moz-focus-inner,.mat-icon-button::-moz-focus-inner,.mat-stroked-button::-moz-focus-inner,.mat-flat-button::-moz-focus-inner{border:0}.mat-button.mat-button-disabled,.mat-icon-button.mat-button-disabled,.mat-stroked-button.mat-button-disabled,.mat-flat-button.mat-button-disabled{cursor:default}.mat-button.cdk-keyboard-focused .mat-button-focus-overlay,.mat-button.cdk-program-focused .mat-button-focus-overlay,.mat-icon-button.cdk-keyboard-focused .mat-button-focus-overlay,.mat-icon-button.cdk-program-focused .mat-button-focus-overlay,.mat-stroked-button.cdk-keyboard-focused .mat-button-focus-overlay,.mat-stroked-button.cdk-program-focused .mat-button-focus-overlay,.mat-flat-button.cdk-keyboard-focused .mat-button-focus-overlay,.mat-flat-button.cdk-program-focused .mat-button-focus-overlay{opacity:.12}.mat-button::-moz-focus-inner,.mat-icon-button::-moz-focus-inner,.mat-stroked-button::-moz-focus-inner,.mat-flat-button::-moz-focus-inner{border:0}.mat-raised-button{box-sizing:border-box;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;outline:none;border:none;-webkit-tap-highlight-color:transparent;display:inline-block;white-space:nowrap;text-decoration:none;vertical-align:baseline;text-align:center;margin:0;min-width:64px;line-height:36px;padding:0 16px;border-radius:4px;overflow:visible;transform:translate3d(0, 0, 0);transition:background 400ms cubic-bezier(0.25, 0.8, 0.25, 1),box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)}.mat-raised-button::-moz-focus-inner{border:0}.mat-raised-button.mat-button-disabled{cursor:default}.mat-raised-button.cdk-keyboard-focused .mat-button-focus-overlay,.mat-raised-button.cdk-program-focused .mat-button-focus-overlay{opacity:.12}.mat-raised-button::-moz-focus-inner{border:0}._mat-animation-noopable.mat-raised-button{transition:none;animation:none}.mat-stroked-button{border:1px solid currentColor;padding:0 15px;line-height:34px}.mat-stroked-button .mat-button-ripple.mat-ripple,.mat-stroked-button .mat-button-focus-overlay{top:-1px;left:-1px;right:-1px;bottom:-1px}.mat-fab{box-sizing:border-box;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;outline:none;border:none;-webkit-tap-highlight-color:transparent;display:inline-block;white-space:nowrap;text-decoration:none;vertical-align:baseline;text-align:center;margin:0;min-width:64px;line-height:36px;padding:0 16px;border-radius:4px;overflow:visible;transform:translate3d(0, 0, 0);transition:background 400ms cubic-bezier(0.25, 0.8, 0.25, 1),box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);min-width:0;border-radius:50%;width:56px;height:56px;padding:0;flex-shrink:0}.mat-fab::-moz-focus-inner{border:0}.mat-fab.mat-button-disabled{cursor:default}.mat-fab.cdk-keyboard-focused .mat-button-focus-overlay,.mat-fab.cdk-program-focused .mat-button-focus-overlay{opacity:.12}.mat-fab::-moz-focus-inner{border:0}._mat-animation-noopable.mat-fab{transition:none;animation:none}.mat-fab .mat-button-wrapper{padding:16px 0;display:inline-block;line-height:24px}.mat-mini-fab{box-sizing:border-box;position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:pointer;outline:none;border:none;-webkit-tap-highlight-color:transparent;display:inline-block;white-space:nowrap;text-decoration:none;vertical-align:baseline;text-align:center;margin:0;min-width:64px;line-height:36px;padding:0 16px;border-radius:4px;overflow:visible;transform:translate3d(0, 0, 0);transition:background 400ms cubic-bezier(0.25, 0.8, 0.25, 1),box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);min-width:0;border-radius:50%;width:40px;height:40px;padding:0;flex-shrink:0}.mat-mini-fab::-moz-focus-inner{border:0}.mat-mini-fab.mat-button-disabled{cursor:default}.mat-mini-fab.cdk-keyboard-focused .mat-button-focus-overlay,.mat-mini-fab.cdk-program-focused .mat-button-focus-overlay{opacity:.12}.mat-mini-fab::-moz-focus-inner{border:0}._mat-animation-noopable.mat-mini-fab{transition:none;animation:none}.mat-mini-fab .mat-button-wrapper{padding:8px 0;display:inline-block;line-height:24px}.mat-icon-button{padding:0;min-width:0;width:40px;height:40px;flex-shrink:0;line-height:40px;border-radius:50%}.mat-icon-button i,.mat-icon-button .mat-icon{line-height:24px}.mat-button-ripple.mat-ripple,.mat-button-focus-overlay{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none;border-radius:inherit}.mat-button-ripple.mat-ripple:not(:empty){transform:translateZ(0)}.mat-button-focus-overlay{opacity:0;transition:opacity 200ms cubic-bezier(0.35, 0, 0.25, 1),background-color 200ms cubic-bezier(0.35, 0, 0.25, 1)}._mat-animation-noopable .mat-button-focus-overlay{transition:none}.mat-button-ripple-round{border-radius:50%;z-index:1}.mat-button .mat-button-wrapper>*,.mat-flat-button .mat-button-wrapper>*,.mat-stroked-button .mat-button-wrapper>*,.mat-raised-button .mat-button-wrapper>*,.mat-icon-button .mat-button-wrapper>*,.mat-fab .mat-button-wrapper>*,.mat-mini-fab .mat-button-wrapper>*{vertical-align:middle}.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button,.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button{display:block;font-size:inherit;width:2.5em;height:2.5em}.cdk-high-contrast-active .mat-button,.cdk-high-contrast-active .mat-flat-button,.cdk-high-contrast-active .mat-raised-button,.cdk-high-contrast-active .mat-icon-button,.cdk-high-contrast-active .mat-fab,.cdk-high-contrast-active .mat-mini-fab{outline:solid 1px}.cdk-high-contrast-active .mat-button-base.cdk-keyboard-focused,.cdk-high-contrast-active .mat-button-base.cdk-program-focused{outline:solid 3px}
-</style><style>button.cdk-program-focused[_ngcontent-iie-c41]     .mat-button-focus-overlay{opacity:0}#header[_ngcontent-iie-c41]{color:#fff;margin-top:.5rem;margin-bottom:2rem;text-align:center}#header[_ngcontent-iie-c41]   h1[_ngcontent-iie-c41]{margin-top:0;text-align:center;line-height:1.4;font-size:1.8rem;font-weight:600}#header[_ngcontent-iie-c41]   img[_ngcontent-iie-c41]{margin:0 auto;width:60px}#background-color[_ngcontent-iie-c41]{background-color:#007ad3}#background-color[_ngcontent-iie-c41], #background-image[_ngcontent-iie-c41]{position:absolute;top:0;bottom:0;right:0;left:0;z-index:-1}#background-image[_ngcontent-iie-c41]{background-image:url(background.301cc14c5795f309c1ea.jpeg);background-position:50%;background-size:cover;background-repeat:no-repeat;content:"";opacity:.3;-webkit-mask-image:linear-gradient(#000,#000,#000,transparent)}#generator-container[_ngcontent-iie-c41]{padding-bottom:1.5rem}#generator-card[_ngcontent-iie-c41]{border-radius:.4em;background-color:#fff;padding:1em 5%;box-shadow:0 0 10px #444}#network-field[_ngcontent-iie-c41]{margin-top:1em}#button-container[_ngcontent-iie-c41]{text-align:center;margin:2em auto 1em;height:90px;max-width:440px}@media (min-width:500px){#button-container[_ngcontent-iie-c41]{height:40px}}#button-container[_ngcontent-iie-c41]   div[_ngcontent-iie-c41]   button[_ngcontent-iie-c41]{width:180px;height:40px;margin:0 auto}#button-container[_ngcontent-iie-c41]   div[_ngcontent-iie-c41]   button[_ngcontent-iie-c41]   img[_ngcontent-iie-c41]{-webkit-filter:invert(100%);width:24px}#download-div[_ngcontent-iie-c41]{margin-bottom:10px}@media (min-width:500px){#download-div[_ngcontent-iie-c41]{margin-bottom:0;float:left}}@media (min-width:500px){#print-div[_ngcontent-iie-c41]   button[_ngcontent-iie-c41]{float:right}}#qrcode_preview[_ngcontent-iie-c41]{width:160px;margin:1.2em auto}span.icon-button-text[_ngcontent-iie-c41]{padding-left:10px}#qrcode_png[_ngcontent-iie-c41]{display:none}table[_ngcontent-iie-c41]{margin:0 auto}#title-section[_ngcontent-iie-c41]{margin-top:0}#title-icon[_ngcontent-iie-c41]{width:80px;vertical-align:middle}#title-text[_ngcontent-iie-c41]{margin-left:.5cm;font-size:50pt;font-weight:700;vertical-align:middle}#qrcode_print[_ngcontent-iie-c41]{width:220px;margin:2cm auto 0}#credentials[_ngcontent-iie-c41]{word-wrap:break-word;margin:2cm 0 3cm;font-size:20pt;text-align:center}#credentials[_ngcontent-iie-c41]   div.label[_ngcontent-iie-c41]{margin-top:1cm}#credentials[_ngcontent-iie-c41]   div.value[_ngcontent-iie-c41]{margin-top:.3cm;font-weight:700}div.footer[_ngcontent-iie-c41]{font-size:14pt}div.footer[_ngcontent-iie-c41]   div.td[_ngcontent-iie-c41]{padding:.1cm .1cm 0}div.footer[_ngcontent-iie-c41]   img.icon[_ngcontent-iie-c41]{vertical-align:middle;width:1cm;border-radius:.25cm;margin-right:.3cm}</style><style>.mat-form-field{display:inline-block;position:relative;text-align:left}[dir=rtl] .mat-form-field{text-align:right}.mat-form-field-wrapper{position:relative}.mat-form-field-flex{display:inline-flex;align-items:baseline;box-sizing:border-box;width:100%}.mat-form-field-prefix,.mat-form-field-suffix{white-space:nowrap;flex:none;position:relative}.mat-form-field-infix{display:block;position:relative;flex:auto;min-width:0;width:180px}.cdk-high-contrast-active .mat-form-field-infix{border-image:linear-gradient(transparent, transparent)}.mat-form-field-label-wrapper{position:absolute;left:0;box-sizing:content-box;width:100%;height:100%;overflow:hidden;pointer-events:none}[dir=rtl] .mat-form-field-label-wrapper{left:auto;right:0}.mat-form-field-label{position:absolute;left:0;font:inherit;pointer-events:none;width:100%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;transform-origin:0 0;transition:transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1),color 400ms cubic-bezier(0.25, 0.8, 0.25, 1),width 400ms cubic-bezier(0.25, 0.8, 0.25, 1);display:none}[dir=rtl] .mat-form-field-label{transform-origin:100% 0;left:auto;right:0}.mat-form-field-empty.mat-form-field-label,.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{display:block}.mat-form-field-autofill-control:-webkit-autofill+.mat-form-field-label-wrapper .mat-form-field-label{display:none}.mat-form-field-can-float .mat-form-field-autofill-control:-webkit-autofill+.mat-form-field-label-wrapper .mat-form-field-label{display:block;transition:none}.mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label,.mat-input-server[placeholder]:not(:placeholder-shown)+.mat-form-field-label-wrapper .mat-form-field-label{display:none}.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label,.mat-form-field-can-float .mat-input-server[placeholder]:not(:placeholder-shown)+.mat-form-field-label-wrapper .mat-form-field-label{display:block}.mat-form-field-label:not(.mat-form-field-empty){transition:none}.mat-form-field-underline{position:absolute;width:100%;pointer-events:none;transform:scale3d(1, 1.0001, 1)}.mat-form-field-ripple{position:absolute;left:0;width:100%;transform-origin:50%;transform:scaleX(0.5);opacity:0;transition:background-color 300ms cubic-bezier(0.55, 0, 0.55, 0.2)}.mat-form-field.mat-focused .mat-form-field-ripple,.mat-form-field.mat-form-field-invalid .mat-form-field-ripple{opacity:1;transform:scaleX(1);transition:transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),background-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-form-field-subscript-wrapper{position:absolute;box-sizing:border-box;width:100%;overflow:hidden}.mat-form-field-subscript-wrapper .mat-icon,.mat-form-field-label-wrapper .mat-icon{width:1em;height:1em;font-size:inherit;vertical-align:baseline}.mat-form-field-hint-wrapper{display:flex}.mat-form-field-hint-spacer{flex:1 0 1em}.mat-error{display:block}.mat-form-field-control-wrapper{position:relative}.mat-form-field-hint-end{order:1}.mat-form-field._mat-animation-noopable .mat-form-field-label,.mat-form-field._mat-animation-noopable .mat-form-field-ripple{transition:none}
-</style><style>.mat-form-field-appearance-fill .mat-form-field-flex{border-radius:4px 4px 0 0;padding:.75em .75em 0 .75em}.cdk-high-contrast-active .mat-form-field-appearance-fill .mat-form-field-flex{outline:solid 1px}.mat-form-field-appearance-fill .mat-form-field-underline::before{content:"";display:block;position:absolute;bottom:0;height:1px;width:100%}.mat-form-field-appearance-fill .mat-form-field-ripple{bottom:0;height:2px}.cdk-high-contrast-active .mat-form-field-appearance-fill .mat-form-field-ripple{height:0;border-top:solid 2px}.mat-form-field-appearance-fill:not(.mat-form-field-disabled) .mat-form-field-flex:hover~.mat-form-field-underline .mat-form-field-ripple{opacity:1;transform:none;transition:opacity 600ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-form-field-appearance-fill._mat-animation-noopable:not(.mat-form-field-disabled) .mat-form-field-flex:hover~.mat-form-field-underline .mat-form-field-ripple{transition:none}.mat-form-field-appearance-fill .mat-form-field-subscript-wrapper{padding:0 1em}
-</style><style>.mat-input-element{font:inherit;background:transparent;color:currentColor;border:none;outline:none;padding:0;margin:0;width:100%;max-width:100%;vertical-align:bottom;text-align:inherit}.mat-input-element:-moz-ui-invalid{box-shadow:none}.mat-input-element::-ms-clear,.mat-input-element::-ms-reveal{display:none}.mat-input-element,.mat-input-element::-webkit-search-cancel-button,.mat-input-element::-webkit-search-decoration,.mat-input-element::-webkit-search-results-button,.mat-input-element::-webkit-search-results-decoration{-webkit-appearance:none}.mat-input-element::-webkit-contacts-auto-fill-button,.mat-input-element::-webkit-caps-lock-indicator,.mat-input-element::-webkit-credentials-auto-fill-button{visibility:hidden}.mat-input-element[type=date],.mat-input-element[type=datetime],.mat-input-element[type=datetime-local],.mat-input-element[type=month],.mat-input-element[type=week],.mat-input-element[type=time]{line-height:1}.mat-input-element[type=date]::after,.mat-input-element[type=datetime]::after,.mat-input-element[type=datetime-local]::after,.mat-input-element[type=month]::after,.mat-input-element[type=week]::after,.mat-input-element[type=time]::after{content:" ";white-space:pre;width:1px}.mat-input-element::-webkit-inner-spin-button,.mat-input-element::-webkit-calendar-picker-indicator,.mat-input-element::-webkit-clear-button{font-size:.75em}.mat-input-element::placeholder{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;transition:color 400ms 133.3333333333ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-input-element::placeholder:-ms-input-placeholder{-ms-user-select:text}.mat-input-element::-moz-placeholder{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;transition:color 400ms 133.3333333333ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-input-element::-moz-placeholder:-ms-input-placeholder{-ms-user-select:text}.mat-input-element::-webkit-input-placeholder{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;transition:color 400ms 133.3333333333ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-input-element::-webkit-input-placeholder:-ms-input-placeholder{-ms-user-select:text}.mat-input-element:-ms-input-placeholder{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;transition:color 400ms 133.3333333333ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-input-element:-ms-input-placeholder:-ms-input-placeholder{-ms-user-select:text}.mat-form-field-hide-placeholder .mat-input-element::placeholder{color:transparent !important;-webkit-text-fill-color:transparent;transition:none}.mat-form-field-hide-placeholder .mat-input-element::-moz-placeholder{color:transparent !important;-webkit-text-fill-color:transparent;transition:none}.mat-form-field-hide-placeholder .mat-input-element::-webkit-input-placeholder{color:transparent !important;-webkit-text-fill-color:transparent;transition:none}.mat-form-field-hide-placeholder .mat-input-element:-ms-input-placeholder{color:transparent !important;-webkit-text-fill-color:transparent;transition:none}textarea.mat-input-element{resize:vertical;overflow:auto}textarea.mat-input-element.cdk-textarea-autosize{resize:none}textarea.mat-input-element{padding:2px 0;margin:-2px 0}select.mat-input-element{-moz-appearance:none;-webkit-appearance:none;position:relative;background-color:transparent;display:inline-flex;box-sizing:border-box;padding-top:1em;top:-1em;margin-bottom:-1em}select.mat-input-element::-ms-expand{display:none}select.mat-input-element::-moz-focus-inner{border:0}select.mat-input-element:not(:disabled){cursor:pointer}select.mat-input-element::-ms-value{color:inherit;background:none}.mat-focused .cdk-high-contrast-active select.mat-input-element::-ms-value{color:inherit}.mat-form-field-type-mat-native-select .mat-form-field-infix::after{content:"";width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid;position:absolute;top:50%;right:0;margin-top:-2.5px;pointer-events:none}[dir=rtl] .mat-form-field-type-mat-native-select .mat-form-field-infix::after{right:auto;left:0}.mat-form-field-type-mat-native-select .mat-input-element{padding-right:15px}[dir=rtl] .mat-form-field-type-mat-native-select .mat-input-element{padding-right:0;padding-left:15px}.mat-form-field-type-mat-native-select .mat-form-field-label-wrapper{max-width:calc(100% - 10px)}.mat-form-field-type-mat-native-select.mat-form-field-appearance-outline .mat-form-field-infix::after{margin-top:-5px}.mat-form-field-type-mat-native-select.mat-form-field-appearance-fill .mat-form-field-infix::after{margin-top:-10px}
-</style><style>.mat-form-field-appearance-legacy .mat-form-field-label{transform:perspective(100px);-ms-transform:none}.mat-form-field-appearance-legacy .mat-form-field-prefix .mat-icon,.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon{width:1em}.mat-form-field-appearance-legacy .mat-form-field-prefix .mat-icon-button,.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button{font:inherit;vertical-align:baseline}.mat-form-field-appearance-legacy .mat-form-field-prefix .mat-icon-button .mat-icon,.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button .mat-icon{font-size:inherit}.mat-form-field-appearance-legacy .mat-form-field-underline{height:1px}.cdk-high-contrast-active .mat-form-field-appearance-legacy .mat-form-field-underline{height:0;border-top:solid 1px}.mat-form-field-appearance-legacy .mat-form-field-ripple{top:0;height:2px;overflow:hidden}.cdk-high-contrast-active .mat-form-field-appearance-legacy .mat-form-field-ripple{height:0;border-top:solid 2px}.mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{background-position:0;background-color:transparent}.cdk-high-contrast-active .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline{border-top-style:dotted;border-top-width:2px}.mat-form-field-appearance-legacy.mat-form-field-invalid:not(.mat-focused) .mat-form-field-ripple{height:1px}
-</style><style>.mat-form-field-appearance-outline .mat-form-field-wrapper{margin:.25em 0}.mat-form-field-appearance-outline .mat-form-field-flex{padding:0 .75em 0 .75em;margin-top:-0.25em;position:relative}.mat-form-field-appearance-outline .mat-form-field-prefix,.mat-form-field-appearance-outline .mat-form-field-suffix{top:.25em}.mat-form-field-appearance-outline .mat-form-field-outline{display:flex;position:absolute;top:.25em;left:0;right:0;bottom:0;pointer-events:none}.mat-form-field-appearance-outline .mat-form-field-outline-start,.mat-form-field-appearance-outline .mat-form-field-outline-end{border:1px solid currentColor;min-width:5px}.mat-form-field-appearance-outline .mat-form-field-outline-start{border-radius:5px 0 0 5px;border-right-style:none}[dir=rtl] .mat-form-field-appearance-outline .mat-form-field-outline-start{border-right-style:solid;border-left-style:none;border-radius:0 5px 5px 0}.mat-form-field-appearance-outline .mat-form-field-outline-end{border-radius:0 5px 5px 0;border-left-style:none;flex-grow:1}[dir=rtl] .mat-form-field-appearance-outline .mat-form-field-outline-end{border-left-style:solid;border-right-style:none;border-radius:5px 0 0 5px}.mat-form-field-appearance-outline .mat-form-field-outline-gap{border-radius:.000001px;border:1px solid currentColor;border-left-style:none;border-right-style:none}.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap{border-top-color:transparent}.mat-form-field-appearance-outline .mat-form-field-outline-thick{opacity:0}.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start,.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end,.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap{border-width:2px}.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline,.mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline{opacity:0;transition:opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,.mat-form-field-appearance-outline.mat-form-field-invalid .mat-form-field-outline-thick{opacity:1}.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline{opacity:0;transition:opacity 600ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-flex:hover .mat-form-field-outline-thick{opacity:1}.mat-form-field-appearance-outline .mat-form-field-subscript-wrapper{padding:0 1em}.mat-form-field-appearance-outline._mat-animation-noopable:not(.mat-form-field-disabled) .mat-form-field-flex:hover~.mat-form-field-outline,.mat-form-field-appearance-outline._mat-animation-noopable .mat-form-field-outline,.mat-form-field-appearance-outline._mat-animation-noopable .mat-form-field-outline-start,.mat-form-field-appearance-outline._mat-animation-noopable .mat-form-field-outline-end,.mat-form-field-appearance-outline._mat-animation-noopable .mat-form-field-outline-gap{transition:none}
-</style><style>.mat-form-field-appearance-standard .mat-form-field-flex{padding-top:.75em}.mat-form-field-appearance-standard .mat-form-field-underline{height:1px}.cdk-high-contrast-active .mat-form-field-appearance-standard .mat-form-field-underline{height:0;border-top:solid 1px}.mat-form-field-appearance-standard .mat-form-field-ripple{bottom:0;height:2px}.cdk-high-contrast-active .mat-form-field-appearance-standard .mat-form-field-ripple{height:0;border-top:2px}.mat-form-field-appearance-standard.mat-form-field-disabled .mat-form-field-underline{background-position:0;background-color:transparent}.cdk-high-contrast-active .mat-form-field-appearance-standard.mat-form-field-disabled .mat-form-field-underline{border-top-style:dotted;border-top-width:2px}.mat-form-field-appearance-standard:not(.mat-form-field-disabled) .mat-form-field-flex:hover~.mat-form-field-underline .mat-form-field-ripple{opacity:1;transform:none;transition:opacity 600ms cubic-bezier(0.25, 0.8, 0.25, 1)}.mat-form-field-appearance-standard._mat-animation-noopable:not(.mat-form-field-disabled) .mat-form-field-flex:hover~.mat-form-field-underline .mat-form-field-ripple{transition:none}
-</style><link rel="canonical" href="https://wifiqrcode.com/locale/en/"><title>Free Wi-Fi QR Code Generator</title><meta name="description" content="Create and print your own QR code to share your Wifi with your guests."><meta name="og:title" content="Free Wi-Fi QR Code Generator"><meta name="og:description" content="Create and print your own QR code to share your Wifi with your guests."></head>
+        function save () {
+            var ssid = $('#ssid').val();
+            if (!ssid) return;
+            var hidden = $('#hidden').is(':checked');
+            var enc = $('#enc').val();
+            var key = $('#key').val();
+            var storage = $.localStorage('qificodes');
+            if (!storage) storage = {};
+            storage[ssid] = {'hidden': hidden, 'enc': enc, 'key': key};
+            $.localStorage('qificodes', storage);
+            loadhistory();
+        };
 
-<body class="mat-typography">
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCT2JLT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <app-root _nghost-iie-c47="" ng-version="11.0.2"><router-outlet _ngcontent-iie-c47=""></router-outlet><app-home _nghost-iie-c41="" class="ng-star-inserted"><div _ngcontent-iie-c41="" class="metadata"><div _ngcontent-iie-c41="">Free Wi-Fi QR Code Generator</div><div _ngcontent-iie-c41="">Create and print your own QR code to share your Wifi with your guests.</div></div><div _ngcontent-iie-c41="" id="generator-container" class="container no-print"><div _ngcontent-iie-c41="" id="background-color"></div><div _ngcontent-iie-c41="" id="background-image"></div><div _ngcontent-iie-c41="" id="header"><img _ngcontent-iie-c41="" alt="Wi-Fi icon" src="assets/icon-white.svg"><h1 _ngcontent-iie-c41="">Wi-Fi QR Code Generator</h1></div><div _ngcontent-iie-c41="" id="generator-card"><form _ngcontent-iie-c41="" novalidate="" class="ng-untouched ng-pristine ng-invalid"><div _ngcontent-iie-c41="" id="network-field"><mat-form-field _ngcontent-iie-c41="" class="mat-form-field ng-tns-c18-0 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-invalid"><div class="mat-form-field-wrapper ng-tns-c18-0"><div class="mat-form-field-flex ng-tns-c18-0"><!----><!----><div class="mat-form-field-infix ng-tns-c18-0"><input _ngcontent-iie-c41="" formcontrolname="network" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" matinput="" required="" class="mat-input-element mat-form-field-autofill-control ng-tns-c18-0 ng-untouched ng-pristine ng-invalid cdk-text-field-autofill-monitored" id="mat-input-0" data-placeholder="Network/SSID" aria-invalid="false" aria-required="true"><span class="mat-form-field-label-wrapper ng-tns-c18-0"><label class="mat-form-field-label ng-tns-c18-0 mat-empty mat-form-field-empty ng-star-inserted" id="mat-form-field-label-1" for="mat-input-0" aria-owns="mat-input-0"><span class="ng-tns-c18-0 ng-star-inserted">Network/SSID</span><!----><!----><!----><span aria-hidden="true" class="mat-placeholder-required mat-form-field-required-marker ng-tns-c18-0 ng-star-inserted"> *</span><!----></label><!----></span></div><!----></div><div class="mat-form-field-underline ng-tns-c18-0 ng-star-inserted"><span class="mat-form-field-ripple ng-tns-c18-0"></span></div><!----><div class="mat-form-field-subscript-wrapper ng-tns-c18-0"><!----><div class="mat-form-field-hint-wrapper ng-tns-c18-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted" style="opacity: 1; transform: translateY(0%);"><!----><div class="mat-form-field-hint-spacer ng-tns-c18-0"></div></div><!----></div></div></mat-form-field></div><div _ngcontent-iie-c41="" class="ng-star-inserted"><mat-form-field _ngcontent-iie-c41="" class="mat-form-field ng-tns-c18-2 mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid"><div class="mat-form-field-wrapper ng-tns-c18-2"><div class="mat-form-field-flex ng-tns-c18-2"><!----><!----><div class="mat-form-field-infix ng-tns-c18-2"><input _ngcontent-iie-c41="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" matinput="" formcontrolname="password" class="mat-input-element mat-form-field-autofill-control ng-tns-c18-2 ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored" id="mat-input-2" data-placeholder="Password" aria-invalid="false" aria-required="false"><span class="mat-form-field-label-wrapper ng-tns-c18-2"><label class="mat-form-field-label ng-tns-c18-2 mat-empty mat-form-field-empty ng-star-inserted" id="mat-form-field-label-5" for="mat-input-2" aria-owns="mat-input-2"><span class="ng-tns-c18-2 ng-star-inserted">Password</span><!----><!----><!----><!----></label><!----></span></div><!----></div><div class="mat-form-field-underline ng-tns-c18-2 ng-star-inserted"><span class="mat-form-field-ripple ng-tns-c18-2"></span></div><!----><div class="mat-form-field-subscript-wrapper ng-tns-c18-2"><!----><div class="mat-form-field-hint-wrapper ng-tns-c18-2 ng-trigger ng-trigger-transitionMessages ng-star-inserted" style="opacity: 1; transform: translateY(0%);"><!----><div class="mat-form-field-hint-spacer ng-tns-c18-2"></div></div><!----></div></div></mat-form-field></div><!----><div _ngcontent-iie-c41=""><mat-form-field _ngcontent-iie-c41="" class="mat-form-field ng-tns-c18-1 mat-primary mat-form-field-type-mat-native-select mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder ng-untouched ng-pristine ng-valid"><div class="mat-form-field-wrapper ng-tns-c18-1"><div class="mat-form-field-flex ng-tns-c18-1"><!----><!----><div class="mat-form-field-infix ng-tns-c18-1"><select _ngcontent-iie-c41="" matnativecontrol="" required="" formcontrolname="encryption" class="mat-input-element mat-form-field-autofill-control ng-tns-c18-1 ng-untouched ng-pristine ng-valid cdk-text-field-autofill-monitored" id="mat-input-1" aria-invalid="false" aria-required="true"><option _ngcontent-iie-c41="" value="wpa">WPA/WPA2</option><option _ngcontent-iie-c41="" value="wep">WEP</option><option _ngcontent-iie-c41="" value="none">None</option></select><span class="mat-form-field-label-wrapper ng-tns-c18-1"><!----></span></div><!----></div><div class="mat-form-field-underline ng-tns-c18-1 ng-star-inserted"><span class="mat-form-field-ripple ng-tns-c18-1"></span></div><!----><div class="mat-form-field-subscript-wrapper ng-tns-c18-1"><!----><div class="mat-form-field-hint-wrapper ng-tns-c18-1 ng-trigger ng-trigger-transitionMessages ng-star-inserted" style="opacity: 1; transform: translateY(0%);"><!----><div class="mat-form-field-hint-spacer ng-tns-c18-1"></div></div><!----></div></div></mat-form-field></div></form><div _ngcontent-iie-c41="" id="qrcode_preview" hidden=""><img _ngcontent-iie-c41="" alt="QR code" title=""></div><div _ngcontent-iie-c41="" id="button-container"><div _ngcontent-iie-c41="" id="download-div"><button _ngcontent-iie-c41="" mat-raised-button="" color="primary" class="mat-focus-indicator mat-raised-button mat-button-base mat-primary mat-button-disabled" disabled="true"><span class="mat-button-wrapper"><img _ngcontent-iie-c41="" alt="Download button" src="assets/button-icons/download.svg"><span _ngcontent-iie-c41="" class="icon-button-text">Download</span></span><span matripple="" class="mat-ripple mat-button-ripple"></span><span class="mat-button-focus-overlay"></span></button></div><div _ngcontent-iie-c41="" id="print-div"><button _ngcontent-iie-c41="" id="tc-print" mat-raised-button="" color="accent" class="mat-focus-indicator mat-raised-button mat-button-base mat-accent mat-button-disabled" disabled="true"><span class="mat-button-wrapper"><img _ngcontent-iie-c41="" alt="Print button" id="tc-print" src="assets/button-icons/print.svg"><span _ngcontent-iie-c41="" id="tc-print" class="icon-button-text">Print</span></span><span matripple="" class="mat-ripple mat-button-ripple"></span><span class="mat-button-focus-overlay"></span></button></div></div></div></div><div _ngcontent-iie-c41="" class="container no-print"><h2 _ngcontent-iie-c41="">How does it work?</h2><p _ngcontent-iie-c41="">Enter your Wi-Fi credentials (network/SSID, password) and print them on piece of paper. Put that paper somewhere in your living room, restaurant etc.</p><p _ngcontent-iie-c41="">Your guests then are able to connect to your Wi-Fi simply by scanning the QR code! Alternatively, they can type in the password the old fashioned way.</p><h2 _ngcontent-iie-c41="">How can I scan the QR code?</h2><p _ngcontent-iie-c41="">We recommend downloading our QRbot app at <a _ngcontent-iie-c41="" href="https://qrbot.net" target="_blank">https://qrbot.net</a> available both on Android and iOS. It is well-designed, fast and free!</p><p _ngcontent-iie-c41="">If you are running on iOS 11 or higher you can alternatively use the built-in camera app.</p><h2 _ngcontent-iie-c41="">What password should I choose?</h2><p _ngcontent-iie-c41="">A Wi-Fi QR code provides the convenience of having a strong safe password without the hassle of typing it! So choose a strong password which typically contains:</p><ul _ngcontent-iie-c41=""><li _ngcontent-iie-c41="">at least 16 characters</li><li _ngcontent-iie-c41="">upper- and lowercase characters</li><li _ngcontent-iie-c41="">numbers</li><li _ngcontent-iie-c41="">special characters (%, $, &amp;, ...)</li></ul><h2 _ngcontent-iie-c41="">WPA/WPA2, WEP or None?</h2><p _ngcontent-iie-c41="">WPA/WPA2 is the securest option and also the default setting for most Wi-Fi access points. If you are not sure choose this option. None means your Wi-Fi is unprotected and open to everyone.</p></div><canvas _ngcontent-iie-c41="" id="qrcode_png"></canvas><div _ngcontent-iie-c41="" class="print"><div _ngcontent-iie-c41="" id="title-section"><table _ngcontent-iie-c41=""><tr _ngcontent-iie-c41=""><td _ngcontent-iie-c41=""><div _ngcontent-iie-c41=""><img _ngcontent-iie-c41="" alt="Wi-Fi icon" id="title-icon" src="assets/icon-black.svg"></div></td><td _ngcontent-iie-c41=""><div _ngcontent-iie-c41="" id="title-text">Wi-Fi</div></td></tr></table></div><div _ngcontent-iie-c41="" id="qrcode_print"><img _ngcontent-iie-c41=""></div><div _ngcontent-iie-c41="" id="credentials"><div _ngcontent-iie-c41="" class="label">Network/SSID</div><div _ngcontent-iie-c41="" class="value"></div><div _ngcontent-iie-c41="" class="label">Password</div><div _ngcontent-iie-c41="" class="value"></div></div><div _ngcontent-iie-c41="" class="footer"><table _ngcontent-iie-c41=""><tr _ngcontent-iie-c41=""><td _ngcontent-iie-c41="" align="right"><div _ngcontent-iie-c41=""><img _ngcontent-iie-c41="" alt="QRbot icon" src="assets/app-icon-black-white.svg" class="icon"></div></td><td _ngcontent-iie-c41="" style="white-space: nowrap;"><div _ngcontent-iie-c41="" class="td">No QR code scanner?</div><div _ngcontent-iie-c41="" class="td">Visit <b _ngcontent-iie-c41="">qrbot.net</b></div></td><td _ngcontent-iie-c41="" width="99%"></td><td _ngcontent-iie-c41="" align="right"><div _ngcontent-iie-c41=""><img _ngcontent-iie-c41="" alt="Wi-Fi icon" src="assets/icon-black-white.svg" class="icon"></div></td><td _ngcontent-iie-c41="" style="white-space: nowrap;"><div _ngcontent-iie-c41="" class="td">How to create this?</div><div _ngcontent-iie-c41="" class="td">Visit <b _ngcontent-iie-c41="">wifiqrcode.com</b></div></td></tr></table></div></div></app-home><!----><app-footer _ngcontent-iie-c47="" _nghost-iie-c46=""><div _ngcontent-iie-c46="" class="footer no-print"><div _ngcontent-iie-c46="" class="container"><nav _ngcontent-iie-c46=""><span _ngcontent-iie-c46="" class="language-icon"><img _ngcontent-iie-c46="" alt="US flag" src="assets/flags/us.svg" class="flag"></span><span _ngcontent-iie-c46="" class="language-icon"><img _ngcontent-iie-c46="" alt="Spanish flag" src="assets/flags/es.svg" class="flag"></span><span _ngcontent-iie-c46="" class="language-icon"><img _ngcontent-iie-c46="" alt="French flag" src="assets/flags/fr.svg" class="flag"></span><span _ngcontent-iie-c46="" class="language-icon"><img _ngcontent-iie-c46="" alt="German flag" src="assets/flags/de.svg" class="flag"></span></nav></div><div _ngcontent-iie-c46="" class="container"><nav _ngcontent-iie-c46=""><div _ngcontent-iie-c46="" class="nav-link"><a _ngcontent-iie-c46="" routerlink="/" href="/locale/en/">Home</a></div><div _ngcontent-iie-c46="" class="nav-link"><a _ngcontent-iie-c46="" routerlink="/privacy-policy" href="/locale/en/privacy-policy">Privacy Policy</a></div><div _ngcontent-iie-c46="" class="nav-link"><a _ngcontent-iie-c46="" routerlink="/legal-disclosure" href="/locale/en/legal-disclosure">Legal Disclosure</a></div></nav></div><div _ngcontent-iie-c46="" id="copyright" class="container">© 2020 TeaCapps GmbH</div><div _ngcontent-iie-c46="" id="denso" class="container">QR Code is a registered trademark of DENSO WAVE INCORPORATED in the United States and other countries.</div></div></app-footer><div _ngcontent-iie-c47="" class="no-print"><div _ngcontent-iie-c47="" id="cookie-banner"><div _ngcontent-iie-c47="" id="cookie-container"><div _ngcontent-iie-c47="" id="cookie-text-cell">We use cookies to analyse the use of our website. <a _ngcontent-iie-c47="" routerlink="/privacy-policy" href="/locale/en/privacy-policy">See details</a></div><div _ngcontent-iie-c47="" id="cookie-button-cell"><button _ngcontent-iie-c47="" id="cookie-button" mat-raised-button="" color="primary" class="mat-focus-indicator mat-raised-button mat-button-base mat-primary"><span class="mat-button-wrapper">OK</span><span matripple="" class="mat-ripple mat-button-ripple"></span><span class="mat-button-focus-overlay"></span></button></div></div></div><!----></div></app-root>
-<script src="runtime-es2015.d3ec696ec3df761b1861.js" type="module"></script><script src="runtime-es5.d3ec696ec3df761b1861.js" nomodule="" defer=""></script><script src="polyfills-es5.bac6140da7059a25ac8d.js" nomodule="" defer=""></script><script src="polyfills-es2015.c618915fe37faaca0819.js" type="module"></script><script src="scripts.cdd6ef94b36ffe931dcf.js" defer=""></script><script src="main-es2015.c46d4f335738facc3419.js" type="module"></script><script src="main-es5.c46d4f335738facc3419.js" nomodule="" defer=""></script>
+        function load(ssid) {
+            var storage = $.localStorage('qificodes');
+            if (ssid in storage) {
+                $('#ssid').val(ssid);
+                $('#enc').val(storage[ssid]['enc']);
+                $('#key').val(storage[ssid]['key']);
+                $('#hidden').prop('checked', storage[ssid]['hidden']);
+                generate();
+            }
+        };
 
-</body></html>
+        function loadhistory () {
+            var storage = $.localStorage('qificodes');
+            if (storage) {
+                var history = $('#history-drop ul.dropdown-menu');
+                var ssids = Object.keys(storage);
+                history.empty();
+                for (var i=0; i<ssids.length; i++) {
+                    history.append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="history-item">'+ssids[i]+'</a></li>');
+                }
+                history.append('<li role="presentation" class="divider"></li>');
+                history.append('<li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="history-clear">clear history</a></li>');
+
+                history.on('click', 'a.history-item', function(e) {
+                    e.preventDefault();
+                    load($(this).text());
+                });
+                history.on('click', 'a.history-clear', function(e) {
+                    e.preventDefault();
+                    clearhistory();
+                });
+                $('#history-drop').show();
+            }
+        };
+
+        function clearhistory () {
+            $.localStorage('qificodes', null);
+            $('#history-drop').hide();
+        };
+
+        $(document).ready(function(){
+            $('#form').submit(function() {
+                generate();
+                return false;
+            });
+            $('#save').click(function() {
+                save();
+            });
+            $('#display-key').click(function() {
+                var $key = $("#key");
+                if ($key.attr('type') === 'password') {
+                    $key.attr('type', 'text');
+                    $("#display-key-icon").attr("class", "glyphicon glyphicon-eye-close");
+                } else {
+                    $key.attr('type', 'password');
+                    $("#display-key-icon").attr("class", "glyphicon glyphicon-eye-open");
+                }
+            });
+            $('#enc').change(function() {
+                if($(this).val() != 'nopass') {
+                   $('#key-p').show();
+                   $('#key').attr('required','required');
+                }
+                else {
+                   $('#key-p').hide();
+                   $('#key').removeAttr('required');
+                }
+            });
+            $('#form').tooltip({
+                selector: "[data-toggle=tooltip]"
+            });
+            loadhistory();
+        });
+
+        // Service Worker installation
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js', {scope: './'}).then(function(registration) {
+                    console.log('[Service Worker] Successfully installed');
+                }).catch(function(error) {
+                    console.log('[Service Worker] Installation failed:', error);
+                })
+            });
+        }
+    </script>
+</body>
+</html>
